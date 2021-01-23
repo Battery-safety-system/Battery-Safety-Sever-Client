@@ -1,0 +1,1 @@
+bytes shouldn't decode directly while socket transferrring. that's because if there is some error on transferring, the program will hang on that decode; therefore, using b'' == str1.encode please!!!

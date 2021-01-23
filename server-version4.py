@@ -137,20 +137,22 @@ class Server_PC:
     def messageReceiving(self):
         self.connect.settimeout(15.0)
         Pre_word = self.connect.recv(3072);
+        self.connect.settimeout(None)
         assert Pre_word.decode() == "message_data_list"
         cvs_list = pickle.loads(self.connect.recv(3072));
         self.WritetoCVS(cvs_list, self.label_list);
         self.connect.sendall(b'your cvs_list has received.');
         print('cvs_list is ', cvs_list);
-        self.connect.settimeout(None)
+
 
     def statusReceiving(self):
         # section 6 get the status
         self.connect.settimeout(15.0)
         print('start status Receiving')
-        print('status Preword Receiving')
+
         Pre_word = self.connect.recv(3072);
-        assert Pre_word.decode() == "battery_status"
+        print('status Preword Receiving')
+        assert Pre_word == b"battery_status"
         print('status Receiving')
         self.battery_status = pickle.loads(self.connect.recv(3072));
         self.connect.sendall(b'your battery_status has received.');
