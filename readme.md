@@ -11,13 +11,14 @@ This Safety System aims to keep the temperature, voltage of the batteries module
   - Automatically reconnect the system when the network break down and reconnected.
 
 # Table of contents
-1. [Built With](#introduction)
-2. [Usage](#Usage)
-    1. [Sub paragraph](#module1)
-    2. 
+1. [Install](#Install)
+2. [Built With](#BuiltWith)
+3. [Content](#Content)
+    1. [Client](#Client)
+    2. [Server](#Server)
 3. [Conclusion](#Conclusion)
 
-# Install
+# Install <a name="Install"></a>
 Before we use these code, we need to install peak driver to drive the pcan. <br/>
 Installation step: <br />
 1. First, install the driving package in the [peak website](https://www.peak-system.com/fileadmin/media/linux/files/peak-linux-driver-8.11.0.tar.gz) 
@@ -37,7 +38,7 @@ Installation step: <br />
 If there is still error, please refer to this [website](https://forum.peak-system.com/viewtopic.php?f=59&t=3381)
 
 
-## Built With <a name="introduction"></a>
+## Built With <a name="BuiltWith"></a>
 <!---
 your comment goes here
 and here
@@ -62,6 +63,13 @@ and here
 
 
 
-## Content Explanation 
+## Content  <a name="Content"></a>
+### 1. Client <a name="Client"></a>
+Flow Chart
+	
+
+### 2. Server <a name="Server"></a>
+Flow Chart
+
 
 ## Conclusion <a name="Conclusion"></a>
