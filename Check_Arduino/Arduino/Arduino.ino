@@ -1,5 +1,4 @@
-#include <iostream>
-#include <string>
+
 
 // In pin
 int Temp1_PIN = 0;
@@ -93,3 +92,6 @@ void loop(){
 // main file: https://electronicshobbyists.com/control-arduino-using-raspberry-pi-arduino-and-raspberry-pi-serial-communication/
 // map to String: http://www.cplusplus.com/forum/general/211386/
 // int to string: http://www.cplusplus.com/reference/string/to_string/
+
+
+//
