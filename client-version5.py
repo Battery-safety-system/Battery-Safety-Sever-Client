@@ -8,24 +8,35 @@ import csv
 import socket
 import pickle
 import logging
-logging.getLogger().setLevel(logging.INFO)
+from File import File
+from PcanConnection import PcanConnection
+from Message import Message
+from PCConnection import PCConnection
+from Status import Status
+from GPIOHandler import GPIOHandler
+from DataHandler import DataHandler
+
+
 class Battery_System:
     def __init__(self):
         # initiate setting
-        logInit();
-        self.GPIOSetting(Pump = 18, Relay = 16);
-        self.SyncMessageSetting();
-        self.ReqMessageSetting();
+        GPIOInfoList = []
+        GPIOInfoList.append({"device": "Pump", "pin_number": 18, "pin_type": GPIO.OUT, "pin_value": GPIO.LOW});
+        GPIOInfoList.append({"device": "Relay", "pin_number": 16, "pin_type": GPIO.OUT, "pin_value": GPIO.HIGH});
+        self.GPIOHandler = GPIOHandler(GPIO.BCM, GPIOInfoList);
+        self.Message = Message();
+        # PcanConnection_test = PcanConnection();
+        # PcanConnection_test.getAllInfo(Message);
         self.dbcCreationg();
-        self.fileInit();
-
+        self.Message = Message()
+        self.FileHandler = File();
         # socket setting
-        self.socketConnection();
+        self.Conn = PcanConnection();
+        # self.socketConnection();
         self.error = 0;
         self.getLabel();
         self.sendLabel();
     def run(self):
-
             while True:
                 try:
                     self.getData();
@@ -40,6 +51,7 @@ class Battery_System:
                     else:
                         self.socketConnection();
                         self.sendLabel();
+                        self.storeDataToRepo();
                         self.sendData();
                         self.sendStatus();
                         self.error = 0; 
@@ -48,52 +60,9 @@ class Battery_System:
                     print(e)
                 self.activateDevice();
                 pass
-## initilization part
-    def logInit(self):
 
-        logging.basicConfig(level=logging.DEBUG,  # 控制台打印的日志级别
-                            filename='ErrorRecord.log',
-                            filemode='a',  ##模式，有w和a，w就是写模式，每次都会重新写日志，覆盖之前的日志
-                            # a是追加模式，默认如果不写的话，就是追加模式
-                            format=
-                            '%(asctime)s - %(pathname)s[line:%(lineno)d] - %(levelname)s: %(message)s'
-                            # 日志格式
-                            )
-        logging.info("Begin start the Program")
 
-    def fileInit(self):
-        self.path = os.getcwd();
-        self.current = time.strftime('Battery-System %m-%Y') # current: Battery-System %m-%Y
-        if(not os.path.isdir(self.path + "/" + "Battery-System-database")):
-            os.mkdir(self.path + "/" + "Battery-System-database")
-        self.floder = self.path + "/" + "Battery-System-database" + "/" + self.current
-        if (not os.path.isdir(self.floder)):
-            os.mkdir(self.floder)
-        self.file ="log" + time.strftime('-Battery-System %d-%m-%Y') + "-" + time.strftime('%H-%M-%S')+".csv"
-        self.day = time.strftime('%d')
 
-        ## section2: WritetoCVS function
-    def WritetoCVS(self, list_vol_temp, summary_head):
-            # 2.1 update the floder, current, day, file, 
-        current_month=time.strftime('Battery-System %m-%Y')
-        current_day = time.strftime('%d')
-        if(current_month != self.current):
-            self.current = current_month
-            self.floder = self.path + "/" + "Battery-System-database" + "/" + self.current
-            os.mkdir(self.floder)
-        if(current_day != self.day):
-            self.day = current_day
-            self.file = "log" + time.strftime('-Battery-System %d-%m-%Y') + "-"+ time.strftime('%H-%M-%S')+".csv";
-
-        # 2.2 make the header if the file is new
-        if(not os.path.isfile(self.floder + '/' + self.file)):
-            with open(self.floder + '/' + self.file, 'w', newline='') as csvfile:
-                writer1=csv.writer(csvfile);
-                writer1.writerow(summary_head);
-        # 2.3 insert the data
-        with open(self.floder + '/' + self.file, 'a', newline='') as csvfile:
-            writer1=csv.writer(csvfile)
-            writer1.writerow(list_vol_temp)
 
 
     def GPIOSetting(self, Pump = 18, Relay = 16):
@@ -150,17 +119,7 @@ class Battery_System:
         self.reverse_message_dbc =  {v: k for k, v in self.message_dbc.items()}
         self.temperature_voliated_battery = [];
 
-    # 2. Connection Function:
-    def socketConnection(self):
-        #### ip address
-        ip_addre='192.168.137.1'
-        ip_port = 6699
-        self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.client.connect((ip_addre, ip_port))
-        print('socket has connected')
-    # 3. Recursing Function
-    def initSocket(self):
-        self.client.settimeout(None);
+
 
     def sendSynMessage(self):
         self.bus.send(self.send_message);
@@ -178,10 +137,10 @@ class Battery_System:
         label_list = [];
         while True:
             message = self.bus.recv();
-            if(message.arbitration_id not in self.message_dbc):
+            if(message.arbitration_id not in self.Message.message_dbc):
                 count += 1;
             else:
-                message_name = self.message_dbc[message.arbitration_id];
+                message_name = self.Message.message_dbc[message.arbitration_id];
                 label_list.append(message_name);
                 count = 0;
             if(count > 10):
@@ -210,11 +169,11 @@ class Battery_System:
         message_dict = {}
         while True:
             message = self.bus.recv();
-            if(message.arbitration_id not in self.message_dbc):
+            if(message.arbitration_id not in self.Message.message_dbc):
                 count += 1;
         
             else:
-                message_name = self.message_dbc[message.arbitration_id];
+                message_name = self.Message.message_dbc[message.arbitration_id];
                 message_dict[message_name] = message;
                 self.label_list.append(message_name);
                 count = 0;
@@ -246,11 +205,11 @@ class Battery_System:
         # print(self.final_label_list)
         print('Begin sendLabel')
         final_label_list_pickle = pickle.dumps(self.final_label_list);
-
-        self.client.send(b'label_list')
+        self.PcanConnection.client.send(b'label_list')
+        # self.client.send(b'label_list')
         try:
-            self.client.settimeout(15)
-            rec_data = self.client.recv(1024)
+            self.PcanConnection.client.settimeout(15)
+            rec_data = self.PcanConnection.client.recv(1024)
             print(b'form server receive:' + rec_data);
         except Exception as e:
             logging.error(e);
@@ -258,16 +217,16 @@ class Battery_System:
 
         ## send formal lable list
         print('send final_label_list_pickle')
-        self.client.send(final_label_list_pickle)
+        self.PcanConnection.send(final_label_list_pickle)
         print("final_label_list has sent")
         try:
-            rec_data = self.client.recv(1024);
+            rec_data = self.PcanConnection.client.recv(1024);
         except Exception as e:
             logging.error(e);
             raise Exception("sendLabel: Receive Formal Label Problem");
 
         print(b'form server receive:' + rec_data);
-        self.client.settimeout(None);
+        self.PcanConnection.client.settimeout(None);
         print("sendLabel() End")
 
     def getData(self):
@@ -281,24 +240,24 @@ class Battery_System:
         count = 0;
         while True:
             message = self.bus.recv();
-            if(message.arbitration_id not in self.message_dbc ):
+            if(message.arbitration_id not in self.Message.message_dbc ):
                 count += 1;
                 if(count > 10 and len(self.message_dict) != 0):
                     break;
                 continue;
         #data_decode=db.decode_message(message.arbitration_id, message.data)
-            message_name = self.message_dbc[message.arbitration_id]
+            message_name = self.Message.message_dbc[message.arbitration_id]
             self.message_dict[message_name] = message;
             count = 0;
 
         print("getData() end");
         
-    def handleData(self):
+    def handleData(self, messageObj):
         print("Begin handleData()");
         self.message_data_dict = {} # {BMU01_MAXTemp: xxx, BMU01_MinTemp: xxx, ...}
         self.message_data_list = []; # date, time, BMU01_MAXTemp, BMU01_MinTemp, ... (based on the label)
         for label in self.label_list: # BMU01_pdo1, BMU01_pdo2
-            A_message = self.message_dict[label];
+            A_message = messageObj.message_dict[label];
             battery_name = label[0:5] #BMU01 or BMU02
             data_decode = self.db.decode_message(A_message.arbitration_id, A_message.data);
             for key, value in data_decode.items(): # key: Max_temp
@@ -316,19 +275,21 @@ class Battery_System:
                 self.message_data_list.append(value);
         # print("message data has been handle, start to send the message data")
         print("handleData() end")
-
+    def storeDataToRepo(self):
+        self.FileHandler.WritetoCVS(self.message_data_list, self.final_label_list);
 
     def sendData(self):
         print("Begin to send message data list")
 
-        self.WritetoCVS(self.message_data_list, self.final_label_list);
-        self.client.send("message_data_list".encode())
-        self.client.send(pickle.dumps(self.message_data_list))
+        # self.WritetoCVS(self.message_data_list, self.final_label_list);
+        
+        self.PcanConnection.client.send("message_data_list".encode())
+        self.PcanConnection.client.send(pickle.dumps(self.message_data_list))
 
         try:
-            self.client.settimeout(15)
+            self.PcanConnection.client.settimeout(15)
             rec_data = self.client.recv(1024)
-            self.client.settimeout(None)
+            self.PcanConnection.client.settimeout(None)
         except Exception as e:
             logging.error(e)
             raise Exception("send Data function error!!! ");
@@ -395,8 +356,8 @@ class Battery_System:
         # 3.3 send the battery status
         battery_status = [self.tempHigh, self.volLimited];
 
-        self.client.send("battery_status".encode())
-        self.client.send(pickle.dumps(battery_status))
+        self.PcanConnection.client.send("battery_status".encode())
+        self.PcanConnection.client.send(pickle.dumps(battery_status))
         try:
             print("battery_status has send")
             self.client.settimeout(15);

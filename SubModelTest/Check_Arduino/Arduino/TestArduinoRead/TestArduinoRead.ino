@@ -6,10 +6,10 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   String incoming_state;
-//  if (Serial.available() > 0){
-//    
-//    
-//  }
   incoming_state = Serial.readString();
+//  if(incoming_state == "") {
+//    return;
+//    } 
   Serial.println(incoming_state);
+
 }
