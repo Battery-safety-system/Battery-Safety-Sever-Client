@@ -21,3 +21,4 @@ NEW_TEMPERATURE = 95
 instrument.address                         # this is the slave address number
 instrument.mode = minimalmodbus.MODE_RTU   # rtu or ascii mode
 instrument.clear_buffers_before_each_transaction = True
+# ref: https://minimalmodbus.readthedocs.io/en/stable/usage.html
