@@ -1,27 +1,34 @@
 from Message import Message;
+import can
 class PcanConnection(object):
-	"""docstring for PcanConnection"""
-	def __init__(self, arg):
-		super(PcanConnection, self).__init__()
+    """docstring for PcanConnection"""
+    def __init__(self):
+        super(PcanConnection, self).__init__()
+        
         #### ip address
-        print("Start CAN Bus Setting")
+        print("Initialize PCAN Connection")
         bustype = 'socketcan'
         channel = 'can0'
         self.bus = can.interface.Bus(channel=channel, bustype=bustype)
-        ### sync message setting
-        print("Complete CAN Bus Setting")
+
+        print("PCAN Connection Initialization end");
+
 
     def sendMessage(self, message):
+        print("Send Message: " + str(message.arbitration_id))
         self.bus.send(message);
+        print("sendMessage() end");
         
     def sendMessageList(self, messageList):
+        print("send Message list id: " + str([message.arbitration_id for message in messageList]))
         for Req_message in messageList:
             self.bus.send(Req_message);
-
+        print("sendMessageList() end");
 
     def getBatteryListFromPcan(self, messageObj):
+        print("Begin getBatteryListFromPcan()")
         battery_list = [];
-    	self.sendMessage(messageObj.sync_message);
+        self.sendMessage(messageObj.sync_message);
         count = 0;
         label_list = [];
         while True:
@@ -38,9 +45,11 @@ class PcanConnection(object):
         label_list.sort();
         battery_list = list(set([int(elem[3:5]) for elem in label_list]));
         messageObj.battery_list = battery_list;
+        print("getBatteryListFromPcan() end");
         
     def getLabelListPlusMessageDictFromPcan(self, messageObj):
-    	        # 1.3 get the total pdo number with Req sending
+        print("Begin getLabelListPlusMessageDictFromPcan()")
+                # 1.3 get the total pdo number with Req sending
         self.sendMessage(messageObj.sync_message);
         self.sendMessageList(messageObj.Req_message_list);
         count = 0;
@@ -61,10 +70,11 @@ class PcanConnection(object):
 
         messageObj.label_list = label_list;
         messageObj.message_dict = message_dict;
+        print("getLabelListPlusMessageDictFromPcan() end");
 
     def getFinalLabelList(self, messageObj):
-
-    	final_label_list = [] # BMU01_Max_temp, BMU01_Min_temp
+        print("Begin getFinalLabelList()")
+        final_label_list = [] # BMU01_Max_temp, BMU01_Min_temp
         for label in messageObj.label_list:
             A_message = messageObj.message_dict[label];
             battery_name = label[0:5] #BMU01 or BMU02
@@ -75,12 +85,14 @@ class PcanConnection(object):
         final_label_list.sort();
         final_label_list.insert(0, 'time');
         final_label_list.insert(0, 'date'); # final_label_list: [date time BMU01_Max_temp .... BMU02_Max_temp ...]
+        final_label_list.append('istempHigh'); final_label_list.append('isvolLimited');final_label_list.append('isCVViolated'); 
         messageObj.final_label_list = final_label_list;
+        print("getFinalLabelList() end");
 
     def getDataFromPcan(self, messageObj):
         print("Begin getDataFromPcan()")
-        sendMessage(messageObj.sync_message);
-        sendMessageList(messageObj.Req_message_list)
+        self.sendMessage(messageObj.sync_message);
+        self.sendMessageList(messageObj.Req_message_list)
         message_dict = {};
         count = 0;
         while True:
@@ -97,14 +109,23 @@ class PcanConnection(object):
 
         print("getDataFromPcan() end");
 
-	def getAllInfo(self, messageObj):
+    def getReqMessageList(self, messageObj):
+        print("Begin getReqMessageList()")
+        messageObj.Req_message_list = messageObj.getReqMessageList();
+        print("ReqMessage List id: ")
+        print([ Req_message.arbitration_id  for Req_message in messageObj.Req_message_list]);
+        print("ReqMessage List: " + str(messageObj.Req_message_list))
+        print("getReqMessageList() end");
+
+    def getAllInfo(self, messageObj):
+        print("Begin getAllInfo()")
         # 1.1 get the battery number
         self.getBatteryListFromPcan(messageObj);
-
+        self.getReqMessageList(messageObj);
         self.getLabelListPlusMessageDictFromPcan(messageObj)
 
-        logging.info(f'label list: {messageObj.label_list}')
+        print(f'label list: {messageObj.label_list}')
 
         # 1.4 construct the label list
-        self.getFinalLabelList(self, messageObj);
-
+        self.getFinalLabelList(messageObj);
+        print("getAllInfos() end");

@@ -1,11 +1,13 @@
 #!/usr/bin/python3
 import cantools
+import can
 
 class Message(object):
-	"""docstring for Message"""
-	def __init__(self):
-		super(Message, self).__init__()
-		# exmaple: map: key: Hex number 181 e.g. value: (e.g. BMU01_pdo1)
+    """docstring for Message"""
+    def __init__(self):
+        super(Message, self).__init__()
+        print("Initialize Message Object")
+        # exmaple: map: key: Hex number 181 e.g. value: (e.g. BMU01_pdo1)
         self.message_dbc = self.getMessageDBC();
         self.reverse_message_dbc =  {v: k for k, v in self.message_dbc.items()}
 
@@ -14,7 +16,7 @@ class Message(object):
         self.setSyncMessage(); ## 
         self.setReqMessage(); # self.Req_message
 
-        self.Req_message_list = getReqMessageList();
+        self.Req_message_list = [];
 
         ## need to get from PCAN
         self.label_list = []
@@ -24,7 +26,7 @@ class Message(object):
         self.message_dict = {};
         self.message_data_dict = {};
         self.message_data_list = [];
-        
+        print("Message Object Initialization End")
 
 
     def getMessageDBC(self):
@@ -56,12 +58,11 @@ class Message(object):
 
     def getReqMessageList(self):
         Req_message_list = [];
-        Req_list = ['self.' + 'BMU'+str(battery_id).zfill(2)+'_Req_send_message' for battery_id in messageObj.battery_list];
+        Req_list = ['self.' + 'BMU'+str(battery_id).zfill(2)+'_Req_send_message' for battery_id in self.battery_list];
         for ele in Req_list:
             print(ele)
             Req_message_list.append(eval(ele));
-        messageObj.Req_message_list = Req_message_list;
-
+        return Req_message_list;
 
 
 
@@ -70,4 +71,4 @@ class Message(object):
 
 
         # self.temperature_voliated_battery = [];
-		
+        

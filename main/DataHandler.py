@@ -7,22 +7,13 @@ import can
 import RPi.GPIO as GPIO
 import cantools
 import os
-import csv
-import socket
-import pickle
-import logging
-from File import File
-from PcanConnection import PcanConnection
-from Message import Message
-from PCConnection import PCConnection
-from Status import Status
-from GPIOHandler import GPIOHandler
-from DataHandler import DataHandler
+
 
 class DataHandler(object):
     """docstring for DataHandler"""
     def __init__(self):
         super(DataHandler, self).__init__()
+        print("Initializae Data Handler")
     
 
     def handleData(self, messageObj):
@@ -38,7 +29,9 @@ class DataHandler(object):
                 message_data_dict[final_label] = value;
 
         for label in messageObj.final_label_list:
-            if(label == 'date'):
+            if(label == 'istempHigh' or label == 'isvolLimited' or label == 'isCVViolated'):
+                pass;
+            elif(label == 'date'):
                 message_data_list.append(time.strftime('%d-%m-%Y'));
             elif(label == 'time'):
                 message_data_list.append(time.strftime('%H:%M:%S'));
@@ -70,7 +63,7 @@ class DataHandler(object):
             battery_str = 'BMU'+str(battery).zfill(2)
             label = battery_str + '_' + 'CMA_Max_Temp';
             CMA_Max_Temp = messageObj.message_data_dict[label];
-            if CMA_Max_Temp >= 35:  ##40?
+            if CMA_Max_Temp >= 40:  ##40?
                 status.temperature_voliated_battery.append(battery);
         for battery in status.temperature_voliated_battery:
             battery_str = 'BMU'+str(battery).zfill(2)
@@ -103,6 +96,50 @@ class DataHandler(object):
         self.detectVoltage(status, messageObj);
         self.detectTemp(status, messageObj);
         self.detectCellVoltageViolated(status, messageObj);
-        print("is there any voltage violate: %s; is the temperature too high: %s;" %(status.isvolLimited, status.istempHigh ))
+        print(messageObj.message_data_dict)
+        print("is there any voltage violated: %s; is the temperature too high: %s;is there any cell voltage violated: %s" %(status.isvolLimited, status.istempHigh, status.isCVViolated))
         print("detectStatus End")
         
+    def setStatusToMessageObj(self, StatusObj, MessageObj):
+        MessageObj.message_data_list.append(StatusObj.istempHigh);
+        MessageObj.message_data_list.append(StatusObj.isvolLimited);
+        MessageObj.message_data_list.append(StatusObj.isCVViolated);
+    
+    
+    def judgeGPIOInfo(self, StatusObj):
+        GPIOInfoList = [];
+        if(StatusObj.istempHigh == True):
+            GPIOInfoList.append({"device": "Pump", "pin_number": 18, "pin_type": GPIO.OUT, "pin_value": GPIO.HIGH});
+            print("temperature is too high, the pump continue to work");
+        else:
+            print("temp is in control, the pump is off")
+            GPIOInfoList.append({"device": "Pump", "pin_number": 18, "pin_type": GPIO.OUT, "pin_value": GPIO.LOW});
+
+        if(StatusObj.isvolLimited == True or StatusObj.isCVViolated ):
+            GPIOInfoList.append({"device": "Relay", "pin_number": 16, "pin_type": GPIO.OUT, "pin_value": GPIO.LOW});
+            print("voltage is out of control, relay is off")
+
+        else:
+            GPIOInfoList.append({"device": "Relay", "pin_number": 16, "pin_type": GPIO.OUT, "pin_value": GPIO.HIGH});
+            print("voltage is in control, the relay is on")
+        return GPIOInfoList;
+    
+    
+    def getGPIOInitInfoList(self):
+        GPIOInfoList = []
+        GPIOInfoList.append({"device": "Pump", "pin_number": 18, "pin_type": GPIO.OUT, "pin_value": GPIO.LOW});
+        GPIOInfoList.append({"device": "Relay", "pin_number": 16, "pin_type": GPIO.OUT, "pin_value": GPIO.HIGH});
+        return GPIOInfoList
+
+    def getStatusList(self, StatusObj):
+        return [StatusObj.isvolLimited, StatusObj.istempHigh, StatusObj.isCVViolated]
+
+    def storeToLocalRepo(self, FileObj, MessageObj):
+        FileObj.WritetoCVS(MessageObj.message_data_list, MessageObj.final_label_list);
+        pass
+
+    def activateDevice(self, GPIOInfoList):
+        print("activateDevice() begin")
+        for GPIOInfo in GPIOInfoList:
+            GPIO.output(GPIOInfo["pin_number"], GPIOInfo["pin_value"]);
+        print("activateDevice() end")
