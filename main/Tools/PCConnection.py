@@ -11,9 +11,10 @@ import pickle
 
 class PCConnection(object):
     """docstring for PCConnection"""
+
     def __init__(self):
         super(PCConnection, self).__init__()
-        self.ip_addre='192.168.137.1'
+        self.ip_addre = '192.168.137.1'
         self.ip_port = 6699
 
     def connect(self):
@@ -21,7 +22,6 @@ class PCConnection(object):
         self.client.connect((self.ip_addre, self.ip_port))
         print('socket has connected')
 
-    
     def sendContent(self, keyword, list_sent):
         dict_exp = {}
         dict_exp["keyword"] = keyword;
@@ -33,7 +33,6 @@ class PCConnection(object):
         except Exception as e:
             raise Exception("sendContent: " + str(keyword) + " Error");
 
-    
 
 
-        
+

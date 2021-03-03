@@ -36,5 +36,8 @@ class DataHandler(object):
 
     def getStatusInfoString(self, status):
         str1="status: isvolLimited: " +  str(status[0]) + "istempHigh: " +  str(status[1]) + "isCVViolated: " +  str(status[2])
-        
+
         return str1;
+
+
+
