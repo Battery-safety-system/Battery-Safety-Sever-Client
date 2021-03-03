@@ -1,27 +1,27 @@
 class DataHandler(object):
-	"""docstring for DataHandler"""
-	def __init__(self):
-		super(DataHandler, self).__init__()
-	
-	def getLabelFromDict(self, content):
-		assert isinstance(content, dict)
-		assert list(content.keys())[0] == "Label"
-		return content["Label"];
+    """docstring for DataHandler"""
+    def __init__(self):
+        super(DataHandler, self).__init__()
+
+    def getLabelFromDict(self, content):
+        assert isinstance(content, dict)
+        assert list(content.keys())[0] == "Label"
+        return content["Label"];
 
 
-	def getDataFromDict(self, content):
-		assert isinstance(content, dict)
-		assert list(content.keys())[0] == "Data"
-		return content["Data"];
+    def getDataFromDict(self, content):
+        assert isinstance(content, dict)
+        assert list(content.keys())[0] == "Data"
+        return content["Data"];
 
-	def getStatusFromDict(self, content):
-		assert isinstance(content, dict)
-		assert list(content.keys())[0] == "Status"
-		return content["Status"];
+    def getStatusFromDict(self, content):
+        assert isinstance(content, dict)
+        assert list(content.keys())[0] == "Status"
+        return content["Status"];
 
-	# def printList
+    # def printList
 
-	def getDeviceInfoString(self, status):
+    def getDeviceInfoString(self, status):
         str1="Device: Pump is "
         if(status[0] == True):
             str1 += "on"

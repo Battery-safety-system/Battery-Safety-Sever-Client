@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 import time
 import can
-import RPi.GPIO as GPIO
+
 import cantools
 import os
 import csv
@@ -10,10 +10,9 @@ import pickle
 
 class Connection(object):
 
-	    """docstring for PCConnection"""
     def __init__(self):
-        super(PCConnection, self).__init__()
-        self.ip_addre='192.168.137.1'
+        super(Connection, self).__init__()
+        self.ip_addr='192.168.137.1'
         self.ip_port = 6699
         self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -25,11 +24,11 @@ class Connection(object):
         print(u'the client %s:%s has connected.' % (host, port))
 
     def receiveContent(self, keyWords):
-    	self.connect.settimeout(60)
-    	try: 
-        	content = pickle.loads(self.connect.recv(9216));
+        self.connect.settimeout(60)
+        try:
+            content = pickle.loads(self.connect.recv(9216));
         except Exception as e:
-        	raise Exception(keyWords + "receiving error")
+            raise Exception(keyWords + "receiving error")
         return content;
 
 

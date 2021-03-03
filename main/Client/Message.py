@@ -64,11 +64,3 @@ class Message(object):
             Req_message_list.append(eval(ele));
         return Req_message_list;
 
-
-
-
-
-
-
-        # self.temperature_voliated_battery = [];
-        
