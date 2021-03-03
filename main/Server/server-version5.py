@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-from File import File
-from DataHandler import DataHandler
+from main.Tools.File import File
+from main.Tools.DataHandler import DataHandler
 from main.Tools.ServerConnection import Connection
 
 
