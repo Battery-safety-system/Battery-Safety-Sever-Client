@@ -26,28 +26,30 @@ class Battery_System:
         # init the PC Connection
         self.PCConnectionObj = PCConnection();
         self.PCConnectionObj.connect();
-        self.PCConnectionObj.sendContent("Label", self.MessageObj.final_label_list);
-
         self.StatusObj = Status();
 
-    #         self.failConnectTimes = 0;
+    def activateDevice(self, GPIOInfoList):
+        print("activateDevice() begin")
+        for GPIOInfo in GPIOInfoList:
+            GPIO.output(GPIOInfo["pin_number"], GPIOInfo["pin_value"]);
+        print("activateDevice() end")
+
 
     def run(self):
         while True:
             self.PcanConnectionObj.getDataFromPcan(self.MessageObj);  # get data dict
             self.DataHandlerObj.handleData(self.MessageObj);  ## build message_data_list
-            self.DataHandlerObj.detectStatus(self.StatusObj,
-                                             self.MessageObj);  ## set the value for status from messageObj
+            self.DataHandlerObj.detectStatus(self.StatusObj, self.MessageObj);  ## set the value for status from messageObj
             self.DataHandlerObj.setStatusToMessageObj(self.StatusObj, self.MessageObj);
             self.DataHandlerObj.storeToLocalRepo(self.FileObj, self.MessageObj);
             try:
-                self.PCConnectionObj.sendContent("Data", self.MessageObj.message_data_list);
-                self.PCConnectionObj.sendContent("Status", self.DataHandlerObj.getStatusList(self.StatusObj));
+                dictContent = self.DataHandlerObj.getSendContent(self.MessageObj, self.StatusObj);
+                self.PCConnectionObj.sendContent(dictContent)
             except Exception as e:
                 print(e);
 
             GPIOInfoList = self.DataHandlerObj.judgeGPIOInfo(self.StatusObj)  # create GPIO list
-            self.DataHandlerObj.activateDevice(GPIOInfoList);
+            self.activateDevice(GPIOInfoList);
 
 
 Battery1 = Battery_System();

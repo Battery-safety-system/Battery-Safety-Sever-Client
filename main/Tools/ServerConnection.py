@@ -11,7 +11,7 @@ import pickle
 class Connection(object):
 
     def __init__(self):
-        super(self).__init__()
+
         self.ip_addr='192.168.137.1'
         self.ip_port = 6699
         self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

@@ -22,16 +22,13 @@ class PCConnection(object):
         self.client.connect((self.ip_addre, self.ip_port))
         print('socket has connected')
 
-    def sendContent(self, keyword, list_sent):
-        dict_exp = {}
-        dict_exp["keyword"] = keyword;
-        dict_exp["list"] = list_sent;
-        dict_pickle = pickle.dumps(dict_exp);
+    def sendContent(self, dictContent):
+        dict_pickle = pickle.dumps(dictContent);
         self.client.settimeout(15)
         try:
             self.client.send(dict_pickle)
         except Exception as e:
-            raise Exception("sendContent: " + str(keyword) + " Error");
+            raise Exception("sendContent: Error");
 
 
 

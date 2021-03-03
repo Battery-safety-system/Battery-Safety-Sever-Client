@@ -4,7 +4,7 @@
 #!/usr/bin/python3
 import time
 import can
-import RPi.GPIO as GPIO
+
 import cantools
 import os
 
@@ -138,11 +138,7 @@ class DataHandler(object):
         FileObj.WritetoCVS(MessageObj.message_data_list, MessageObj.final_label_list);
         pass
 
-    def activateDevice(self, GPIOInfoList):
-        print("activateDevice() begin")
-        for GPIOInfo in GPIOInfoList:
-            GPIO.output(GPIOInfo["pin_number"], GPIOInfo["pin_value"]);
-        print("activateDevice() end")
+
 
     def getLabelFromDict(self, content):
         assert isinstance(content, dict)
@@ -179,3 +175,7 @@ class DataHandler(object):
             status[2])
 
         return str1;
+
+    def getSendContent(self, MessageObj, StatusObj ):
+        dictContent = {"Data": MessageObj.message_data_list, "Status": self.getStatusList(StatusObj), "Label": MessageObj.final_label_list};
+        return dictContent;
