@@ -1,14 +1,7 @@
 #!/usr/bin/python3
-import time
-import os
-import csv
-import pickle
-import socket
-import logging
 from File import File
-from Connection import Connection
 from DataHandler import DataHandler
-from Connection import Connection
+from main.Tools.ServerConnection import Connection
 
 
 class Server_PC:

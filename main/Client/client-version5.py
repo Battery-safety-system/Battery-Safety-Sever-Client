@@ -3,7 +3,7 @@ import RPi.GPIO as GPIO
 from main.Tools.File import File
 from main.Tools.PcanConnection import PcanConnection
 from main.Tools.Message import Message
-from main.Tools.PCConnection import PCConnection
+from main.Tools.ClientConnection import PCConnection
 from main.Tools.Status import Status
 from main.Tools.GPIOHandler import GPIOHandler
 from main.Tools.DataHandler import DataHandler
