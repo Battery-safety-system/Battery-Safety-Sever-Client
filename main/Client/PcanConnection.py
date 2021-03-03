@@ -87,6 +87,7 @@ class PcanConnection(object):
         final_label_list.insert(0, 'date'); # final_label_list: [date time BMU01_Max_temp .... BMU02_Max_temp ...]
         final_label_list.append('istempHigh'); final_label_list.append('isvolLimited');final_label_list.append('isCVViolated'); 
         messageObj.final_label_list = final_label_list;
+        print("final_label_list: " + str(final_label_list))
         print("getFinalLabelList() end");
 
     def getDataFromPcan(self, messageObj):
