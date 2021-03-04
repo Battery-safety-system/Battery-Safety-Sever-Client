@@ -28,12 +28,9 @@ class Connection(object):
         self.connect, (host, port) = self.server.accept()
         print(u'the client %s:%s has connected.' % (host, port))
 
-    def receiveContent(self, keyWords):
+    def receiveContent(self):
         self.connect.settimeout(15)
-        try:
-            content = pickle.loads(self.connect.recv(9216));
-        except Exception as e:
-            raise Exception(keyWords + "receiving error")
+        content = pickle.loads(self.connect.recv(9216));
         return content;
 
 

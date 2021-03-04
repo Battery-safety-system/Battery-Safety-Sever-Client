@@ -6,7 +6,7 @@ from main.Tools.Message import Message
 from main.Tools.ClientConnection import PCConnection
 from main.Tools.Status import Status
 from main.Tools.GPIOHandler import GPIOHandler
-from main.Tools.DataHandler import DataHandler
+from main.Tools.ClientDataHandler import DataHandler
 
 
 class Battery_System:
@@ -22,11 +22,12 @@ class Battery_System:
         self.PcanConnectionObj = PcanConnection();
         self.PcanConnectionObj.getAllInfo(self.MessageObj);  # getLabel, dbcCreating requestMessage SyncMessage
         # init the File
-        self.FileObj = File();  # fileinit
-        # init the PC Connection
-        self.PCConnectionObj = PCConnection();
-        self.PCConnectionObj.connect();
+        self.FileObj = File(self.MessageObj.final_label_list)
         self.StatusObj = Status();
+        # init the PC Connection
+        self.PCConnectionObj = PCConnection()
+        self.PCConnectionObj.connect()
+        self.PCConnectionObj.sendContent({"labels": self.MessageObj.final_label_list})
 
     def activateDevice(self, GPIOInfoList):
         print("activateDevice() begin")
@@ -50,7 +51,6 @@ class Battery_System:
 
             GPIOInfoList = self.DataHandlerObj.judgeGPIOInfo(self.StatusObj)  # create GPIO list
             self.activateDevice(GPIOInfoList);
-
 
 Battery1 = Battery_System();
 Battery1.run();

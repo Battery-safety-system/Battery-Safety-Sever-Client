@@ -12,59 +12,62 @@ import csv
 class File(object):
     """docstring for File"""
 
-    def __init__(self):
-        super(File, self).__init__()
+    def __init__(self, labels):
+
         print("Initialize File Object")
-        self.path = os.getcwd();
-        self.Repo = time.strftime('Battery-System %m-%Y')
-        self.createFloderIfNull(self.path + "/" + "Battery-System-database");
-        self.floder = self.path + "/" + "Battery-System-database" + "/" + self.Repo
-        self.createFloderIfNull(self.floder);
-        self.file = "log" + time.strftime('-Battery-System %d-%m-%Y') + "-" + time.strftime('%H-%M-%S') + ".csv"
-        self.day = time.strftime('%d')
+        self.labels = labels
+        self.createWholeFileSystemVar()
+        self.createWholeFilesWithFloders()
         print("File Object Intialization End")
 
     def WritetoCVS(self, list_vol_temp, summary_head):
-        # 2.1 update the floder, current, day, file,
 
-        print("Begin WritetoCVS: " + str(list_vol_temp))
-        self.updateRepoPlusFloder();
-        self.updateFilePlusDate();
-        if (not os.path.isfile(self.floder + '/' + self.file)):
-            self.writeList(summary_head);
+        print("Begin WritetoCVS")
+        self.updateFileByLabels(summary_head)
+        self.updateFilesWithFlodersByDates();
         self.writeList(list_vol_temp);
         print("WritetoCVS End")
+
+    def updateFileByLabels(self, summary_head):
+        if(self.labels != summary_head):
+            self.labels = summary_head
+            self.createWholeFileSystemVar();
+            self.createWholeFilesWithFloders();
 
     def createFloderIfNull(self, path):
         if (not os.path.isdir(path)):
             os.mkdir(path)
-        pass
 
-    def updateRepoPlusFloder(self):
-        self.Repo = time.strftime('Battery-System %m-%Y');
-        self.floder = self.path + "/" + "Battery-System-database" + "/" + self.Repo
-        self.createFloderIfNull(self.floder)
 
-    def updateFilePlusDate(self):
+    def updateFilesWithFlodersByDates(self):
         current_day = time.strftime('%d')
         if (current_day != self.day):
-            self.day = current_day
-            self.file = "log" + time.strftime('-Battery-System %d-%m-%Y') + "-" + time.strftime('%H-%M-%S') + ".csv";
-        pass
+            self.createWholeFileSystemVar();
+            self.createWholeFilesWithFloders();
 
     def writeList(self, list):
         with open(self.floder + '/' + self.file, 'a', newline='') as csvfile:
             writer1 = csv.writer(csvfile);
             writer1.writerow(list);
 
-    def updateWholeFile(self):
-        print("updateWholeFile() Begin")
+    def createWholeFileSystemVar(self):
+        print("updateWholeFileSystem() Begin")
         self.path = os.getcwd();
+        self.dataBasePath = self.path + "/" + "Battery-System-database"
         self.Repo = time.strftime('Battery-System %m-%Y')
-        self.createFloderIfNull(self.path + "/" + "Battery-System-database");
         self.floder = self.path + "/" + "Battery-System-database" + "/" + self.Repo
-        self.createFloderIfNull(self.floder);
         self.file = "log" + time.strftime('-Battery-System %d-%m-%Y') + "-" + time.strftime('%H-%M-%S') + ".csv"
         self.day = time.strftime('%d')
-        print("updateWholeFile() End")
-        
+        print("updateWholeFileSystem() End")
+
+    def createWholeFilesWithFloders(self):
+        self.createFloderIfNull(self.dataBasePath);
+        self.createFloderIfNull(self.floder)
+        self.createFileIfNull(self.labels)
+
+    def createFileIfNull(self, labels):
+        if (not os.path.isfile(self.floder + '/' + self.file)):
+            with open(self.floder + '/' + self.file, 'w', newline='') as csvfile:
+                writer1 = csv.writer(csvfile);
+                writer1.writerow(labels);
+
