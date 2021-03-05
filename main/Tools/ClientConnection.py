@@ -24,7 +24,9 @@ class PCConnection(object):
         print('socket has connected')
 
     def sendContent(self, dictContent):
-        if(self.isError == True):
+        if(self.isError == True and self.errorTimes < 60):
+            self.errorTimes += 1;
+            print("Try to reconnect after " + str(60 - self.errorTimes))
             return ;
         dict_pickle = pickle.dumps(dictContent);
         self.client.settimeout(5)
@@ -39,8 +41,6 @@ class PCConnection(object):
 
     def reconnectAfterLoops(self):
         self.isError = True;
-        self.errorTimes += 1;
-        print("Try to reconnect after " + str(60 - self.errorTimes))
         if(self.errorTimes >= 60):
             self.client.close();
             self.errorTimes = 0
