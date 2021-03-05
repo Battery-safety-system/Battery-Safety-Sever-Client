@@ -15,12 +15,15 @@ class Connection(object):
         self.ip_addr='192.168.137.1'
         self.ip_port = 6699
         self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+        self.connectToClient();
     def reconnect(self):
         self.connect.close();
+        print(u'waiting for connect...')
         self.connect, (host, port) = self.server.accept()
         print(u'the client %s:%s has connected.' % (host, port))
 
-    def connect(self):
+    def connectToClient(self):
 
         self.server.bind((self.ip_addr, self.ip_port))
         self.server.listen(5)
