@@ -7,11 +7,12 @@ from main.Tools.ServerConnection import Connection
 class Server_PC:
     def __init__(self):
         ## section1: file and floder creation
-
         self.ConnectionObj = Connection();
-        self.DataHandlerObj = DataHandler();
         content = self.ConnectionObj.receiveContent()
         self.FileObj = File(content["labels"])
+
+        self.DataHandlerObj = DataHandler();
+
     def run(self):
         datas = [];
         status = [];
