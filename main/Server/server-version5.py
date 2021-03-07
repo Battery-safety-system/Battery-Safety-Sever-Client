@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+import sys
+sys.path.append("C:\\Users\\SERF1\\Desktop\\Battery-Safety-Sever-Client")
 from main.Tools.File import File
 from main.Tools.ServerDataHandler import DataHandler
 from main.Tools.ServerConnection import Connection
@@ -7,8 +9,10 @@ from main.Tools.ServerConnection import Connection
 class Server_PC:
     def __init__(self):
         ## section1: file and floder creation
+        print("check the connection")
         self.ConnectionObj = Connection();
         content = self.ConnectionObj.receiveContent()
+        print("initialize the File")
         self.FileObj = File(content["labels"])
 
         self.DataHandlerObj = DataHandler();

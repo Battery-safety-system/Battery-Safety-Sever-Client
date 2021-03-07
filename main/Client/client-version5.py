@@ -41,7 +41,7 @@ class Battery_System:
             self.DataHandlerObj.setStatusToMessageObj(self.StatusObj, self.MessageObj);
 
             # store data to the local repo
-            self.FileObj.WritetoCVS(self.FileObj, self.MessageObj);
+            self.FileObj.WritetoCVS(self.MessageObj.message_data_list, self.MessageObj.final_label_list);
             try:
                 dictContent = self.DataHandlerObj.getSendContent(self.MessageObj, self.StatusObj);
                 self.PCConnectionObj.sendContent(dictContent)
