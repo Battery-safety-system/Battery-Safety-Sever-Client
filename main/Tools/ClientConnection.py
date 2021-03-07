@@ -19,6 +19,7 @@ class PCConnection(object):
         self.isError = False;
 
     def connect(self):
+        print("Try to connect to PC")
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.client.connect((self.ip_addre, self.ip_port))
         print('socket has connected')

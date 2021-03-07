@@ -75,14 +75,20 @@ class DataHandler(object):
     def detectCellVoltageViolated(self, status, messageObj):
         isCVViolated = False;
         for battery in messageObj.battery_list:
+            Max_Cell_Voltage = -1;
+            Min_Cell_Voltage = 1000;
             battery_str = 'BMU' + str(battery).zfill(2);
-            label = battery_str + '_' + 'Max_Cell_Voltage'
-            Max_Cell_Voltage = messageObj.message_data_dict[label];
-            label = battery_str + '_' + 'Min_Cell_Voltage'
-            Min_Cell_Voltage = messageObj.message_data_dict[label];
+            for i in range(1, 12):
+                label = battery_str + '_' + 'Cell' + '_' + str(i) + '_Voltage'
+                if(messageObj.message_data_dict[label] > Max_Cell_Voltage) :
+                    Max_Cell_Voltage = messageObj.message_data_dict[label]
+                if(messageObj.message_data_dict[label] < Min_Cell_Voltage ):
+                    Min_Cell_Voltage = messageObj.message_data_dict[label];
+            print("Max_Cell_Voltage: " + str(Max_Cell_Voltage));
+            print("Min_Cell_voltage: " + str(Min_Cell_Voltage))
             if Max_Cell_Voltage >= 4.1 or Min_Cell_Voltage < 2.8:  ##40?
                 isCVViolated = True;
-
+        print("is Cell Voltage Violated: " + str(isCVViolated))
         status.isCVViolated = isCVViolated;
 
     def detectStatus(self, status, messageObj):
