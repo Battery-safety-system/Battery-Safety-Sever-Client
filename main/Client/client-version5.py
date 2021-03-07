@@ -8,6 +8,7 @@ from main.Tools.Status import Status
 from main.Tools.GPIOHandler import GPIOHandler
 from main.Tools.ClientDataHandler import DataHandler
 
+import time;
 
 class Battery_System:
     def __init__(self):
@@ -34,6 +35,8 @@ class Battery_System:
     def run(self):
         while True:
             # Receive data from Pcan
+            print("current time is " +  time.strftime('%H-%M-%S'))
+
             self.PcanConnectionObj.getDataFromPcan(self.MessageObj);  # get data dict
             # get Status, Labels, datas
             self.DataHandlerObj.handleData(self.MessageObj);  ## build message_data_list
@@ -51,6 +54,7 @@ class Battery_System:
             # active device based on status
             GPIOInfoList = self.DataHandlerObj.judgeGPIOInfo(self.StatusObj)  # create GPIO list
             self.GPIOHandlerObj.activateDevice(GPIOInfoList);
+            print("---------------------------------------")
     def __del__(self):
         print("Battery Manage System Program Exit !!!")
 
