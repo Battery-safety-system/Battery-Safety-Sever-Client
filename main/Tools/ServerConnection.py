@@ -7,13 +7,18 @@ import os
 import csv
 import socket
 import pickle
+import json
 
 class Connection(object):
 
     def __init__(self):
-
-        self.ip_addr='192.168.137.1'
-        self.ip_port = 6699
+        with open('config.properties') as f:
+            data = json.load(f)
+        self.ip_port = int(data["ip_port"])
+        self.ip_addr = data["ip_addr"]
+        #
+        # self.ip_addr='192.168.137.1'
+        # self.ip_port = 6699
         self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
         self.connectToClient();
