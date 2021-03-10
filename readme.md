@@ -63,7 +63,8 @@ and here
 
 ## Module <a name="Module"></a>
 ### 1. Arduino Model
-Client send pin_num:pin_val&; 4:1&5:0
+Client send pin_num:pin_val& example: 4:1&5:0 to the arduino to control the pin value; 
+we use A0, A1 as analog pin
 
 ## Content  <a name="Content"></a>
 ### 1. Client <a name="Client"></a>

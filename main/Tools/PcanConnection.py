@@ -1,4 +1,4 @@
-from Message import Message;
+
 import can
 class PcanConnection(object):
     """docstring for PcanConnection"""
