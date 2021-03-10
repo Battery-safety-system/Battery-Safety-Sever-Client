@@ -1,7 +1,7 @@
 #define INPUT_SIZE 30
-int Temp1_PIN = 0;
-int Pump_PIN = 4; 
-int Relay_PIN = 5; 
+int Temp1_PIN = A0;
+int Pump_PIN = 4;
+int Relay_PIN = 5;
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);  //Started the serial communication at 9600 baudrate
@@ -14,7 +14,7 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  int Temp1 = digitalRead(Temp1_PIN);
+  int Temp1 = analogRead(Temp1_PIN);
   // send mapStatus to Rasp
   String mapStatus = "Temp1:" + String(Temp1);
   Serial.println(mapStatus);

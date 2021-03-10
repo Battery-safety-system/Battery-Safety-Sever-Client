@@ -61,7 +61,9 @@ and here
 		
         $ python3 Client.py 
 
-
+## Module <a name="Module"></a>
+### 1. Arduino Model
+Client send pin_num:pin_val&; 4:1&5:0
 
 ## Content  <a name="Content"></a>
 ### 1. Client <a name="Client"></a>
