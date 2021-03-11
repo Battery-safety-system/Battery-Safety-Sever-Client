@@ -24,6 +24,10 @@ Installation step: <br />
 1. First, install the driving package in the [peak website](https://www.peak-system.com/fileadmin/media/linux/files/peak-linux-driver-8.11.0.tar.gz) 
 2. Follow the Read.me to install the driver
 ```console
+	$ sudo apt update
+	$ sudo apt install build-essential
+	$ sudo apt-get install manpages-dev
+	$ sudo apt-get install make
 	$ cd peak-linux-driver-x.y.z
 	$ sudo make install
 ```
