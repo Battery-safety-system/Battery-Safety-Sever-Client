@@ -8,7 +8,7 @@ void setup() {
   pinMode(Temp1_PIN, INPUT);
   pinMode(Pump_PIN, OUTPUT);
   pinMode(Relay_PIN, OUTPUT);
-  Serial.println("Arduino Start");
+//  Serial.println("Arduino Start");
 
 }
 
@@ -18,10 +18,10 @@ void loop() {
   // send mapStatus to Rasp
   String mapStatus = "Temp1:" + String(Temp1);
   Serial.println(mapStatus);
-
-  if (Serial.available() > 0){
-    // get data from rasp
-    char input[INPUT_SIZE + 1];
+  while(Serial.available() == 0) {
+  }
+  
+      char input[INPUT_SIZE + 1];
     byte size = Serial.readBytes(input, INPUT_SIZE);
     // Add the final 0 to end the C string
     input[size] = 0;
@@ -44,10 +44,6 @@ void loop() {
         // Find the next command in input string
         command = strtok(0, "&");
     }
+  
 
-
-    // active device
-//     digitalWrite( Pump_PIN, Pump);
-//     digitalWrite( Relay_PIN, Relay);
-  }
 }
