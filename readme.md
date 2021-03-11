@@ -75,5 +75,10 @@ Flow Chart
 ### 2. Server <a name="Server"></a>
 Flow Chart
 
+## Error 
+### 1. When run sudo apt-install build-essential: get Waiting for cache lock:
+https://stackoverflow.com/questions/62126195/getting-error-waiting-for-cache-lock-could-not-get-lock-var-lib-dpkg-lock-fro
+https://itsfoss.com/could-not-get-lock-error/
+
 
 ## Conclusion <a name="Conclusion"></a>
