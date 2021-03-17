@@ -9,6 +9,7 @@ from main.Tools.Status import Status
 from main.Tools.GPIOHandler import GPIOHandler
 from main.Tools.ClientDataHandler import DataHandler
 from main.Tools.ArduinoHandler import ArduinoHandler;
+from main.Tools.ModbusHandler import ModbusHandler;
 import time;
 
 class Battery_System:
@@ -42,6 +43,10 @@ class Battery_System:
         print("check Arduino")
         self.ArduinoHandlerObj = ArduinoHandler();
 
+        # check modbus
+        self.ModbusHandlerObj = ModbusHandler();
+
+
     def run(self):
         while True:
             print("Begin Loop Module")
@@ -52,6 +57,8 @@ class Battery_System:
 
             print("Recieve information from Arduino")
             ArduinoInfoDict = self.ArduinoHandlerObj.getInfo()
+            ArduinoLabelList = self.ArduinoHandlerObj.getLabListFromContentDict(ArduinoInfoDict)
+            ArduinoDataList = self.ArduinoHandlerObj.getDataListFromContentDict(ArduinoLabelList, ArduinoLabelList);
 
             # get Status, Labels, datas
             print("Get Labels, Status, datas from Message")
@@ -61,11 +68,14 @@ class Battery_System:
 
             # store data to the local repo
             print("Store Labels, Status, datas to Repository")
-            self.FileObj.WritetoCVS(self.MessageObj.message_data_list,self.MessageObj.final_label_list);
+            data_list = []; label_list = [];
+            data_list = self.MessageObj.message_data_list + ArduinoDataList;
+            label_list = self.MessageObj.final_label_list + ArduinoLabelList;
+            self.FileObj.WritetoCVS(data_list, label_list);
 
             print("send Label, status, datas to PC")
             try:
-                dictContent = self.DataHandlerObj.getSendContent(self.MessageObj, self.StatusObj);
+                dictContent = self.DataHandlerObj.getSendContent(data_list, self.StatusObj.getStatusList(), label_list);
                 self.PCConnectionObj.sendContent(dictContent)
             except Exception as e:
                 self.PCConnectionObj.reconnectAfterLoops();
@@ -76,10 +86,14 @@ class Battery_System:
             self.ArduinoHandlerObj.activateDevice(ArduinoInfoList)
             # GPIOInfoList = self.DataHandlerObj.judgeGPIOInfo(self.StatusObj)  # create GPIO list
             # self.GPIOHandlerObj.activateDevice(GPIOInfoList);
+
+            # update the modbus current
+            self.ModbusHandlerObj.updateCurrent();
+
             print("---------------------------------------")
     def __del__(self):
         print("Battery Manage System Program Exit !!!")
-
+        self.ModbusHandlerObj.setAsZero();
         self.PCConnectionObj.close()
 
         self.GPIOHandlerObj = GPIOHandler(self.DataHandlerObj.getGPIOInitInfoList());

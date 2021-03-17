@@ -12,4 +12,6 @@ class Status(object):
         self.istempHigh = False; 
         self.isvolLimited = False;
         self.isCVViolated = False;
-        
+
+    def getStatusList(self):
+        return [self.isvolLimited, self.istempHigh, self.isCVViolated]

@@ -138,7 +138,20 @@ class DataHandler(object):
         FileObj.WritetoCVS(MessageObj.message_data_list, MessageObj.final_label_list);
         pass
 
-    def getSendContent(self, MessageObj, StatusObj):
+    def getSendContent(self, dataList, statusList, labelsList):
+        dictContent = {"datas": dataList, "status": statusList,
+                       "labels": labelsList}
+        return dictContent;
+    # def getSendContent(self, MessageObj, StatusObj):
+    #
+    #     dictContent= {"datas": MessageObj.message_data_list , "status": self.getStatusList(StatusObj), "labels": MessageObj.final_label_list}
+    #     return dictContent
 
-        dictContent= {"datas": MessageObj.message_data_list , "status": self.getStatusList(StatusObj), "labels": MessageObj.final_label_list}
-        return dictContent
+    def LoopIfNotMeetReq(self, handler, times, *args, **kwargs):
+
+        for i in range(times):
+            time.sleep(1);
+            if (handler(*args)):
+                return True;
+        raise Exception(handler.__name__ + " cannot work even after " + str(times) + " times");
+        return False;

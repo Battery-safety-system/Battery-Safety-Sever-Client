@@ -1,23 +1,41 @@
 #define INPUT_SIZE 30
+// get info
 int Temp1_PIN = A0;
+int Temp2_PIN = A1;
+int Press_PIN = A3;
+// set value
 int Pump_PIN = 4;
-int Relay_PIN = 5;
+int Fan_PIN = 8;
+
+int Relay1_PIN = 5;
+int Relay2_PIN = 6;
+int Relay3_PIN = 7;
+
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);  //Started the serial communication at 9600 baudrate
+  // Input PIN
   pinMode(Temp1_PIN, INPUT);
+  pinMode(Temp2_PIN, INPUT);
+  pinMode(Press_PIN, INPUT);
+  // output PIN
   pinMode(Pump_PIN, OUTPUT);
-  pinMode(Relay_PIN, OUTPUT);
-//  Serial.println("Arduino Start");
+  pinMode(Relay1_PIN, OUTPUT);
+  pinMode(Relay2_PIN, OUTPUT);
+  pinMode(Relay3_PIN, OUTPUT);
+  pinMode(Fan_PIN, OUTPUT);
 
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
   int Temp1 = analogRead(Temp1_PIN);
+  int Temp2 = analogRead(Temp2_PIN);
+  int Press = analogRead(Press_PIN);
   // send mapStatus to Rasp
-  String mapStatus = "Temp1:" + String(Temp1);
+  String mapStatus = "Ardu_Temp1:" + String(Temp1) + ",Ardu_Temp2:" + String(Temp2) + ",Ardu_Press:" + String(Press);
   Serial.println(mapStatus);
+
   while(Serial.available() == 0) {
   }
   
