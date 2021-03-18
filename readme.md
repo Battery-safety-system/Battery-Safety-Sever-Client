@@ -53,6 +53,7 @@ and here
 * Install tools:
 ```console
 	$ pip install xxx
+	$ pip install python-can
 ```
 * Run Command: <br />
 
