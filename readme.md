@@ -52,8 +52,9 @@ and here
 * Python Package: RPi.GPIO, can, cantools, pickle, logging, socket, os, time, csv <br />
 * Install tools:
 ```console
-	$ pip install xxx
-	$ pip install python-can
+	$ pip3 install xxx
+	$ pip3 install python-can
+	$ pip3 install cantools
 ```
 * Run Command: <br />
 
