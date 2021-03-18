@@ -52,9 +52,8 @@ and here
 * Python Package: RPi.GPIO, can, cantools, pickle, logging, socket, os, time, csv <br />
 * Install tools:
 ```console
-	$ pip3 install xxx
-	$ pip3 install python-can
-	$ pip3 install cantools
+	$ pip install xxx
+	$ pip install python-can
 ```
 * Run Command: <br />
 
@@ -67,7 +66,9 @@ and here
 		
         $ python3 Client.py 
 
-
+* Download Arduino
+	[simulator link](https://www.tinkercad.com/things/bGWVayF3Z1h-start-simulating/editel?lessonid=EHD2303J3YPUS5Z&projectid=OIYJ88OJ3OPN3EA&collectionid=OIYJ88OJ3OPN3EA&tenant=circuits#/lesson-viewer)
+	$ sudo apt-get install arduino
 
 ## Content  <a name="Content"></a>
 ### 1. Client <a name="Client"></a>
