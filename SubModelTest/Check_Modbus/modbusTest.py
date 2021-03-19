@@ -1,8 +1,20 @@
 import minimalmodbus
 import time
 # open the minimalmodbus device
-USB_Port = '/dev/ttyUSB1'
+USB_Port = '/dev/ttyUSB0'
 instrument = minimalmodbus.Instrument(USB_Port, 2)  # port name, slave address (in decimal)
+
+# instrument.serial.port                     # this is the serial port name
+# instrument.serial.baudrate = 19200         # Baud
+# instrument.serial.bytesize = 8
+# instrument.serial.parity   = serial.PARITY_NONE
+# instrument.serial.stopbits = 1
+# instrument.serial.timeout  = 0.05          # seconds
+# 
+# instrument.address                         # this is the slave address number
+# instrument.mode = minimalmodbus.MODE_RTU   # rtu or ascii mode
+# instrument.clear_buffers_before_each_transaction = True
+
 
 # Go to security code register #41025 and enter the number 125.
 instrument.write_register(41024, 125, 1) #
@@ -26,38 +38,38 @@ instrument.write_register(41027, 0, 1) # Op_mode_setpoint
 ## Check if the grid trip timings and limits registers (41033 - 41045) are set as required.
 
 ## modbus to check if the power is 0
-times = 10;
-def LoopIfNotMeetReq(handler, times):
-
-    for i in range(times):
-        time.sleep(1);
-        if(handler()):
-            return True;
-    return False;
-
-def checkModbusPowerIfInit():
-    DCBusPower = instrument.read_register(30266);
-    DCBusCurrent = instrument.read_register(30267);
-    DCBusVoltage = instrument.read_register(30265);
-    if(DCBusPower == 0 and DCBusCurrent == 0 and DCBusVoltage < 384 and DCBusVoltage > 264):
-        return True;
-
-    pass;
-
-def checkModbusCurrentIfRight():
-    pass
-##
-if(not LoopIfNotMeetReq(checkModbusPowerIfInit, 10)):
-    exit()
-
-# Section 3: loop work
-# set power points and current points on modbus:
-requiredCurrent = 3;
-# requiredPower = 0;
-# set current xx
-instrument.write_register(41026, 1, 1) # K_op_mode
-instrument.write_register(41027, requiredCurrent, 1) # Op_mode_setpoint
-LoopIfNotMeetReq(checkModbusCurrentIfRight, 3);
+# times = 10;
+# def LoopIfNotMeetReq(handler, times):
+# 
+#     for i in range(times):
+#         time.sleep(1);
+#         if(handler()):
+#             return True;
+#     return False;
+# 
+# def checkModbusPowerIfInit():
+#     DCBusPower = instrument.read_register(30266);
+#     DCBusCurrent = instrument.read_register(30267);
+#     DCBusVoltage = instrument.read_register(30265);
+#     if(DCBusPower == 0 and DCBusCurrent == 0 and DCBusVoltage < 384 and DCBusVoltage > 264):
+#         return True;
+# 
+#     pass;
+# 
+# def checkModbusCurrentIfRight():
+#     pass
+# ##
+# if(not LoopIfNotMeetReq(checkModbusPowerIfInit, 10)):
+#     exit()
+# 
+# # Section 3: loop work
+# # set power points and current points on modbus:
+# requiredCurrent = 3;
+# # requiredPower = 0;
+# # set current xx
+# instrument.write_register(41026, 1, 1) # K_op_mode
+# instrument.write_register(41027, requiredCurrent, 1) # Op_mode_setpoint
+# LoopIfNotMeetReq(checkModbusCurrentIfRight, 3);
 
 # # set power xx
 # instrument.write_register(41026, 2, 1) # K_op_mode
@@ -73,7 +85,7 @@ DCBusPower = instrument.read_register(30266);
 DCBusCurrent = instrument.read_register(30267);
 PowerLimit = instrument.read_register(30285);
 
-
+print(DCBusPower)
 
 #
 #
