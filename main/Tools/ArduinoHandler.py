@@ -1,27 +1,33 @@
 import serial
 import csv
+import json
 class ArduinoHandler:
     def __init__(self):
         self.ser = serial.Serial('/dev/ttyACM0', 9600)
         # output device
-        self.pumpPIN = 4;
-        self.FanPIN = 8;
-        self.Relay1PIN = 5;
-        self.Relay2PIN = 6;
-        self.Relay3PIN = 7;
+        self.setPINValue();
 
 
 
         self.ohmsList = [];
         self.tempList = [];
-        self.getDictFromSensorCsv();
+        self.setOhmsTempList();
 
         # input device
-        self.contentDict = {};
-        self.inputDeviceList = ["Ardu_Temp1", "Ardu_Temp2", "Ardu_Press" ];
+        self.contentDict = {};  # "Ardu_Temp1": 589, "Ardu_Temp2": 589, "Ardu_Press":620
+        # self.inputDeviceList = ["Ardu_Temp1", "Ardu_Temp2", "Ardu_Press" ];
         pass
 
-    def getDictFromSensorCsv(self):
+    def setPINValue(self):
+        with open('config.properties') as f:
+            data = json.load(f)
+        self.pumpPIN = data["pumpPIN"];
+        self.FanPIN = data["FanPIN"];
+        self.Relay1PIN = data["Relay1PIN"];
+        self.Relay2PIN = data["Relay2PIN"];
+        self.Relay3PIN = data["Relay3PIN"];
+
+    def setOhmsTempList(self):
         ohmsList = [];
         tempList = [];
         with open('TempSensor.csv', newline='') as csvfile:
@@ -62,7 +68,17 @@ class ArduinoHandler:
             arr = oneInfo.split(':');
             keyword = arr[0];
             content = arr[1];
-            contentDict[keyword] = int(content);
+            val = int(content);
+
+            if(keyword[5:9] == "Temp") :
+                res = self.convertTempToRealValue(val);
+                contentDict[keyword] = int(res);
+            elif(keyword[5:9] == "Pres") :
+                res = self.convertPressToRealValue(val);
+                contentDict[keyword] = int(res);
+            else:
+                raise Exception("getInfo: don't have such device");
+
         print("contentDict is: " + str(contentDict))
         self.contentDict = contentDict;
         return contentDict;
@@ -75,6 +91,7 @@ class ArduinoHandler:
         self.send(contentStr.encode());
 
     def judgeArduinoInfo(self, StatusObj):
+        ## logic: get info list
         ArduinoInfoList = [];
         if (StatusObj.istempHigh == True):
             ArduinoInfoList.append({"device": "Pump", "pin_number": self.pumpPIN, "pin_value": 1});
@@ -99,13 +116,12 @@ class ArduinoHandler:
         return ArduinoInfoList;
 
 
-    def convertToRealValue(self):
-        for ele in self.inputDeviceList:
-            val = self.contentDict[ele];
 
-        pass;
+
+
     def convertTempToRealValue(self, Volval):
         voltage = (Volval /1024.0 * 5.0)
+        print(voltage)
         ohms = (2200 * voltage) / (5.0 - voltage)
         for i in range(1, len(self.ohmsList)):
             val = self.ohmsList[i];
@@ -114,12 +130,23 @@ class ArduinoHandler:
                 bottomline =  self.ohmsList[i - 1]
                 if(bottomline > ohms):
                     return 140;
-                per = (ohms - bottom)(topline - bottomline)
+                per = (ohms - bottomline)/(topline - bottomline)
                 temp_high = self.tempList[i - 1];
                 temp_low = self.tempList[i];
                 temp = (temp_high - temp_low) * per + temp_low;
-                return 
+                return temp
                 pass
-        return -1; 
+        return -1;
+
+    def convertPressToRealValue(self, Volval):
+        voltage = (Volval /1024.0 * 5.0);
+        press = -1;
+        if(voltage < 0.5) :
+            press = 0;
+        elif (voltage > 4.5):
+            press = 150;
+        else:
+            press = (voltage - 0.5) /(4.5 - 0.5) * 150
+        return  press;
 
         pass

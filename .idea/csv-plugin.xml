@@ -10,6 +10,20 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\main\Client\readJson.py">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\main\Tools\ArduinoHandler.py">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
       </map>
     </option>
   </component>

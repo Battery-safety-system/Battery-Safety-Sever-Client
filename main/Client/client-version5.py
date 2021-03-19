@@ -56,7 +56,7 @@ class Battery_System:
             self.PcanConnectionObj.getDataFromPcan(self.MessageObj);  # get data dict
 
             print("Recieve information from Arduino")
-            ArduinoInfoDict = self.ArduinoHandlerObj.getInfo()
+            ArduinoInfoDict = self.ArduinoHandlerObj.getInfo() # get temp1, temp2, real1, real2 values
             ArduinoLabelList = self.ArduinoHandlerObj.getLabListFromContentDict(ArduinoInfoDict)
             ArduinoDataList = self.ArduinoHandlerObj.getDataListFromContentDict(ArduinoLabelList, ArduinoLabelList);
 
