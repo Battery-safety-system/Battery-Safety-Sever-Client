@@ -37,7 +37,7 @@ class Battery_System:
         print("initialize PC Connection")
         self.PCConnectionObj = PCConnection()
         self.PCConnectionObj.connect()
-        self.PCConnectionObj.sendContent({"labels": self.MessageObj.final_label_list})
+        # self.PCConnectionObj.sendContent({"labels": self.MessageObj.final_label_list})
 
         # check Arudino
         print("check Arduino")
@@ -54,23 +54,43 @@ class Battery_System:
             print("current time is " +  time.strftime('%H-%M-%S'))
             print("Receive Message from PCAN")
             self.PcanConnectionObj.getDataFromPcan(self.MessageObj);  # get data dict
-
-            print("Recieve information from Arduino")
-            ArduinoInfoDict = self.ArduinoHandlerObj.getInfo() # get temp1, temp2, real1, real2 values
-            ArduinoLabelList = self.ArduinoHandlerObj.getLabListFromContentDict(ArduinoInfoDict)
-            ArduinoDataList = self.ArduinoHandlerObj.getDataListFromContentDict(ArduinoLabelList, ArduinoLabelList);
-
-            # get Status, Labels, datas
+            # get Status, Labels, datas from pcan (mainly cell voltage)
             print("Get Labels, Status, datas from Message")
             self.DataHandlerObj.handleData(self.MessageObj);  ## build message_data_list
             self.DataHandlerObj.detectStatus(self.StatusObj, self.MessageObj);  ## set the value for status from messageObj
             self.DataHandlerObj.setStatusToMessageObj(self.StatusObj, self.MessageObj);
 
-            # store data to the local repo
-            print("Store Labels, Status, datas to Repository")
-            data_list = []; label_list = [];
+
+            # get label, datas from arduino( mainly temp, pressure)
+            print("Recieve information from Arduino")
+            ArduinoInfoDict = self.ArduinoHandlerObj.getInfo() # get temp1, temp2, real1, real2 values
+            ArduinoLabelList = self.ArduinoHandlerObj.getLabListFromContentDict(ArduinoInfoDict)
+            ArduinoDataList = self.ArduinoHandlerObj.getDataListFromContentDict(ArduinoLabelList, ArduinoLabelList);
+
+
+
+            # get labels, data from modbus (mainly DC current, DC power)
+
+            # get status from these three datas
+
+            # merge status, arduino, modbus, pcan to data list and label list, and status dict;
+
+            # store data, label to the local fldoer
+
+            # send data, label to the pc
+
+            # active the device and check if its out of warnig level and dangerous level and do responding operation
+            ## option1: -3A, 0, 3A, 0 (three steps)
+
+            # merge Pcan, arduino, modbus label list and data list
+            print("merge all the information")
+            data_list = [];
+            label_list = [];
             data_list = self.MessageObj.message_data_list + ArduinoDataList;
             label_list = self.MessageObj.final_label_list + ArduinoLabelList;
+
+            # store data to the local repo
+            print("Store Labels, Status, datas to Repository")
             self.FileObj.WritetoCVS(data_list, label_list);
 
             print("send Label, status, datas to PC")
@@ -81,7 +101,7 @@ class Battery_System:
                 self.PCConnectionObj.reconnectAfterLoops();
 
             # active device based on status
-            print("activate device: pump and relay")
+            print("activate device: pump and relay with Arduino")
             ArduinoInfoList = self.ArduinoHandlerObj.judgeArduinoInfo(self.StatusObj);
             self.ArduinoHandlerObj.activateDevice(ArduinoInfoList)
             # GPIOInfoList = self.DataHandlerObj.judgeGPIOInfo(self.StatusObj)  # create GPIO list
