@@ -105,8 +105,8 @@ class ArduinoHandler:
 
         pass;
     def convertTempToRealValue(self, Volval):
-        voltage = (Volval /1028 * 5)
-        ohms = (2000 * voltage) / (5 - voltage)
+        voltage = (Volval /1024.0 * 5.0)
+        ohms = (2200 * voltage) / (5.0 - voltage)
         for i in range(1, len(self.ohmsList)):
             val = self.ohmsList[i];
             if (val >= ohms ) :
@@ -114,9 +114,12 @@ class ArduinoHandler:
                 bottomline =  self.ohmsList[i - 1]
                 if(bottomline > ohms):
                     return 140;
-                (topline - bottomline )
-                return
+                per = (ohms - bottom)(topline - bottomline)
+                temp_high = self.tempList[i - 1];
+                temp_low = self.tempList[i];
+                temp = (temp_high - temp_low) * per + temp_low;
+                return 
                 pass
-        val = min(self.ohmsList, key=lambda x: abs(x - ohms))
+        return -1; 
 
         pass

@@ -1,7 +1,9 @@
 import minimalmodbus
 import time
 import json
-from ClientDataHandler import DataHandler
+import sys
+sys.path.append("/home/pi/Desktop/Battery-Safety-Sever-Client")
+from main.Tools.ClientDataHandler import DataHandler
 
 class ModbusHandler:
     def __init__(self):
