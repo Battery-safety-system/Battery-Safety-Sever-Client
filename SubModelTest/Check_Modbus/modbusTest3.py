@@ -47,70 +47,72 @@ instrument.write_register(41027, requiredCurrent * set_current_scale, 0, 6) # Op
 
 # check if the current is 0 and voltage meet the requirement;
 
-
-def LoopIfNotMeetReq( handler, times, *args, **kwargs):
-    try:
-        for i in range(times):
-            time.sleep(1);
-            if (handler(*args)):
-                return True;
-    except:
-        raise Exception(handler.__name__ + " cannot work even after " + str(times) + " times");
-    finally:
-        return False;
-
-def checkModbusIfInit():
-    DCBusPower = instrument.read_register(30266, 0, 4) / power_scale;
-    DCBusCurrent = instrument.read_register(30267, 0, 4) / set_current_scale;
-    DCBusVoltage = instrument.read_register(30265, 0, 4) / voltage_scale;
-    if(DCBusPower == 0 and DCBusCurrent == 0 and DCBusVoltage < max_vol and DCBusVoltage > min_vol):
-        return True;
-    pass;
-
-def checkIfModbusCurrentRight(self, upLine, bottomLine):
-        current = self.getCurrent();
-        if (current < upLine and current > bottomLine):
-            return True;
-        else:
-            return False;
-
-def checkIfModbusVoltageRight(self,  upLine, bottomLine):
-        voltage = self.getVoltage();
-        if (voltage < upLine and voltage > bottomLine):
-            return True;
-        else:
-            return False;
-
-# def checkModbusCurrentIfRight(upLine, bottomLine):
-#     DCBusCurrent = instrument.read_register(30267, 0, 4) / current_scale;
+# 
+# def LoopIfNotMeetReq( handler, times, *args, **kwargs):
+#     try:
+#         for i in range(times):
+#             time.sleep(1);
+#             if (handler(*args)):
+#                 return True;
+#     except:
+#         raise Exception(handler.__name__ + " cannot work even after " + str(times) + " times");
+#     finally:
+#         return False;
+# 
+# def checkModbusIfInit():
+#     DCBusPower = instrument.read_register(30266, 0, 4) / power_scale;
+#     DCBusCurrent = instrument.read_register(30267, 0, 4) / set_current_scale;
 #     DCBusVoltage = instrument.read_register(30265, 0, 4) / voltage_scale;
-#     if( and DCBusVoltage < 384 and DCBusVoltage > 264):
+#     if(DCBusPower == 0 and DCBusCurrent == 0 and DCBusVoltage < max_vol and DCBusVoltage > min_vol):
 #         return True;
-
-if(not LoopIfNotMeetReq(checkModbusIfInit, times = 10)):
-    exit()
-
-
-# Section 3: loop work
-# set power points and current points on modbus:
-requiredCurrent = 3;
-error_current = 0.2;
-# requiredPower = 0;
-# set current xx
-instrument.write_register(41026, current_mode, 0, 6) # K_op_mode
-instrument.write_register(41027, requiredCurrent * set_current_scale, 0, 6) # Op_mode_setpoint
-LoopIfNotMeetReq(checkIfModbusCurrentRight, 3, requiredCurrent + error_current, requiredCurrent - error_current );
-
-# # set power xx
-# instrument.write_register(41026, power_mode, 0, 6) # K_op_mode
-# instrument.write_register(41027, requiredPower * power_scale, 0, 6) # Op_mode_setpoint
-
-
-# Section: check all the DC status information
-# get DC modbus status information
-BatteryRemoteVoltage = instrument.read_register(30263, 0, 4) /
+#     pass;
+# 
+# def checkIfModbusCurrentRight(self, upLine, bottomLine):
+#         current = self.getCurrent();
+#         if (current < upLine and current > bottomLine):
+#             return True;
+#         else:
+#             return False;
+# 
+# def checkIfModbusVoltageRight(self,  upLine, bottomLine):
+#         voltage = self.getVoltage();
+#         if (voltage < upLine and voltage > bottomLine):
+#             return True;
+#         else:
+#             return False;
+# 
+# # def checkModbusCurrentIfRight(upLine, bottomLine):
+# #     DCBusCurrent = instrument.read_register(30267, 0, 4) / current_scale;
+# #     DCBusVoltage = instrument.read_register(30265, 0, 4) / voltage_scale;
+# #     if( and DCBusVoltage < 384 and DCBusVoltage > 264):
+# #         return True;
+# 
+# if(not LoopIfNotMeetReq(checkModbusIfInit, times = 10)):
+#     exit()
+# 
+# 
+# # Section 3: loop work
+# # set power points and current points on modbus:
+# requiredCurrent = 3;
+# error_current = 0.2;
+# # requiredPower = 0;
+# # set current xx
+# instrument.write_register(41026, current_mode, 0, 6) # K_op_mode
+# instrument.write_register(41027, requiredCurrent * set_current_scale, 0, 6) # Op_mode_setpoint
+# LoopIfNotMeetReq(checkIfModbusCurrentRight, 3, requiredCurrent + error_current, requiredCurrent - error_current );
+# power_scale
+# # # set power xx
+# # instrument.write_register(41026, power_mode, 0, 6) # K_op_mode
+# # instrument.write_register(41027, requiredPower * power_scale, 0, 6) # Op_mode_setpoint
+# 
+# 
+# # Section: check all the DC status information
+# # get DC modbus status information
+BatteryRemoteVoltage = instrument.read_register(30263, 0, 4) 
 DCLinkSetpoints = instrument.read_register(30264, 0, 4);
 DCBusVoltage = instrument.read_register(30265, 0, 4);
 DCBusPower = instrument.read_register(30266, 0, 4);
 DCBusCurrent = instrument.read_register(30267, 0, 4);
 PowerLimit = instrument.read_register(30285, 0, 4);
+print(DCBusVoltage / voltage_scale)
+print(DCBusCurrent / read_current_scale);
