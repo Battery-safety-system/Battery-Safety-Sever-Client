@@ -84,4 +84,8 @@ https://stackoverflow.com/questions/62126195/getting-error-waiting-for-cache-loc
 https://itsfoss.com/could-not-get-lock-error/
 
 
+## Modbus ref:
+### function code: https://blog.softwaretoolbox.com/opc-modbus-function-codes
+### MinimalModbus API: https://minimalmodbus.readthedocs.io/en/stable/apiminimalmodbus.html
+
 ## Conclusion <a name="Conclusion"></a>
