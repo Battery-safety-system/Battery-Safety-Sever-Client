@@ -37,87 +37,144 @@ class ModbusHandler:
         self.epcl_dc_link_volt = 30265
         self.epcl_dc_link_pwr = 30266
         self.epc1_dc_link_crnt = 30267
-        
+
+        # the variance
+        self.variance_current =  1;
+        self.variance_voltage = 20;
+        self.variance_power= 5;
+
+        # the initial current, voltage, power values
+        self.init_current = 2;
+        self.init_power = 5;
+
+        #
+        logging.info("Initialize the modbusHandler")
         self.Init();
 
+
+        # start work; set init variable and current;
+        self.CurrentList = [0, 1, 0, -1];
+        self.currentVal = 3;
+
+        self.powerValue = 20;
+        self.PowerList = [0, 1, 0, -1];
+
+        self.PreviousTime = time.time();
+        self.intervalCount = 0;
+        self.IntervalTime = 300;
+
+    def updateCurrent(self):
+        currentTime = time.time();
+        if (currentTime - self.PreviousTime > self.IntervalTime):
+            self.intervalCount += 1;
+            self.PreviousTime = time.time();
+            # get the current value we need
+            currentVal = self.currentVal * self.CurrentList[self.intervalCount % 4]
+            # set the current value
+            self.setCurrent(currentVal);
+            # check if the real value is one the range of expected values
+            self.LoopIfNotMeetReq(self.checkIfModbusCurrentRight, 20, currentVal - self.variance_current, currentVal + self.variance_current)
+
+    def updatePower(self):
+        currentTime = time.time();
+        if (currentTime - self.PreviousTime > self.IntervalTime):
+            self.intervalCount += 1;
+            self.PreviousTime = time.time();
+            # get the current value we need
+            powerVal = self.powerValue * self.PowerList[self.intervalCount % 4]
+            # set the current value
+            self.setPower(powerVal);
+            # check if the real value is one the range of expected values
+            self.LoopIfNotMeetReq(self.checkIfModbusPowerRight, 20, powerVal - self.variance_power, powerVal + self.variance_power)
+    def run(self):
+        while(True):
+            self.updatePower()
+            # self.updateCurrent();
+
     def Init(self):
+
+        logging.info("----------------")
+        self.openModbus();
+
+        logging.info("set the limitation on current, voltage, power")
+        self.setLimitation();
+
+
+        logging.info("set current 0")
+        self.initCurrent();
+        
+        logging.info("set power 0")
+        self.initPower();
+
+
+        if(not self.LoopIfNotMeetReq(self.checkModbusIfInit(), 20)):
+            print("checkModbusIfInit doesn't meet the requirement")
+        else:
+            print("checkModbusIfInit pass the test")
+
+        # close the modbus device
+        self.instrument.write_register(self.K_op_mode, 0, 0, 6)  # K_op_mode
+        
+        print("Init job completed")
+
+
+    def openModbus(self):
         # set up connection: port name, slave address (in decimal)
         self.instrument = minimalmodbus.Instrument(self.USB_Port, self.slaveAddress)  # port name, slave address (in decimal)
-        logging.info("----------------")
-
-#         ## Read voltage set point(Init value) ##
-#         self.instrument.write_register(41026, self.voltage_mode, 0, 6)  # K_op_mode
-#         voltage = self.instrument.read_register(41027, 0) / self.voltage_scale
-#         print("The Initial voltage is ", str(voltage), "Volts")
-
         ### We need to do some special writes before sending commands
         ## Set the security register
         self.instrument.write_register(self.security_code, 125, 0, 6)
 
         # Set the timeout register
         self.instrument.write_register(self.Heartbeat, 333, 0, 6)
-        # set the op mode off        
+        # set the op mode off
         self.instrument.write_register(self.K_op_mode, 0, 0, 6)  # K_op_mode
 
-        # set the current limitation
-        self.instrument.write_register(self.bat_max_chrg_crt, 30 * self.set_current_scale, 0, 6);
-        self.instrument.write_register(self.bat_max_dischrg_crt, 30 * self.set_current_scale, 0, 6);
+    def setLimitation(self):
+        # set the limitation among current, power, voltage
+        self.instrument.write_register(self.bat_max_chrg_crt,self.getCorrectValue( 30 * self.set_current_scale), 0, 6);
+        self.instrument.write_register(self.bat_max_dischrg_crt, self.getCorrectValue (30 * self.set_current_scale), 0, 6);
         # set the charge power limitation
-        self.instrument.write_register(self.bat_max_chrg_power, 20 * self.power_scale, 0, 6)  
+        self.instrument.write_register(self.bat_max_chrg_power, self.getCorrectValue (20 * self.power_scale), 0, 6)
         ## set Max voltage
-        self.instrument.write_register(self.bat_max_volt, self.max_vol * self.voltage_scale, 0, 6)
+        self.instrument.write_register(self.bat_max_volt, self.getCorrectValue (self.max_vol * self.voltage_scale), 0, 6)
         ## set Min voltage
-        self.instrument.write_register(self.bat_min_volt, self.min_vol * self.voltage_scale, 0, 6);
+        self.instrument.write_register(self.bat_min_volt, self.getCorrectValue (self.min_vol * self.voltage_scale), 0, 6);
 
-        # # set current 0
-        logging.info("set current 0")
-        requiredCurrent = 2;
+    def initCurrent(self):
+
+        requiredCurrent = self.init_current;
         self.instrument.write_register(41026, self.current_mode, 0, 6)  # K_op_mode
-        self.instrument.write_register(41027, requiredCurrent * self.set_current_scale, 0, 6)  # Op_mode_setpoint
-        
-#         logging.info("set power 0")
-#         requiredPower = 0.1;
-#         self.instrument.write_register(self.K_op_mode, self.power_mode, 0, 6)  # K_op_mode
-#         self.instrument.write_register(self.Op_mode_setpoint, requiredPower * self.power_scale, 0, 6)  # Op_mode_setpoint
-
-        
-        for i in range(10):
-            time.sleep(1);
-            if (self.checkModbusIfInit()):
-                break;
-#         self.LoopIfNotMeetReq(self.checkModbusIfInit(), 100);
-        self.instrument.write_register(41026, 0, 0, 6)  # K_op_mode
-        
-        print("Init job completed")
+        self.instrument.write_register(41027, self.getCorrectValue(requiredCurrent * self.set_current_scale), 0, 6)  # Op_mode_setpoint
 
 
 
+    def initPower(self):
+        requiredPower = self.init_power;
+        self.instrument.write_register(self.K_op_mode, self.power_mode, 0, 6)  # K_op_mode
+        self.instrument.write_register(self.Op_mode_setpoint,self.getCorrectValue(requiredPower * self.power_scale), 0, 6)  # Op_mode_setpoint
+
+
+    # check function
     def LoopIfNotMeetReq(self, handler, times, *args, **kwargs):
-        try:
-            for i in range(times):
-#                 print("LoopIfNotMeetReq: " + handler.__name__ + ": " + str(i) + " times")
-                time.sleep(1);
-                if (handler(*args)):
-                    return True;
-        except:
-            print("loop not meet req")
-            raise Exception(handler.__name__ + " cannot work even after " + str(times) + " times");
-        finally:
-            return False;
+
+        for i in range(times):
+            if (handler(*args)):
+                return True;
+        return False;
 
     def checkModbusIfInit(self):
-        DCBusPower = self.instrument.read_register(30266, 0, 4) / self.power_scale;
-        DCBusCurrent = self.instrument.read_register(30267, 0, 4) / self.read_current_scale;
-        DCBusVoltage = self.instrument.read_register(30265, 0, 4) / self.voltage_scale;
-        if (DCBusPower == 0   and DCBusCurrent == 0 and DCBusVoltage < self.max_vol and DCBusVoltage > self.min_vol):
-            print("meet the requirement")
+        DCBusPower = self.instrument.read_register(self.epcl_dc_link_pwr , 0, 4) / self.power_scale;
+        DCBusCurrent = self.instrument.read_register(self.epc1_dc_link_crnt , 0, 4) / self.read_current_scale;
+        DCBusVoltage = self.instrument.read_register(self.epcl_dc_link_volt, 0, 4) / self.voltage_scale;
+        if (DCBusPower > 0 - self.variance_power and DCBusPower < 0 + self.variance_power and DCBusCurrent > 0 - self.variance_current and DCBusCurrent < 0 + self.variance_current and DCBusVoltage < self.max_vol and DCBusVoltage > self.min_vol):
+            print("Current and power are all set nearly 0, meet the requirement")
             return True;
         print("----------------")
         print("DCBusPower: " + str(DCBusPower))
         print("DCBusCurrent: " + str(DCBusCurrent))
         print("DCBusVoltage: " + str(DCBusVoltage))
         str1 = "DCBusPower: " + str(DCBusPower) + ";" + "DCBusCurrent: " + str(DCBusCurrent) + ";" + "DCBusVoltage: " + str(DCBusVoltage) + ";"
-        
         logging.info(str1)
         return False;
         pass;
@@ -136,35 +193,43 @@ class ModbusHandler:
         else:
             return False;
 
+    # get and set function
+
     def getCurrent(self):
-        DCBusCurrent = self.instrument.read_register(30267, 0, 4)/ self.read_current_scale;
+        DCBusCurrent = self.instrument.read_register(self.epc1_dc_link_crnt, 0, 4) / self.read_current_scale;
         return DCBusCurrent;
 
     def getPower(self):
-        DCBusPower = self.instrument.read_register(30266, 0, 4) / self.power_scale;
+        DCBusPower = self.instrument.read_register(self.epcl_dc_link_pwr, 0, 4) / self.power_scale;
         return DCBusPower;
 
     def getVoltage(self):
-        DCBusVoltage = self.instrument.read_register(30265, 0, 4) / self.voltage_scale;
+        DCBusVoltage = self.instrument.read_register(self.epcl_dc_link_volt, 0, 4) / self.voltage_scale;
         return DCBusVoltage
 
     def setCurrent(self, value):
-        self.instrument.write_register(41026, self.current_mode, 0, 6)  # K_op_mode
-        self.instrument.write_register(41027, value * self.set_current_scale, 0, 6)  # Op_mode_setpoint
+        self.instrument.write_register(self.K_op_mode, self.current_mode, 0, 6)  # K_op_mode
+        self.instrument.write_register(self.Op_mode_setpoint,self.getCorrectValue( value * self.set_current_scale), 0, 6)  # Op_mode_setpoint
 
     def setPower(self, value):
-        self.instrument.write_register(41026, self.power_scale, 0, 6) # K_op_mode
-        self.instrument.write_register(41027, value * self.power_scale, 0, 6) # Op_mode_setpoint
+        self.instrument.write_register(self.K_op_mode, self.power_scale, 0, 6) # K_op_mode
+        self.instrument.write_register(self.Op_mode_setpoint, self.getCorrectValue( value * self.power_scale), 0, 6) # Op_mode_setpoint
 
     def setVoltage(self, value):
-        self.instrument.write_register(41026, self.voltage_scale, 0, 6) # K_op_mode
-        self.instrument.write_register(41027, value * self.voltage_scale, 0, 6) # Op_mode_setpoint
+        self.instrument.write_register(self.K_op_mode, self.voltage_scale, 0, 6) # K_op_mode
+        self.instrument.write_register(self.Op_mode_setpoint,self.getCorrectValue (value * self.voltage_scale), 0, 6) # Op_mode_setpoint
+    def getCorrectValue(self, signedValue):
+        if(signedValue < 0):
+            signedValue += 2**32;
+        return signedValue;
 
     def __del__(self):
         print("exit the program")
         self.instrument.write_register(41026, 0, 0, 6)  # K_op_mode
-#             self.setCurrent(0)
-#             self.setVoltage(0)
-#             self.setPower(0)
+        # self.setCurrent(0)
+        # # self.setVoltage(0)
+        # self.setPower(0)
         pass;
+
 m1 = ModbusHandler();
+m1.run();
