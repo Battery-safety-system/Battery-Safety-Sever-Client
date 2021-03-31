@@ -1,7 +1,9 @@
 import serial
 import csv
 import json
-from Status import Status
+import sys
+sys.path.append("/home/pi/Desktop/Battery-Safety-Sever-Client")
+from main.Tools.Status import Status
 class ArduinoHandler:
     def __init__(self):
         self.ser = serial.Serial('/dev/ttyACM0', 9600)
@@ -19,6 +21,7 @@ class ArduinoHandler:
         self.temp_dangerous = 50
         self.press_warning = 100
         self.press_dangerous = 150
+        print("Arduino Init complete")
 
     def setStatus(self, statusObj):
         assert isinstance(statusObj, Status)
@@ -62,8 +65,8 @@ class ArduinoHandler:
         with open('TempSensor.csv', newline='') as csvfile:
             spamreader = csv.reader(csvfile, delimiter=',')
             for row in spamreader:
-                ohms = row[1];
-                temp = row[0]
+                ohms = float(row[1]);
+                temp = float(row[0])
                 ohmsList.append(ohms)
                 tempList.append(temp)
         self.tempList = tempList
@@ -79,6 +82,7 @@ class ArduinoHandler:
         labelList = [];
         for key in contentDict:
             labelList.append(key)
+        labelList.sort();
         return labelList;
 
     def getDataListFromContentDict(self, contentDict, labelList):
@@ -106,7 +110,8 @@ class ArduinoHandler:
                 res = self.convertPressToRealValue(val);
                 contentDict[keyword] = int(res);
             else:
-                raise Exception("getInfo: don't have such device");
+#                 raise Exception("getInfo: don't have such device");
+                pass
 
         print("contentDict is: " + str(contentDict))
         self.contentDict = contentDict;
@@ -152,7 +157,7 @@ class ArduinoHandler:
             val = self.ohmsList[i];
             if (val >= ohms ) :
                 topline = val;
-                bottomline =  self.ohmsList[i - 1]
+                bottomline = self.ohmsList[i - 1]
                 if(bottomline > ohms):
                     return 140;
                 per = (ohms - bottomline)/(topline - bottomline)

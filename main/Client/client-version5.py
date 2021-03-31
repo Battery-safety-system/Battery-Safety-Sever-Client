@@ -45,19 +45,21 @@ class Battery_System:
         modbusLabels = self.ModbusHandlerObj.getLabels();
 
         # start to work;
-        self.label_list = PcanLabels + modbusLabels + ArduinoLabelList + status_labels;
+        self.label_list = PcanLabels + ArduinoLabelList + modbusLabels  + status_labels;
+        self.label_list.insert(0, 'time');
+        self.label_list.insert(0, 'date');  # final_label_list: [date time BMU01_Max_temp .... BMU02_Max_temp ...]
         self.data_list = [];
 
         # init Floder and Files
         print("initialize Floder and Files")
         self.FileObj = File(self.label_list)
 
-        # init the PC Connection
-        print("initialize PC Connection")
-        self.PCConnectionObj = PCConnection()
-        self.PCConnectionObj.connect()
+#         # init the PC Connection
+#         print("initialize PC Connection")
+#         self.PCConnectionObj = PCConnection()
+#         self.PCConnectionObj.connect()
         # self.PCConnectionObj.sendContent({"labels": self.MessageObj.final_label_list})
-
+        print("System Init Part completed")
 
     def run(self):
         while True:
@@ -65,8 +67,7 @@ class Battery_System:
             print("current time is " +  time.strftime('%H-%M-%S'))
 
             print("Initiate the status ")
-            self.StatusObj.warning = False;
-
+            self.StatusObj.warning = False;1
             print("start the Pcan Module")
             self.PcanConnectionObj.getAllInfo();
             pcanDatas = self.PcanConnectionObj.getDatas();
@@ -78,7 +79,7 @@ class Battery_System:
             print("Recieve information from Arduino")
             ArduinoInfoDict = self.ArduinoHandlerObj.getInfo() # get temp1, temp2, real1, real2 values
             ArduinoLabelList = self.ArduinoHandlerObj.getLabListFromContentDict(ArduinoInfoDict)
-            ArduinoDataList = self.ArduinoHandlerObj.getDataListFromContentDict(ArduinoLabelList, ArduinoLabelList);
+            ArduinoDataList = self.ArduinoHandlerObj.getDataListFromContentDict(ArduinoInfoDict, ArduinoLabelList);
             self.ArduinoHandlerObj.setStatus(self.StatusObj)
 
 
@@ -90,7 +91,7 @@ class Battery_System:
 
             # get all the labels and datas from status
             status_labels = self.StatusObj.getLabels();
-            status_datas = self.StatusObj.getStatusList();
+            status_datas = self.StatusObj.getStatusDatas();
 
             # merge status, arduino, modbus, pcan to data list and label list, and status dict;
             self.label_list = pcanLabels + ArduinoLabelList + modbus_labels + status_labels;

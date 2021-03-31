@@ -6,7 +6,7 @@ import logging
 class ModbusHandler:
     def __init__(self):
         logging.basicConfig(filename='Modbus Status.log', level=logging.DEBUG)
-        self.USB_Port = '/dev/ttyUSB0'
+        self.USB_Port = '/dev/ttyUSB1'
         self.slaveAddress = 2;
         
         self.current_mode = 2;
@@ -48,7 +48,6 @@ class ModbusHandler:
         #
         logging.info("Initialize the modbusHandler")
         self.Init();
-
 
         # start work; set init variable and current;
         self.CurrentList = [0, 1, 0, -1];
@@ -104,8 +103,8 @@ class ModbusHandler:
 #         logging.info("set power 0")
 #         self.initPower();
 #         self.setCurrent(-20);
-        self.setPower(-30);
-        for i in range(200):
+        self.setPower(0);
+        for i in range(2):
             time.sleep(0.5)
             self.monitorModbusStatus();
 #         if(not self.LoopIfNotMeetReq(self.checkModbusIfInit, 20)):

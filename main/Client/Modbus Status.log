@@ -1,0 +1,1000 @@
+INFO:root:Initialize the modbusHandler
+INFO:root:----------------
+INFO:root:Initialize the modbusHandler
+INFO:root:----------------
+INFO:root:set the limitation on current, voltage, power
+INFO:root:set current 0
+INFO:root:set power 0
+INFO:root:DCBusPower: -4.042299945065007;DCBusCurrent: -5.298114946059047;DCBusVoltage: 496.53614917447425;
+INFO:root:DCBusPower: -0.40743453579930416;DCBusCurrent: -1.4205090797404691;DCBusVoltage: 509.01821955015714;
+INFO:root:DCBusPower: 0.2700970518220106;DCBusCurrent: -0.5374899220639613;DCBusVoltage: 509.01821955015714;
+INFO:root:DCBusPower: 0.2700970518220106;DCBusCurrent: -0.03839213729028295;DCBusVoltage: 511.4902188177129;
+INFO:root:DCBusPower: 0.2700970518220106;DCBusCurrent: -0.5566859907091027;DCBusVoltage: 511.24607074190493;
+INFO:root:DCBusPower: 0.004577916132576451;DCBusCurrent: -0.5566859907091027;DCBusVoltage: 510.849330118717;
+INFO:root:DCBusPower: -0.23347372276139902;DCBusCurrent: -3.0137827772872114;DCBusVoltage: 509.93377483443703;
+INFO:root:DCBusPower: 0.23805163889397546;DCBusCurrent: 0.3071370983222636;DCBusVoltage: 509.93377483443703;
+INFO:root:DCBusPower: -0.21058414209851675;DCBusCurrent: 0.40311744154797097;DCBusVoltage: 508.95718253120515;
+INFO:root:DCBusPower: -0.21058414209851675;DCBusCurrent: 1.2477444619341957;DCBusVoltage: 507.8585161900692;
+INFO:root:DCBusPower: 0.11444790331441128;DCBusCurrent: 1.2477444619341957;DCBusVoltage: 507.79747917111723;
+INFO:root:DCBusPower: -0.20142830983336385;DCBusCurrent: 0.7486466771605175;DCBusVoltage: 504.80666524246953;
+INFO:root:DCBusPower: 0.38912287126899836;DCBusCurrent: 1.1133719814182055;DCBusVoltage: 504.80666524246953;
+INFO:root:DCBusPower: 0.28383080021974;DCBusCurrent: 0.2111567550965562;DCBusVoltage: 497.5737784966582;
+INFO:root:DCBusPower: 0.28383080021974;DCBusCurrent: 0.0;DCBusVoltage: 493.7894833216345;
+INFO:root:DCBusPower: 0.009155832265152902;DCBusCurrent: 0.0;DCBusVoltage: 492.35511337626264;
+INFO:root:DCBusPower: 0.004577916132576451;DCBusCurrent: 0.019196068645141475;DCBusVoltage: 491.37852107303075;
+INFO:root:DCBusPower: 0.004577916132576451;DCBusCurrent: 0.019196068645141475;DCBusVoltage: 491.37852107303075;
+INFO:root:DCBusPower: 0.0;DCBusCurrent: 0.019196068645141475;DCBusVoltage: 490.4934842982268;
+INFO:root:DCBusPower: 0.0;DCBusCurrent: -0.26874496103198064;DCBusVoltage: 489.9136326181829;
+INFO:root:Initialize the modbusHandler
+INFO:root:----------------
+INFO:root:set the limitation on current, voltage, power
+INFO:root:set current 0
+INFO:root:set power 0
+INFO:root:DCBusPower: 0.29756454861746934;DCBusCurrent: 1.6508619034821668;DCBusVoltage: 378.4295175023652;
+INFO:root:DCBusPower: 0.018311664530305805;DCBusCurrent: 2.2459400314815525;DCBusVoltage: 378.4295175023652;
+INFO:root:Initialize the modbusHandler
+INFO:root:----------------
+INFO:root:set the limitation on current, voltage, power
+INFO:root:set current 0
+INFO:root:set power 0
+INFO:root:DCBusPower: 0.06409082585607032;DCBusCurrent: -0.5950781279993858;DCBusVoltage: 380.59633167516097;
+INFO:root:DCBusPower: 0.3112982970151987;DCBusCurrent: 1.497293354321035;DCBusVoltage: 380.59633167516097;
+INFO:root:DCBusPower: -0.009155832265152902;DCBusCurrent: -0.9598034322570738;DCBusVoltage: 381.0235908078249;
+INFO:root:DCBusPower: -0.009155832265152902;DCBusCurrent: -2.1691557569009867;DCBusVoltage: 381.66447950682084;
+INFO:root:DCBusPower: 0.3112982970151987;DCBusCurrent: 0.7486466771605175;DCBusVoltage: 383.0988494521927;
+INFO:root:DCBusPower: 0.013733748397729353;DCBusCurrent: 0.7486466771605175;DCBusVoltage: 383.86181218909263;
+INFO:root:Initialize the modbusHandler
+INFO:root:----------------
+INFO:root:set the limitation on current, voltage, power
+INFO:root:set current 0
+INFO:root:set power 0
+INFO:root:DCBusPower: 0.06409082585607032;DCBusCurrent: 1.17096018735363;DCBusVoltage: 378.4295175023652;
+INFO:root:DCBusPower: 0.06409082585607032;DCBusCurrent: 1.977195070449572;DCBusVoltage: 378.46003601184117;
+INFO:root:DCBusPower: -0.054934993590917414;DCBusCurrent: 1.977195070449572;DCBusVoltage: 376.9341105380413;
+INFO:root:DCBusPower: 0.07782457425379967;DCBusCurrent: 1.3437248051599031;DCBusVoltage: 375.83544419690537;
+INFO:root:DCBusPower: -0.14649331624244644;DCBusCurrent: 0.9789995009022152;DCBusVoltage: 375.83544419690537;
+INFO:root:DCBusPower: -0.1693828969053287;DCBusCurrent: 1.3053326678696202;DCBusVoltage: 373.4550004577776;
+INFO:root:DCBusPower: -0.1693828969053287;DCBusCurrent: 2.149959688255845;DCBusVoltage: 371.9290749839777;
+INFO:root:DCBusPower: 0.1510712323750229;DCBusCurrent: 2.149959688255845;DCBusVoltage: 372.1427045503097;
+INFO:root:DCBusPower: -0.22889580662882256;DCBusCurrent: 0.9981955695473567;DCBusVoltage: 372.8141117587817;
+INFO:root:DCBusPower: -0.009155832265152902;DCBusCurrent: 1.7084501094175912;DCBusVoltage: 372.8141117587817;
+INFO:root:DCBusPower: 0.24262955502655192;DCBusCurrent: 0.9981955695473567;DCBusVoltage: 369.09085360271;
+INFO:root:Initialize the modbusHandler
+INFO:root:----------------
+INFO:root:set the limitation on current, voltage, power
+INFO:root:set current 0
+INFO:root:set power 0
+INFO:root:Initialize the modbusHandler
+INFO:root:----------------
+INFO:root:set the limitation on current, voltage, power
+INFO:root:set current 0
+INFO:root:set power 0
+INFO:root:DCBusPower: 0.027467496795458707;DCBusCurrent: 2.5338810611586746;DCBusVoltage: 376.32374034852137;
+INFO:root:DCBusPower: 0.3845449551364219;DCBusCurrent: 2.5338810611586746;DCBusVoltage: 374.8588518936735;
+INFO:root:DCBusPower: -0.018311664530305805;DCBusCurrent: 1.3821169424501862;DCBusVoltage: 374.8588518936735;
+INFO:root:DCBusPower: 0.17396081303790514;DCBusCurrent: 1.0365877068376397;DCBusVoltage: 375.22507400738544;
+INFO:root:Initialize the modbusHandler
+INFO:root:----------------
+INFO:root:set the limitation on current, voltage, power
+INFO:root:set current 0
+INFO:root:set power 0
+INFO:root:Initialize the modbusHandler
+INFO:root:----------------
+INFO:root:set the limitation on current, voltage, power
+INFO:root:set current 0
+INFO:root:set power 0
+INFO:root:DCBusPower: 0.013733748397729353;DCBusCurrent: 0.729450608515376;DCBusVoltage: 378.9483321634571;
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0601    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0603    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0605    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0606    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0607    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0608    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0601    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0603    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0605    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0606    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0607    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0608    S                DLC:  8    2f 05 18 01 00 00 00 00
+INFO:root:Initialize the modbusHandler
+INFO:root:----------------
+INFO:root:set the limitation on current, voltage, power
+INFO:root:set current 0
+INFO:root:set power 0
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0601    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0603    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0605    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0606    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0607    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0608    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0601    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0603    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0605    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0606    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0607    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0608    S                DLC:  8    2f 05 18 01 00 00 00 00
+INFO:root:Initialize the modbusHandler
+INFO:root:----------------
+INFO:root:set the limitation on current, voltage, power
+INFO:root:set current 0
+INFO:root:set power 0
+INFO:root:DCBusPower: -0.2700970518220106;DCBusCurrent: -3.3017238069643335;DCBusVoltage: 378.52107303079316;
+INFO:root:DCBusPower: -0.004577916132576451;DCBusCurrent: -1.6124697661918839;DCBusVoltage: 377.8191473128452;
+INFO:root:DCBusPower: -0.3296099615455045;DCBusCurrent: -2.6106653357392404;DCBusVoltage: 376.65944395275733;
+INFO:root:DCBusPower: -0.3296099615455045;DCBusCurrent: -2.8794102967712214;DCBusVoltage: 375.31662953581343;
+INFO:root:DCBusPower: -0.08240249038637612;DCBusCurrent: -2.8794102967712214;DCBusVoltage: 374.24848170415356;
+INFO:root:DCBusPower: -0.05035707745834096;DCBusCurrent: -0.5758820593542442;DCBusVoltage: 374.24848170415356;
+INFO:root:DCBusPower: 0.15564914850759934;DCBusCurrent: -1.535685491611318;DCBusVoltage: 373.72966704306157;
+INFO:root:DCBusPower: -0.3204541292803516;DCBusCurrent: -2.8794102967712214;DCBusVoltage: 373.21085238196963;
+INFO:root:DCBusPower: -0.3204541292803516;DCBusCurrent: 0.6142741966445272;DCBusVoltage: 373.05825983458965;
+INFO:root:DCBusPower: 0.2700970518220106;DCBusCurrent: 0.6142741966445272;DCBusVoltage: 367.38181707205416;
+INFO:root:DCBusPower: 0.2700970518220106;DCBusCurrent: 0.6910584712250931;DCBusVoltage: 367.38181707205416;
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+ERROR:root:Modbus Voltage violated Dangerous
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0601    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0603    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0605    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0606    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0607    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0608    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0601    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0603    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0605    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0606    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0607    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0608    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0601    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0603    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0605    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0606    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0607    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0608    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0601    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0603    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0605    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0606    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0607    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0608    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0601    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0603    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0605    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0606    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0607    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0608    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0601    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0603    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0605    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0606    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0607    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0608    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0601    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0603    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0605    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0606    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0607    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0608    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0601    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0603    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0605    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0606    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0607    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0608    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+INFO:root:Initialize the modbusHandler
+INFO:root:----------------
+INFO:root:set the limitation on current, voltage, power
+INFO:root:set current 0
+INFO:root:set power 0
+INFO:root:DCBusPower: -0.1510712323750229;DCBusCurrent: 1.3053326678696202;DCBusVoltage: 377.1172215948973;
+INFO:root:DCBusPower: 0.19227247756821095;DCBusCurrent: 1.3053326678696202;DCBusVoltage: 374.8588518936735;
+INFO:root:DCBusPower: 0.1785387291704816;DCBusCurrent: 1.6124697661918839;DCBusVoltage: 373.4244819483016;
+INFO:root:DCBusPower: 0.14191540010987;DCBusCurrent: 2.149959688255845;DCBusVoltage: 373.4244819483016;
+INFO:root:DCBusPower: -0.37081120673869256;DCBusCurrent: -0.8446270203862248;DCBusVoltage: 371.86803796502574;
+INFO:root:DCBusPower: -0.37081120673869256;DCBusCurrent: -1.0365877068376397;DCBusVoltage: 371.3797418134098;
+INFO:root:DCBusPower: 0.11444790331441128;DCBusCurrent: -1.0365877068376397;DCBusVoltage: 372.8446302682577;
+INFO:root:DCBusPower: 0.06409082585607032;DCBusCurrent: -1.2093523246439128;DCBusVoltage: 374.21796319467757;
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+WARNING:root:Modbus voltage High violated warning
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0601    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0603    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0605    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0606    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0607    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0608    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0601    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0603    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0605    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0606    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0607    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0608    S                DLC:  8    2f 05 18 01 00 00 00 00
+INFO:root:Initialize the modbusHandler
+INFO:root:----------------
+INFO:root:set the limitation on current, voltage, power
+INFO:root:set current 0
+INFO:root:set power 0
+INFO:root:DCBusPower: 0.009155832265152902;DCBusCurrent: -1.6508619034821668;DCBusVoltage: 377.23929563280126;
+INFO:root:DCBusPower: 0.054934993590917414;DCBusCurrent: -1.6508619034821668;DCBusVoltage: 376.04907376323735;
+INFO:root:DCBusPower: 0.5951290972349387;DCBusCurrent: -0.7486466771605175;DCBusVoltage: 376.04907376323735;
+INFO:root:DCBusPower: -0.15564914850759934;DCBusCurrent: -2.6106653357392404;DCBusVoltage: 375.3776665547654;
+INFO:root:DCBusPower: -0.3570774583409632;DCBusCurrent: 0.5950781279993858;DCBusVoltage: 375.86596270638137;
+INFO:root:DCBusPower: -0.3570774583409632;DCBusCurrent: -0.6142741966445272;DCBusVoltage: 374.6147038178655;
+INFO:root:DCBusPower: -0.11902581944698773;DCBusCurrent: -0.6142741966445272;DCBusVoltage: 373.72966704306157;
+INFO:root:DCBusPower: -0.22431789049624612;DCBusCurrent: -2.3035282374169768;DCBusVoltage: 373.72966704306157;
+INFO:root:DCBusPower: 0.1327595678447171;DCBusCurrent: -1.3437248051599031;DCBusVoltage: 373.05825983458965;
+INFO:root:DCBusPower: 0.24720747115912836;DCBusCurrent: 1.785234383998157;DCBusVoltage: 371.59337137974177;
+INFO:root:DCBusPower: 0.24720747115912836;DCBusCurrent: 0.6526663339348101;DCBusVoltage: 364.63515121921444;
+INFO:root:DCBusPower: 0.3067203808826222;DCBusCurrent: 0.6526663339348101;DCBusVoltage: 358.80611590929897;
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+ERROR:root:Modbus Voltage violated Dangerous
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0601    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0603    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0605    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0606    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0607    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0608    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0601    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0603    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0605    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0606    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0607    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0608    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0601    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0603    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0605    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0606    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0607    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0608    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0601    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0603    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0605    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0606    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0607    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0608    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0601    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0603    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0605    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0606    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0607    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0608    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0601    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0603    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0605    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0606    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0607    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0608    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0601    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0603    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0605    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0606    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0607    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0608    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0601    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0603    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0605    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0606    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0607    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0608    S                DLC:  8    2f 05 18 01 00 00 00 00
+INFO:root:Initialize the modbusHandler
+INFO:root:----------------
+INFO:root:set the limitation on current, voltage, power
+INFO:root:set current 0
+INFO:root:set power 0
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0601    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0603    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0605    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0606    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0607    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0608    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0601    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0603    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0605    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0606    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0607    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0608    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0601    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0603    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0605    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0606    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0607    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0608    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0601    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0603    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0605    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0606    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0607    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0608    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0601    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0603    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0605    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0606    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0607    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0608    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0601    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0603    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0605    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0606    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0607    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0608    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+INFO:root:Initialize the modbusHandler
+INFO:root:----------------
+INFO:root:set the limitation on current, voltage, power
+INFO:root:set current 0
+INFO:root:set power 0
+INFO:root:DCBusPower: 0.07324665812122322;DCBusCurrent: 1.2285483932890544;DCBusVoltage: 378.09381389812916;
+INFO:root:DCBusPower: -0.07324665812122322;DCBusCurrent: 1.1901562559987715;DCBusVoltage: 378.09381389812916;
+INFO:root:DCBusPower: -0.07324665812122322;DCBusCurrent: -0.7102545398702346;DCBusVoltage: 375.7438886684774;
+INFO:root:DCBusPower: -0.07324665812122322;DCBusCurrent: 2.0347832763849962;DCBusVoltage: 375.95751823480936;
+INFO:root:DCBusPower: 0.20142830983336385;DCBusCurrent: -0.9214112949667908;DCBusVoltage: 376.01855525376135;
+INFO:root:DCBusPower: -0.26094121955685773;DCBusCurrent: -0.9214112949667908;DCBusVoltage: 375.98803674428535;
+INFO:root:DCBusPower: 0.1693828969053287;DCBusCurrent: -0.9789995009022152;DCBusVoltage: 375.98803674428535;
+INFO:root:DCBusPower: -0.027467496795458707;DCBusCurrent: -0.6718624025799516;DCBusVoltage: 375.6523331400494;
+INFO:root:DCBusPower: -0.027467496795458707;DCBusCurrent: -2.2075478941912694;DCBusVoltage: 375.6828516495254;
+INFO:root:DCBusPower: -0.10986998718183483;DCBusCurrent: 0.9598034322570738;DCBusVoltage: 375.95751823480936;
+INFO:root:DCBusPower: -0.059512909723493865;DCBusCurrent: 0.9598034322570738;DCBusVoltage: 369.51811273537396;
+INFO:root:DCBusPower: 0.24720747115912836;DCBusCurrent: 0.7102545398702346;DCBusVoltage: 369.51811273537396;
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+ERROR:root:Modbus Voltage violated Dangerous
+INFO:root:Initialize the modbusHandler
+INFO:root:----------------
+INFO:root:set the limitation on current, voltage, power
+INFO:root:set current 0
+INFO:root:set power 0
+INFO:root:DCBusPower: -0.1327595678447171;DCBusCurrent: -1.055783775482781;DCBusVoltage: 376.59840693380534;
+INFO:root:DCBusPower: -0.06866874198864677;DCBusCurrent: -1.055783775482781;DCBusVoltage: 374.7367778557695;
+INFO:root:DCBusPower: 0.10529207104925838;DCBusCurrent: 2.0155872077398547;DCBusVoltage: 374.7367778557695;
+INFO:root:DCBusPower: 0.3021424647500458;DCBusCurrent: 1.9579990018044304;DCBusVoltage: 372.29529709768974;
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+WARNING:root:Modbus voltage High violated warning
+INFO:root:Initialize the modbusHandler
+INFO:root:----------------
+INFO:root:set the limitation on current, voltage, power
+INFO:root:set current 0
+INFO:root:set power 0
+INFO:root:DCBusPower: -0.26094121955685773;DCBusCurrent: -2.7642338849003725;DCBusVoltage: 376.53736991485334;
+INFO:root:DCBusPower: -0.3570774583409632;DCBusCurrent: -2.956194571351787;DCBusVoltage: 374.6757408368175;
+INFO:root:DCBusPower: -0.3570774583409632;DCBusCurrent: -1.8044304526432986;DCBusVoltage: 372.6615192114017;
+INFO:root:DCBusPower: -0.08698040651895257;DCBusCurrent: -0.729450608515376;DCBusVoltage: 371.2271492660298;
+INFO:root:DCBusPower: -0.054934993590917414;DCBusCurrent: -0.729450608515376;DCBusVoltage: 368.3889278847621;
+INFO:root:DCBusPower: 0.1968503937007874;DCBusCurrent: 1.0749798441279226;DCBusVoltage: 368.3889278847621;
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+WARNING:root:Modbus voltage High violated warning
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0601    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0603    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0605    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0606    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0607    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0608    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0601    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0603    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0605    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0606    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0607    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0608    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+INFO:root:Initialize the modbusHandler
+INFO:root:----------------
+INFO:root:set the limitation on current, voltage, power
+INFO:root:set current 0
+INFO:root:set power 0
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+WARNING:root:Modbus voltage High violated warning
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+INFO:root:Initialize the modbusHandler
+INFO:root:----------------
+INFO:root:set the limitation on current, voltage, power
+INFO:root:set current 0
+INFO:root:set power 0
+INFO:root:DCBusPower: -0.03204541292803516;DCBusCurrent: 0.729450608515376;DCBusVoltage: 377.48344370860923;
+INFO:root:DCBusPower: 0.1876945614356345;DCBusCurrent: 2.4762928552232504;DCBusVoltage: 376.2321848200934;
+INFO:root:DCBusPower: 0.1876945614356345;DCBusCurrent: 1.0173916381924981;DCBusVoltage: 375.07248146000546;
+INFO:root:DCBusPower: 0.14191540010987;DCBusCurrent: 1.0173916381924981;DCBusVoltage: 374.46211127048554;
+INFO:root:DCBusPower: -0.054934993590917414;DCBusCurrent: 1.055783775482781;DCBusVoltage: 374.46211127048554;
+INFO:root:DCBusPower: 0.03662332906061161;DCBusCurrent: -1.5164894229661765;DCBusVoltage: 375.25559251686144;
+INFO:root:DCBusPower: -0.04577916132576451;DCBusCurrent: 1.9196068645141475;DCBusVoltage: 375.7438886684774;
+INFO:root:DCBusPower: -0.04577916132576451;DCBusCurrent: 1.1901562559987715;DCBusVoltage: 374.30951872310555;
+INFO:root:DCBusPower: 0.23805163889397546;DCBusCurrent: 1.1901562559987715;DCBusVoltage: 373.18033387249363;
+INFO:root:DCBusPower: 0.19227247756821095;DCBusCurrent: 0.5950781279993858;DCBusVoltage: 373.18033387249363;
+INFO:root:DCBusPower: 0.27925288408716353;DCBusCurrent: 0.6526663339348101;DCBusVoltage: 366.1915952024903;
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0601    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0603    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0605    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0606    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0607    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0608    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0601    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0603    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0605    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0606    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0607    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0608    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0601    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0603    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0605    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0606    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0607    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0608    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0601    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0603    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0605    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0606    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0607    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0608    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+INFO:root:Initialize the modbusHandler
+INFO:root:----------------
+INFO:root:set the limitation on current, voltage, power
+INFO:root:set current 0
+INFO:root:set power 0
+INFO:root:DCBusPower: -0.21516205823109322;DCBusCurrent: -3.685645179867163;DCBusVoltage: 374.5536667989135;
+INFO:root:DCBusPower: 0.09155832265152902;DCBusCurrent: -3.685645179867163;DCBusVoltage: 371.2576677755058;
+INFO:root:DCBusPower: 0.31587621314777514;DCBusCurrent: -3.685645179867163;DCBusVoltage: 371.2576677755058;
+INFO:root:DCBusPower: 0.1693828969053287;DCBusCurrent: -2.5338810611586746;DCBusVoltage: 368.75514999847405;
+INFO:root:DCBusPower: -0.1602270646401758;DCBusCurrent: -3.608860905286597;DCBusVoltage: 366.67989135410625;
+INFO:root:DCBusPower: -0.1602270646401758;DCBusCurrent: -2.3227243060621183;DCBusVoltage: 365.7338175603503;
+INFO:root:DCBusPower: 0.19227247756821095;DCBusCurrent: -2.3227243060621183;DCBusVoltage: 365.42863246559034;
+INFO:root:DCBusPower: -0.07782457425379967;DCBusCurrent: -3.762429454447729;DCBusVoltage: 365.42863246559034;
+INFO:root:DCBusPower: 0.09613623878410547;DCBusCurrent: -2.3035282374169768;DCBusVoltage: 364.57411420026244;
+INFO:root:DCBusPower: 0.37081120673869256;DCBusCurrent: 3.148155257803202;DCBusVoltage: 362.6209295937986;
+INFO:root:DCBusPower: 0.37081120673869256;DCBusCurrent: 0.8638230890313664;DCBusVoltage: 355.47959837641525;
+INFO:root:DCBusPower: 0.27925288408716353;DCBusCurrent: 0.8638230890313664;DCBusVoltage: 349.4064149906918;
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+INFO:root:Initialize the modbusHandler
+INFO:root:----------------
+INFO:root:set the limitation on current, voltage, power
+INFO:root:set current 0
+INFO:root:set power 0
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0601    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0603    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0605    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0606    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0607    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0608    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0601    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0603    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0605    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0606    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0607    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0608    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0601    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0603    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0605    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0606    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0607    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0608    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0601    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0603    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0605    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0606    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0607    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0608    S                DLC:  8    2f 05 18 01 00 00 00 00
+INFO:root:Initialize the modbusHandler
+INFO:root:----------------
+INFO:root:set the limitation on current, voltage, power
+INFO:root:set current 0
+INFO:root:set power 0
+INFO:root:DCBusPower: -0.24262955502655192;DCBusCurrent: -0.729450608515376;DCBusVoltage: 380.74892422254095;
+INFO:root:DCBusPower: -0.04577916132576451;DCBusCurrent: -0.729450608515376;DCBusVoltage: 380.62685018463696;
+INFO:root:DCBusPower: 0.027467496795458707;DCBusCurrent: -1.6700579721273083;DCBusVoltage: 380.62685018463696;
+INFO:root:DCBusPower: -0.2700970518220106;DCBusCurrent: 0.9981955695473567;DCBusVoltage: 381.2677388836329;
+INFO:root:DCBusPower: 0.3021424647500458;DCBusCurrent: 2.3611164433524015;DCBusVoltage: 381.3898129215369;
+INFO:root:DCBusPower: 0.3021424647500458;DCBusCurrent: 1.0941759127730641;DCBusVoltage: 382.5189977721488;
+INFO:root:DCBusPower: 0.19227247756821095;DCBusCurrent: 1.0941759127730641;DCBusVoltage: 381.75603503524883;
+INFO:root:DCBusPower: -0.054934993590917414;DCBusCurrent: 0.7870388144508005;DCBusVoltage: 381.75603503524883;
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+INFO:root:Initialize the modbusHandler
+INFO:root:----------------
+INFO:root:set the limitation on current, voltage, power
+INFO:root:set current 0
+INFO:root:set power 0
+INFO:root:DCBusPower: -0.18311664530305805;DCBusCurrent: 1.6700579721273083;DCBusVoltage: 378.58211004974515;
+INFO:root:DCBusPower: -0.1510712323750229;DCBusCurrent: -1.0173916381924981;DCBusVoltage: 379.863887447737;
+INFO:root:DCBusPower: -0.23347372276139902;DCBusCurrent: 0.8638230890313664;DCBusVoltage: 380.046998504593;
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+INFO:root:Initialize the modbusHandler
+INFO:root:----------------
+INFO:root:set the limitation on current, voltage, power
+INFO:root:set current 0
+INFO:root:set power 0
+INFO:root:DCBusPower: -0.09613623878410547;DCBusCurrent: 2.9753906399969288;DCBusVoltage: 376.6899624622333;
+INFO:root:DCBusPower: -0.4623695293902216;DCBusCurrent: -1.3437248051599031;DCBusVoltage: 375.6828516495254;
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+INFO:root:Initialize the modbusHandler
+INFO:root:----------------
+INFO:root:set the limitation on current, voltage, power
+INFO:root:set current 0
+INFO:root:set power 0
+INFO:root:DCBusPower: -0.1693828969053287;DCBusCurrent: -2.2843321687718356;DCBusVoltage: 376.7509994811853;
+INFO:root:DCBusPower: 0.004577916132576451;DCBusCurrent: -1.3629208738050447;DCBusVoltage: 376.7509994811853;
+INFO:root:DCBusPower: 0.1876945614356345;DCBusCurrent: 0.5566859907091027;DCBusVoltage: 376.9035920285653;
+INFO:root:DCBusPower: -0.07782457425379967;DCBusCurrent: 0.5758820593542442;DCBusVoltage: 376.9646290475173;
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+INFO:root:Initialize the modbusHandler
+INFO:root:----------------
+INFO:root:set the limitation on current, voltage, power
+INFO:root:set current 0
+INFO:root:set power 0
+INFO:root:DCBusPower: 0.26094121955685773;DCBusCurrent: 1.900410795869006;DCBusVoltage: 373.6075930051576;
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0601    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0603    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0605    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0606    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0607    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0608    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0601    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0603    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0605    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0606    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0607    S                DLC:  8    2f 05 18 01 00 00 00 00
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0608    S                DLC:  8    2f 05 18 01 00 00 00 00
+INFO:root:Initialize the modbusHandler
+INFO:root:----------------
+INFO:root:set the limitation on current, voltage, power
+INFO:root:set current 0
+INFO:root:set power 0
+INFO:root:DCBusPower: -0.004577916132576451;DCBusCurrent: -0.11517641187084884;DCBusVoltage: -0.640888698995941;
+INFO:root:DCBusPower: -0.004577916132576451;DCBusCurrent: -0.13437248051599032;DCBusVoltage: -0.6714072084719381;
+INFO:root:DCBusPower: -0.004577916132576451;DCBusCurrent: -0.11517641187084884;DCBusVoltage: -0.640888698995941;
+INFO:root:DCBusPower: -0.004577916132576451;DCBusCurrent: -0.11517641187084884;DCBusVoltage: -0.640888698995941;
+INFO:root:DCBusPower: -0.004577916132576451;DCBusCurrent: -0.11517641187084884;DCBusVoltage: -0.6714072084719381;
+INFO:root:DCBusPower: -0.004577916132576451;DCBusCurrent: -0.13437248051599032;DCBusVoltage: -0.6714072084719381;
+INFO:root:DCBusPower: -0.004577916132576451;DCBusCurrent: -0.9598034322570738;DCBusVoltage: -0.640888698995941;
+INFO:root:DCBusPower: -0.004577916132576451;DCBusCurrent: -2.1883518255461283;DCBusVoltage: 9.43021942808313;
+INFO:root:DCBusPower: -0.03204541292803516;DCBusCurrent: -2.092371482320421;DCBusVoltage: 27.375102999969478;
+INFO:root:DCBusPower: -0.07324665812122322;DCBusCurrent: -2.092371482320421;DCBusVoltage: 46.14398632770775;
+INFO:root:DCBusPower: -0.10986998718183483;DCBusCurrent: -2.0347832763849962;DCBusVoltage: 46.14398632770775;
+INFO:root:DCBusPower: -0.13733748397729353;DCBusCurrent: -2.0347832763849962;DCBusVoltage: 64.33301797540207;
+INFO:root:DCBusPower: -0.13733748397729353;DCBusCurrent: -2.1307636196107036;DCBusVoltage: 81.72856837672047;
+INFO:root:DCBusPower: -0.16480498077275224;DCBusCurrent: -2.265136100126694;DCBusVoltage: 98.26960051271095;
+INFO:root:DCBusPower: -0.1876945614356345;DCBusCurrent: -2.265136100126694;DCBusVoltage: 114.04766991180149;
+INFO:root:DCBusPower: -0.21058414209851675;DCBusCurrent: -2.1307636196107036;DCBusVoltage: 114.04766991180149;
+INFO:root:DCBusPower: -0.21973997436366965;DCBusCurrent: -1.862018658578723;DCBusVoltage: 129.12381359294412;
+INFO:root:DCBusPower: -0.21973997436366965;DCBusCurrent: -1.6892540407724497;DCBusVoltage: 143.49803155613878;
+INFO:root:DCBusPower: -0.24262955502655192;DCBusCurrent: -1.574077628901601;DCBusVoltage: 157.23136082033753;
+INFO:root:DCBusPower: -0.26094121955685773;DCBusCurrent: -1.574077628901601;DCBusVoltage: 170.35431989501632;
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+DEBUG:can.interfaces.socketcan.socketcan:We've been asked to write a message to the bus
+DEBUG:can.interfaces.socketcan.socketcan.tx:sending: Timestamp:        0.000000        ID: 0080    S                DLC:  1    ff
+ERROR:root:Modbus Voltage violated Dangerous

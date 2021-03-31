@@ -5,12 +5,14 @@ sys.path.append("/home/pi/Desktop/Battery-Safety-Sever-Client")
 import minimalmodbus
 import time
 import logging
-from Status import Status
+import sys
+sys.path.append("/home/pi/Desktop/Battery-Safety-Sever-Client")
+from main.Tools.Status import Status
 
 class ModbusHandler:
     def __init__(self):
         logging.basicConfig(filename='Modbus Status.log', level=logging.DEBUG)
-        self.USB_Port = '/dev/ttyUSB0'
+        self.USB_Port = '/dev/ttyUSB1'
         self.slaveAddress = 2;
 
         self.current_mode = 2;
@@ -43,9 +45,9 @@ class ModbusHandler:
         self.epc1_dc_link_crnt = 30267
 
         # the variance
-        self.variance_current = 1;
-        self.variance_voltage = 20;
-        self.variance_power = 5;
+        self.variance_current = 0.5;
+#         self.variance_voltage = 20;
+        self.variance_power = 0.5;
 
         # the initial current, voltage, power values
         self.init_current = 2;

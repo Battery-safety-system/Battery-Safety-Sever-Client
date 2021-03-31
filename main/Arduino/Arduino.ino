@@ -25,6 +25,7 @@ void setup() {
   pinMode(Relay2_PIN, OUTPUT);
   pinMode(Relay3_PIN, OUTPUT);
   pinMode(Fan_PIN, OUTPUT);
+//  Serial.setTimeout(100); // set new value to 100 milliseconds
 
 }
 
@@ -37,6 +38,7 @@ void loop() {
   // send mapStatus to Rasp
   String mapStatus = "Ardu_Temp1:" + String(Temp1) + ",Ardu_Temp2:" + String(Temp2) + ",Ardu_Press:" + String(Press) ;
   Serial.println(mapStatus);
+  
 
  while(Serial.available() == 0) {
  }

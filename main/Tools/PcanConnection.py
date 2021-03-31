@@ -1,7 +1,9 @@
 import cantools
 import can
 import time
-from Status import Status
+import sys
+sys.path.append("/home/pi/Desktop/Battery-Safety-Sever-Client")
+from main.Tools.Status import Status
 class PcanConnection(object):
     """docstring for PcanConnection"""
     def __init__(self):
@@ -10,6 +12,7 @@ class PcanConnection(object):
         self.channel = 'can0'
         self.bus = can.interface.Bus(channel= self.channel, bustype= self.bustype)
 
+        self.exitNum = 30
         self.message_dbc = self.getMessageDBC();
         self.reverse_message_dbc =  {v: k for k, v in self.message_dbc.items()}
 
@@ -40,8 +43,9 @@ class PcanConnection(object):
         self.Max_Voltage_Vio = 4.1
         self.Min_Voltage_Vio = 2.8
         self.cellVoltageNum = 12
+        
 
-
+        
         print("PCAN Connection Initialization end");
 
     def init(self):
@@ -84,12 +88,13 @@ class PcanConnection(object):
                 message_name = self.message_dbc[message.arbitration_id];
                 label_list.append(message_name);
                 count = 0;
-            if(count > 10):
+            if(count > self.exitNum):
                 break;
         # label shoud be sorted [BMU01_pdo01, BMU02_pdo02 ...]
         label_list.sort();
         battery_list = list(set([int(elem[3:5]) for elem in label_list]));
         self.battery_list = battery_list;
+        print("battery_list: " + str(battery_list))
         print("getBatteryListFromPcan() end");
         
     def getLabelListPlusMessageDictFromPcan(self):
@@ -109,7 +114,7 @@ class PcanConnection(object):
                 message_dict[message_name] = message;
                 label_list.append(message_name);
                 count = 0;
-            if(count > 10):
+            if(count > self.exitNum):
                 break;
         label_list.sort(); #[BMU01_pdo01, BMU02_pdo02 ...]
 
@@ -142,7 +147,7 @@ class PcanConnection(object):
             message = self.bus.recv();
             if(message.arbitration_id not in self.message_dbc ):
                 count += 1;
-                if(count > 10 and len(message_dict) != 0):
+                if(count > self.exitNum ):
                     break;
                 continue;
             message_name = self.message_dbc[message.arbitration_id]
