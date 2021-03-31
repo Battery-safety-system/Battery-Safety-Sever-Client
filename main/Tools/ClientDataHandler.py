@@ -50,7 +50,7 @@ class DataHandler(object):
             if CMA_Voltage >= 48 or CMA_Voltage <= 33:
                 isvolLimited = True;
 
-        status.isvolLimited = isvolLimited;
+        status.isCMAVolVio = isvolLimited;
 
     def detectTemp(self, status, messageObj):
         istempHigh = False;
@@ -70,7 +70,7 @@ class DataHandler(object):
                 istempHigh = False;
             else:
                 istempHigh = True;
-        status.istempHigh = istempHigh;
+        status.isCMATempVio = istempHigh;
 
     def detectCellVoltageViolated(self, status, messageObj):
         isCVViolated = False;
@@ -89,7 +89,7 @@ class DataHandler(object):
             if Max_Cell_Voltage >= 4.1 or Min_Cell_Voltage < 2.8:  ##40?
                 isCVViolated = True;
         print("is Cell Voltage Violated: " + str(isCVViolated))
-        status.isCVViolated = isCVViolated;
+        status.isCellVolVio = isCVViolated;
 
     def detectStatus(self, status, messageObj):
         print("Begin to detect the status")
@@ -99,24 +99,24 @@ class DataHandler(object):
         print(messageObj.message_data_dict)
         print(
             "is there any voltage violated: %s; is the temperature too high: %s;is there any cell voltage violated: %s" % (
-            status.isvolLimited, status.istempHigh, status.isCVViolated))
+                status.isCMAVolVio, status.isCMATempVio, status.isCellVolVio))
         print("detectStatus End")
 
     def setStatusToMessageObj(self, StatusObj, MessageObj):
-        MessageObj.message_data_list.append(StatusObj.istempHigh);
-        MessageObj.message_data_list.append(StatusObj.isvolLimited);
-        MessageObj.message_data_list.append(StatusObj.isCVViolated);
+        MessageObj.message_data_list.append(StatusObj.isCMATempVio);
+        MessageObj.message_data_list.append(StatusObj.isCMAVolVio);
+        MessageObj.message_data_list.append(StatusObj.isCellVolVio);
 
     def judgeGPIOInfo(self, StatusObj):
         GPIOInfoList = [];
-        if (StatusObj.istempHigh == True):
+        if (StatusObj.isCMATempVio == True):
             GPIOInfoList.append({"device": "Pump", "pin_number": 18, "pin_type": GPIO.OUT, "pin_value": GPIO.HIGH});
             print("temperature is too high, the pump continue to work");
         else:
             print("temp is in control, the pump is off")
             GPIOInfoList.append({"device": "Pump", "pin_number": 18, "pin_type": GPIO.OUT, "pin_value": GPIO.LOW});
 
-        if (StatusObj.isvolLimited == True or StatusObj.isCVViolated):
+        if (StatusObj.isCMAVolVio == True or StatusObj.isCellVolVio):
             GPIOInfoList.append({"device": "Relay", "pin_number": 16, "pin_type": GPIO.OUT, "pin_value": GPIO.LOW});
             print("voltage is out of control, relay is off")
 
@@ -132,7 +132,7 @@ class DataHandler(object):
         return GPIOInfoList
 
     def getStatusList(self, StatusObj):
-        return [StatusObj.isvolLimited, StatusObj.istempHigh, StatusObj.isCVViolated]
+        return [StatusObj.isCMAVolVio, StatusObj.isCMATempVio, StatusObj.isCellVolVio]
 
     def storeToLocalRepo(self, FileObj, MessageObj):
         FileObj.WritetoCVS(MessageObj.message_data_list, MessageObj.final_label_list);

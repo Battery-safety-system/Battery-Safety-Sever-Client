@@ -18,20 +18,39 @@ class Battery_System:
         # check PCAN
         print("check PCAN")
         self.PcanConnectionObj = PcanConnection();
-        self.MessageObj = Message();
-        self.PcanConnectionObj.getAllInfo(self.MessageObj);  # getLabel, dbcCreating requestMessage SyncMessage
-        # init Floder and Files
-        print("initialize Floder and Files")
-        self.FileObj = File(self.MessageObj.final_label_list)
+        PcanLabels = self.PcanConnectionObj.getLabels();
+
         # init Status
         print("initialize Status")
         self.StatusObj = Status()
+        status_labels = self.StatusObj.getLabels();
         # init DataHandler
         print("initialize Data Handler")
         self.DataHandlerObj = DataHandler();  # detect the temp and get data  dict list
         # initiate GPIO Handler
         print("initialize GPIO Handler")
-        self.GPIOHandlerObj = GPIOHandler(self.DataHandlerObj.getGPIOInitInfoList());
+        self.GPIOHandlerObj = GPIOHandler();
+
+
+
+        # Init Arudino
+        print("Init Arduino")
+        self.ArduinoHandlerObj = ArduinoHandler();
+        ArduinoInfoDict = self.ArduinoHandlerObj.getInfo()  # get temp1, temp2, real1, real2 values
+        ArduinoLabelList = self.ArduinoHandlerObj.getLabListFromContentDict(ArduinoInfoDict)
+
+        # Init modbus
+        print("Init Modbus")
+        self.ModbusHandlerObj = ModbusHandler();
+        modbusLabels = self.ModbusHandlerObj.getLabels();
+
+        # start to work;
+        self.label_list = PcanLabels + modbusLabels + ArduinoLabelList + status_labels;
+        self.data_list = [];
+
+        # init Floder and Files
+        print("initialize Floder and Files")
+        self.FileObj = File(self.label_list)
 
         # init the PC Connection
         print("initialize PC Connection")
@@ -39,26 +58,20 @@ class Battery_System:
         self.PCConnectionObj.connect()
         # self.PCConnectionObj.sendContent({"labels": self.MessageObj.final_label_list})
 
-        # check Arudino
-        print("check Arduino")
-        self.ArduinoHandlerObj = ArduinoHandler();
-
-        # check modbus
-        self.ModbusHandlerObj = ModbusHandler();
-
 
     def run(self):
         while True:
             print("Begin Loop Module")
-            # Receive data from Pcan
             print("current time is " +  time.strftime('%H-%M-%S'))
-            print("Receive Message from PCAN")
-            self.PcanConnectionObj.getDataFromPcan(self.MessageObj);  # get data dict
-            # get Status, Labels, datas from pcan (mainly cell voltage)
-            print("Get Labels, Status, datas from Message")
-            self.DataHandlerObj.handleData(self.MessageObj);  ## build message_data_list
-            self.DataHandlerObj.detectStatus(self.StatusObj, self.MessageObj);  ## set the value for status from messageObj
-            self.DataHandlerObj.setStatusToMessageObj(self.StatusObj, self.MessageObj);
+
+            print("Initiate the status ")
+            self.StatusObj.warning = False;
+
+            print("start the Pcan Module")
+            self.PcanConnectionObj.getAllInfo();
+            pcanDatas = self.PcanConnectionObj.getDatas();
+            pcanLabels = self.PcanConnectionObj.getLabels();
+            self.PcanConnectionObj.detectStatus(self.StatusObj);
 
 
             # get label, datas from arduino( mainly temp, pressure)
@@ -66,49 +79,51 @@ class Battery_System:
             ArduinoInfoDict = self.ArduinoHandlerObj.getInfo() # get temp1, temp2, real1, real2 values
             ArduinoLabelList = self.ArduinoHandlerObj.getLabListFromContentDict(ArduinoInfoDict)
             ArduinoDataList = self.ArduinoHandlerObj.getDataListFromContentDict(ArduinoLabelList, ArduinoLabelList);
-
+            self.ArduinoHandlerObj.setStatus(self.StatusObj)
 
 
             # get labels, data from modbus (mainly DC current, DC power)
+            self.ModbusHandlerObj.run();
+            modbus_labels = self.ModbusHandlerObj.getLabels();
+            modbus_datas = self.ModbusHandlerObj.getDatas();
+            self.ModbusHandlerObj.setStatus(self.StatusObj)
 
-            # get status from these three datas
+            # get all the labels and datas from status
+            status_labels = self.StatusObj.getLabels();
+            status_datas = self.StatusObj.getStatusList();
 
             # merge status, arduino, modbus, pcan to data list and label list, and status dict;
+            self.label_list = pcanLabels + ArduinoLabelList + modbus_labels + status_labels;
+            self.label_list.insert(0, 'time');
+            self.label_list.insert(0, 'date');  # final_label_list: [date time BMU01_Max_temp .... BMU02_Max_temp ...]
+            self.data_list = pcanDatas + ArduinoDataList + modbus_datas + status_datas;
+            self.data_list.insert(0, time.strftime('%H:%M:%S'))
+            self.data_list.insert(0, time.strftime('%d-%m-%Y'))
 
             # store data, label to the local fldoer
-
-            # send data, label to the pc
-
-            # active the device and check if its out of warnig level and dangerous level and do responding operation
-            ## option1: -3A, 0, 3A, 0 (three steps)
-
-            # merge Pcan, arduino, modbus label list and data list
-            print("merge all the information")
-            data_list = [];
-            label_list = [];
-            data_list = self.MessageObj.message_data_list + ArduinoDataList;
-            label_list = self.MessageObj.final_label_list + ArduinoLabelList;
-
-            # store data to the local repo
             print("Store Labels, Status, datas to Repository")
-            self.FileObj.WritetoCVS(data_list, label_list);
+            self.FileObj.WritetoCVS(self.data_list, self.label_list);
 
-            print("send Label, status, datas to PC")
-            try:
-                dictContent = self.DataHandlerObj.getSendContent(data_list, self.StatusObj.getStatusList(), label_list);
-                self.PCConnectionObj.sendContent(dictContent)
-            except Exception as e:
-                self.PCConnectionObj.reconnectAfterLoops();
+            # active the device and check if its out of warnig level and dangerous level and do responding operation from status
 
-            # active device based on status
             print("activate device: pump and relay with Arduino")
             ArduinoInfoList = self.ArduinoHandlerObj.judgeArduinoInfo(self.StatusObj);
             self.ArduinoHandlerObj.activateDevice(ArduinoInfoList)
+
+
+            # # send data, label to the pc
+            # print("send Label, status, datas to PC")
+            # try:
+            #     dictContent = self.DataHandlerObj.getSendContent(data_list, self.StatusObj.getStatusList(), label_list);
+            #     self.PCConnectionObj.sendContent(dictContent)
+            # except Exception as e:
+            #     self.PCConnectionObj.reconnectAfterLoops();
+
+
             # GPIOInfoList = self.DataHandlerObj.judgeGPIOInfo(self.StatusObj)  # create GPIO list
             # self.GPIOHandlerObj.activateDevice(GPIOInfoList);
 
-            # update the modbus current
-            self.ModbusHandlerObj.updateCurrent();
+
 
             print("---------------------------------------")
     def __del__(self):
@@ -117,6 +132,13 @@ class Battery_System:
         self.PCConnectionObj.close()
 
         self.GPIOHandlerObj = GPIOHandler(self.DataHandlerObj.getGPIOInitInfoList());
+
+    def warningHandler(self, ModbusHandlerObj):
+        assert isinstance(ModbusHandlerObj, ModbusHandler)
+
+    def dangerousHandler(self, ModbusHandlerObj, ArduinoHandlerObj):
+        assert isinstance(ModbusHandlerObj, ModbusHandler)
+        assert isinstance(ArduinoHandlerObj, ArduinoHandler)
 
 
 Battery1 = Battery_System();

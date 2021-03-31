@@ -1,22 +1,51 @@
 import serial
 import csv
 import json
+from Status import Status
 class ArduinoHandler:
     def __init__(self):
         self.ser = serial.Serial('/dev/ttyACM0', 9600)
         # output device
         self.setPINValue();
-
-
-
         self.ohmsList = [];
         self.tempList = [];
         self.setOhmsTempList();
 
         # input device
-        self.contentDict = {};  # "Ardu_Temp1": 589, "Ardu_Temp2": 589, "Ardu_Press":620
-        # self.inputDeviceList = ["Ardu_Temp1", "Ardu_Temp2", "Ardu_Press" ];
-        pass
+        self.contentDict = {};  # "Ardu_Temp1": 36, "Ardu_Temp2": 37, "Ardu_Press": 100
+
+        # status
+        self.temp_warning = 30
+        self.temp_dangerous = 50
+        self.press_warning = 100
+        self.press_dangerous = 150
+
+    def setStatus(self, statusObj):
+        assert isinstance(statusObj, Status)
+        temp_warning = self.temp_warning;
+        temp_dangerous = self.temp_dangerous;
+
+        Press_warning = self.press_warning;
+        Press_dangerous = self.press_dangerous;
+        statusObj.isArduPressViolated = False;
+        statusObj.isArduTempHigh = False;
+
+        for key in self.contentDict:
+            if ("Temp" in key ):
+                if (self.contentDict[key] > temp_dangerous):
+                    statusObj.isArduTempHigh = True;
+                    statusObj.dangerous = True;
+                elif (self.contentDict[key] > temp_warning):
+                    statusObj.isArduTempHigh = True;
+                    statusObj.warning = True;
+            elif ("Press" in key) :
+                if (self.contentDict[key] > Press_dangerous):
+                    statusObj.isArduPressViolated = True;
+                    statusObj.dangerous = True;
+                elif (self.contentDict[key] > Press_warning):
+                    statusObj.isArduPressViolated = True;
+                    statusObj.warning = True;
+        pass;
 
     def setPINValue(self):
         with open('config.properties') as f:
@@ -93,7 +122,7 @@ class ArduinoHandler:
     def judgeArduinoInfo(self, StatusObj):
         ## logic: get info list
         ArduinoInfoList = [];
-        if (StatusObj.istempHigh == True):
+        if (StatusObj.isCMATempVio == True):
             ArduinoInfoList.append({"device": "Pump", "pin_number": self.pumpPIN, "pin_value": 1});
             ArduinoInfoList.append({"device": "Pump", "pin_number": self.FanPIN, "pin_value": 1});
             print("temperature is too high, the pump continue to work");
@@ -102,7 +131,7 @@ class ArduinoHandler:
             ArduinoInfoList.append({"device": "Pump", "pin_number": self.pumpPIN, "pin_value": 0});
             ArduinoInfoList.append({"device": "Pump", "pin_number": self.FanPIN, "pin_value": 0});
 
-        if (StatusObj.isvolLimited == True or StatusObj.isCVViolated):
+        if (StatusObj.isCMAVolVio == True or StatusObj.isCellVolVio):
             ArduinoInfoList.append({"device": "Relay", "pin_number": self.Relay1PIN, "pin_value": 0});
             ArduinoInfoList.append({"device": "Relay", "pin_number": self.Relay2PIN, "pin_value": 0});
             ArduinoInfoList.append({"device": "Relay", "pin_number": self.Relay3PIN, "pin_value": 0});
@@ -114,10 +143,6 @@ class ArduinoHandler:
             ArduinoInfoList.append({"device": "Relay", "pin_number": self.Relay3PIN, "pin_value": 1});
             print("voltage is in control, the relay is on")
         return ArduinoInfoList;
-
-
-
-
 
     def convertTempToRealValue(self, Volval):
         voltage = (Volval /1024.0 * 5.0)
