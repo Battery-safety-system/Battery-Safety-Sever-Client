@@ -1,9 +1,7 @@
 #!/usr/bin/python3
 import sys
-
-from main.Tools.ClientConnection import PCConnection
-
 sys.path.append("/home/pi/Desktop/Battery-Safety-Sever-Client")
+from main.Tools.ClientConnection import PCConnection
 from main.Tools.File import File
 from main.Tools.PcanConnection import PcanConnection
 from main.Tools.Status import Status
