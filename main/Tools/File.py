@@ -30,10 +30,10 @@ class File(object):
 
     def updateFileByLabels(self, summary_head):
         if(self.labels != summary_head):
-            for i in range(len(self.labels)):
-                if (self.labels[i] != summary_head[i]):
-                    print("labels: " + self.labels[i])
-                    print("summary_head: " + summary_head[i])
+#             for i in range(len(self.labels)):
+#                 if (self.labels[i] != summary_head[i]):
+#                     print("labels: " + self.labels[i])
+#                     print("summary_head: " + summary_head[i])
             print("labels and summary_head are different")
             print("labels: " + str(self.labels))
             print("summary_head: " + str(summary_head))

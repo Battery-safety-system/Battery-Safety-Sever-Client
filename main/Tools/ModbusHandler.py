@@ -16,7 +16,7 @@ class ModbusHandler:
         self.currentControlMode = 1;
         self.powerControlMode = 2;
 
-        self.USB_Port = '/dev/ttyUSB1'
+        self.USB_Port = '/dev/ttyUSB0'
         self.slaveAddress = 2;
 
         self.current_mode = 2;
@@ -66,11 +66,11 @@ class ModbusHandler:
         self.currentVal = 3;
 
         self.powerValue = 20;
-        self.PowerList = [0, 1, 0, -1];
+        self.PowerList = [0, 1, 0.5, 0.8, 0, 1.2, 0, -1];
 
         self.PreviousTime = time.time();
         self.intervalCount = 0;
-        self.IntervalTime = 300;
+        self.IntervalTime = 10; # test
 
         # Labels and Datas
         self.label_list = ["modbus_Power", "modbus_Current", "modbus_Voltage"]
@@ -141,11 +141,11 @@ class ModbusHandler:
         # # powerLow
         # currentWarning = 100;
         # currentDangerous = 110;
-
-        volLowWarning = 264
-        volHighWarning = 384
+        volLowWarning = 322
+#         volLowWarning = 264
+        volHighWarning = 384  # test
         volHighDangerous = 390;
-        volLowDangerous = 260
+        volLowDangerous = 364
 
         power = self.info_dict["modbus_Power"]
         current = self.info_dict["modbus_Power"]
@@ -204,7 +204,7 @@ class ModbusHandler:
             self.intervalCount += 1;
             self.PreviousTime = time.time();
             # get the current value we need
-            currentVal = self.currentVal * self.CurrentList[self.intervalCount % 4]
+            currentVal = self.currentVal * self.CurrentList[self.intervalCount % len(self.CurrentList)]
             # set the current value
             self.setCurrent(currentVal);
             # check if the real value is one the range of expected values
@@ -217,12 +217,13 @@ class ModbusHandler:
             self.intervalCount += 1;
             self.PreviousTime = time.time();
             # get the current value we need
-            powerVal = self.powerValue * self.PowerList[self.intervalCount % 4]
+            powerVal = self.powerValue * self.PowerList[self.intervalCount % len(self.PowerList)]
             # set the current value
             self.setPower(powerVal);
             # check if the real value is one the range of expected values
             self.LoopIfNotMeetReq(self.checkIfModbusPowerRight, 20, powerVal - self.variance_power,
                                   powerVal + self.variance_power)
+# test
 
     def run(self):
         if self.ControlMode == self.currentControlMode:
@@ -238,12 +239,16 @@ class ModbusHandler:
         DCBusPower = self.getPower();
         DCBusCurrent = self.getCurrent();
         DCBusVoltage = self.getVoltage();
+        RemoteVoltage = self.getRemoteVoltage();
         data_list = [DCBusPower, DCBusCurrent, DCBusVoltage]
         self.data_list = data_list;
         self.info_dict["modbus_Power"] = DCBusPower; self.info_dict["modbus_Current"] = DCBusCurrent; self.info_dict["modbus_Voltage"] = DCBusVoltage;
+        self.info_dict["remoteVoltage"] = RemoteVoltage
+        print("ModbusHandler" + str(self.info_dict))
         return self.data_list;
 
     def setModbusDischarge(self):
+        print("set the modbus to discharge")
         if self.ControlMode == self.currentControlMode:
             currentVal = self.currentVal;
             self.setCurrent(currentVal);
@@ -298,7 +303,10 @@ class ModbusHandler:
         DCBusVoltage = self.unsignedToSigned(
             self.instrument.read_register(self.epcl_dc_link_volt, 0, 4)) / self.voltage_scale;
         return DCBusVoltage
-
+    def getRemoteVoltage(self):
+        RemoteVoltage = (self.instrument.read_register(30263, 0, 4) / self.voltage_scale)
+        return RemoteVoltage;
+    
     def setCurrent(self, value):
         self.instrument.write_register(self.K_op_mode, self.current_mode, 0, 6)  # K_op_mode
         print("SETTING POINTS")
@@ -364,6 +372,13 @@ class ModbusHandler:
             return False;
 
     def checkIfModbusVoltageRight(self, upLine, bottomLine):
+        voltage = self.getVoltage();
+        if (voltage < upLine and voltage > bottomLine):
+            return True;
+        else:
+            return False;
+    
+    def checkIfModbusPowerRight(self, upLine, bottomLine):
         voltage = self.getVoltage();
         if (voltage < upLine and voltage > bottomLine):
             return True;

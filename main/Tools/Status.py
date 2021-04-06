@@ -40,14 +40,17 @@ class Status(object):
     def getLabels(self):
         labelList = [];
         for i in inspect.getmembers(self):
-            if not i[0].startswith('_') and i[0].startswith('is'):
+            if (not i[0].startswith('_')) and i[0].startswith('is'):
                 if not inspect.ismethod(i[1]):
                     labelList.append(i[0]);
         labelList.sort();
+        labelList.append("warning")
+        labelList.append("dangerous")
+        return labelList
 
     def InitStatus(self):
         for i in inspect.getmembers(self):
-            if not (i[0].startswith('_') and i[0].startswith('is')):
+            if (not (i[0].startswith('_')) and i[0].startswith('is')):
                 if not inspect.ismethod(i[1]):
                     setattr(self, i[0], False);
         self.warning = False;
@@ -58,7 +61,7 @@ class Status(object):
             return True;
 
     def isVoltageLowVio(self):
-        if self.isPcanVoltageLowWarning or self.isPcanVoltageHighDangerous or self.isModbusHighVoltageWarning or self.isModbusHighVoltageDagnerous:
+        if self.isPcanVoltageLowWarning or self.isPcanVoltageLowDangerous or self.isModbusLowVoltageWarning or self.isModbusLowVoltageDangerous:
             return True;
 
     def isVoltageHighVio(self):

@@ -16,21 +16,27 @@ class Battery_System:
 
         print("Initialize PCAN")
         PcanLabels = self.pcanInit();
+        print("********************************************")
 
         print("Initialize status")
         status_labels = self.statusInit();
+        print("********************************************")
 
         print("Init Arduino")
         ArduinoLabelList = self.arduinoInit();
+        print("********************************************")
 
         print("Init Modbus")
         modbusLabels = self.modbusInit();
+        print("********************************************")
 
         print("Init Label lists and datas")
         self.labelAndDataInit(PcanLabels, ArduinoLabelList, modbusLabels, status_labels);
+        print("********************************************")
 
         print("initialize Floder and Files")
         self.FileObj = File(self.label_list)
+        print("********************************************")
 
 
 #         # init the PC Connection
@@ -38,6 +44,7 @@ class Battery_System:
 
         print("Init State Machine")
         self.stateInit();
+        print("********************************************")
 
 
     def pcanInit(self):
@@ -45,12 +52,14 @@ class Battery_System:
 
         self.PcanConnectionObj = PcanConnection();
         PcanLabels = self.PcanConnectionObj.getLabels();
+        print("pcan labels" + str(PcanLabels))
         return PcanLabels;
 
     def statusInit(self):
         print("initialize Status")
         self.StatusObj = Status()
         status_labels = self.StatusObj.getLabels();
+        print("status labels " + str(status_labels))
         return status_labels;
         pass;
 
@@ -69,7 +78,7 @@ class Battery_System:
     def modbusInit(self):
         currentControlMode = 1;
         powerControlMode = 2;
-        self.ModbusHandlerObj = ModbusHandler(currentControlMode);
+        self.ModbusHandlerObj = ModbusHandler(powerControlMode);
         modbusLabels = self.ModbusHandlerObj.getLabels();
         return modbusLabels;
 
@@ -99,13 +108,18 @@ class Battery_System:
         print("Begin Loop Module")
         while True:
             print("current time is " + time.strftime('%H-%M-%S'))
+            print(self.ModbusHandlerObj.info_dict)
             if self.currentState == self.normalState:
+                print("normal state \n")
                 self.normalHandler();
             elif self.currentState == self.warningState:
+                print("warning state \n")
                 self.warningHandler();
             elif self.currentState == self.dangerousState:
+                print("dangerous state \n")
                 self.dangerousHandler();
             elif self.currentState == self.securityState:
+                print("security state \n")
                 self.securityHandler();
                 break;
             else:
@@ -146,18 +160,23 @@ class Battery_System:
         self.storeDate();
 
         self.ModbusHandlerObj.closeModbus();
+        
         self.ArduinoHandlerObj.setRelayoff();
-
+        print("set relay off")
         # self.transferToPc();
 
         self.updateStatus();
 
     def securityHandler(self):
+        
         self.ModbusHandlerObj.closeModbus();
+        print("Modbus off")
         self.ArduinoHandlerObj.setRelayoff();
         self.ArduinoHandlerObj.setPumpoff();
         self.ArduinoHandlerObj.closeArduionConnection();
+        print("Arduino off")
         self.PcanConnectionObj.close();
+        print("pcan off")
         pass;
 
 # --------------------------------------------Tools Section ------------------------------------------
