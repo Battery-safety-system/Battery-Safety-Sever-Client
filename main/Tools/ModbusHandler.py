@@ -10,8 +10,12 @@ sys.path.append("/home/pi/Desktop/Battery-Safety-Sever-Client")
 from main.Tools.Status import Status
 
 class ModbusHandler:
-    def __init__(self):
+    def __init__(self, ControlMode):
         logging.basicConfig(filename='Modbus Status.log', level=logging.DEBUG)
+        self.ControlMode = ControlMode;
+        self.currentControlMode = 1;
+        self.powerControlMode = 2;
+
         self.USB_Port = '/dev/ttyUSB1'
         self.slaveAddress = 2;
 
@@ -73,64 +77,127 @@ class ModbusHandler:
         self.data_list = []
         self.info_dict = {};
 
+    def Init(self):
+
+        logging.info("----------------")
+        self.openModbus();
+
+        logging.info("set the limitation on current, voltage, power")
+        self.setLimitation();
+
+        logging.info("set current 0")
+        self.setCurrent(0);
+
+        logging.info("set power 0")
+        self.setPower(0)
+
+        if(not self.LoopIfNotMeetReq(self.checkModbusIfInit, 20)):
+            print("checkModbusIfInit doesn't meet the requirement")
+        else:
+            print("checkModbusIfInit pass the test")
+
+        # close the modbus device
+        print("ModbusInit job completed")
+
+    def setLimitation(self):
+        # set the limitation among current, power, voltage
+        self.instrument.write_register(self.bat_max_chrg_crt, self.signedToUnsigned(self.max_crt * self.current_scale), 0, 6);
+        self.instrument.write_register(self.bat_max_dischrg_crt, self.signedToUnsigned(self.max_dis_crt * self.current_scale), 0, 6);
+        # set the charge power limitation
+        self.instrument.write_register(self.bat_max_chrg_power, self.signedToUnsigned(self.max_power * self.power_scale), 0, 6)
+
+        ## set Max voltage
+        self.instrument.write_register(self.bat_max_volt, self.signedToUnsigned(self.max_vol * self.voltage_scale), 0,
+                                       6)
+        ## set Min voltage
+        self.instrument.write_register(self.bat_min_volt, self.signedToUnsigned(self.min_vol * self.voltage_scale), 0,
+                                       6);
+
+    def checkModbusIfInit(self):
+        DCBusPower = self.getPower();
+        DCBusCurrent = self.getCurrent()
+        DCBusVoltage = self.getVoltage();
+        if (
+                DCBusPower > 0 - self.variance_power and DCBusPower < 0 + self.variance_power and DCBusCurrent > 0 - self.variance_current and DCBusCurrent < 0 + self.variance_current and DCBusVoltage < self.max_vol and DCBusVoltage > self.min_vol):
+            print("Current and power are all set nearly 0, meet the requirement")
+            return True;
+        print("----------------")
+        print("DCBusPower: " + str(DCBusPower))
+        print("DCBusCurrent: " + str(DCBusCurrent))
+        print("DCBusVoltage: " + str(DCBusVoltage))
+        str1 = "DCBusPower: " + str(DCBusPower) + ";" + "DCBusCurrent: " + str(
+            DCBusCurrent) + ";" + "DCBusVoltage: " + str(DCBusVoltage) + ";"
+        logging.info(str1)
+        return False;
+
+
+
+# -------------------------- Status Function -----------------------------------------
+
     def setStatus(self, statusObj):
         assert isinstance(statusObj, Status)
-        powerWarning = 30
-        powerDangerous = 35;
-        # powerLow
-        currentWarning = 100;
-        currentDangerous = 120;
-        volLowWarning = 286
+        # powerWarning = 30
+        # powerDangerous = 35;
+        # # powerLow
+        # currentWarning = 100;
+        # currentDangerous = 110;
+
+        volLowWarning = 264
         volHighWarning = 384
-        volHighDangerous = 400;
-        volLowDangerous = 280
+        volHighDangerous = 390;
+        volLowDangerous = 260
 
         power = self.info_dict["modbus_Power"]
         current = self.info_dict["modbus_Power"]
         vol = self.info_dict["modbus_Voltage"]
-
-        statusObj.isModbusPowerViolated = False;
-        statusObj.isArduTempHigh = False;
-        statusObj.isArduPressViolated = False
-        if (abs(power) >=  powerWarning and abs(power) < powerDangerous):
-            logging.warning("Modbus power violated warning")
-            statusObj.isModbusPowerViolated = True;
-            statusObj.warning = True;
-        elif (abs(power) > powerDangerous):
-            logging.error("Modbus Power violated Dangerous")
-            statusObj.isModbusPowerViolated = True;
-            statusObj.dangerous = True;
-
-        if (abs(current) >=  currentWarning and abs(current) < currentDangerous):
-            logging.warning("Modbus current violated warning")
-            statusObj.isModbusCurrentViolated = True;
-            statusObj.warning = True;
-        elif (abs(current) > currentDangerous):
-            logging.error("Modbus Power violated Dangerous")
-            statusObj.isModbusCurrentViolated = True;
-            statusObj.dangerous = True;
+        #
+        statusObj.isModbusHighVoltageWarning = False;
+        statusObj.isModbusHighVoltageDagnerous = False;
+        statusObj.isModbusLowVoltageWarning = False;
+        statusObj.isModbusLowVoltageDangerous = False;
+        # statusObj.isModbusPowerViolated = False;
+        # statusObj.isArduTempHigh = False;
+        # statusObj.isArduPressViolated = False
+        # if (abs(power) >=  powerWarning and abs(power) < powerDangerous):
+        #     logging.warning("Modbus power violated warning")
+        #     statusObj.isModbusPowerViolated = True;
+        #     statusObj.warning = True;
+        # elif (abs(power) > powerDangerous):
+        #     logging.error("Modbus Power violated Dangerous")
+        #     statusObj.isModbusPowerViolated = True;
+        #     statusObj.dangerous = True;
+        #
+        # if (abs(current) >=  currentWarning and abs(current) < currentDangerous):
+        #     logging.warning("Modbus current violated warning")
+        #     statusObj.isModbusCurrentViolated = True;
+        #     statusObj.warning = True;
+        # elif (abs(current) > currentDangerous):
+        #     logging.error("Modbus Power violated Dangerous")
+        #     statusObj.isModbusCurrentViolated = True;
+        #     statusObj.dangerous = True;
 
         if (abs(vol) <=  volLowWarning and abs(vol) > volLowDangerous):
             logging.warning("Modbus voltage Low violated warning")
-            statusObj.isModbusVoltageViolated = True;
+            statusObj.isModbusLowVoltageWarning = True;
             statusObj.warning = True;
 
-        elif (abs(vol) <= volLowDangerous):
-            logging.error("Modbus Voltage violated Dangerous")
-            statusObj.isModbusVoltageViolated = True;
+        if (abs(vol) <= volLowDangerous):
+            logging.error("Modbus Voltage Low violated Dangerous")
+            statusObj.isModbusLowVoltageDangerous = True;
             statusObj.dangerous = True;
 
         if (abs(vol) >= volHighWarning and abs(vol) < volHighDangerous):
             logging.warning("Modbus voltage High violated warning")
-            statusObj.isModbusVoltageViolated = True;
+            statusObj.isModbusHighVoltageWarning = True;
             statusObj.warning = True;
 
-        elif (abs(vol) >= volHighDangerous):
-            logging.error("Modbus Voltage violated Dangerous")
-            statusObj.isModbusVoltageViolated = True;
+        if (abs(vol) >= volHighDangerous):
+            logging.error("Modbus Voltage High violated Dangerous")
+            statusObj.isModbusHighVoltageDagnerous = True;
             statusObj.dangerous = True;
         pass
 
+# ---------------------- Main Function -------------------------------------------------
     def updateCurrent(self):
         currentTime = time.time();
         if (currentTime - self.PreviousTime > self.IntervalTime):
@@ -158,11 +225,15 @@ class ModbusHandler:
                                   powerVal + self.variance_power)
 
     def run(self):
-        self.updatePower()
-            # self.updateCurrent();
+        if self.ControlMode == self.currentControlMode:
+            self.updateCurrent();
+        elif self.ControlMode == self.powerControlMode:
+            self.updatePower()
+
 
     def getLabels(self):
         return self.label_list;
+
     def getDatas(self):
         DCBusPower = self.getPower();
         DCBusCurrent = self.getCurrent();
@@ -172,27 +243,27 @@ class ModbusHandler:
         self.info_dict["modbus_Power"] = DCBusPower; self.info_dict["modbus_Current"] = DCBusCurrent; self.info_dict["modbus_Voltage"] = DCBusVoltage;
         return self.data_list;
 
-    def Init(self):
+    def setModbusDischarge(self):
+        if self.ControlMode == self.currentControlMode:
+            currentVal = self.currentVal;
+            self.setCurrent(currentVal);
+        elif self.ControlMode == self.powerControlMode:
+            powerVal = self.powerValue
+            self.setPower(powerVal)
 
-        logging.info("----------------")
-        self.openModbus();
 
-        logging.info("set the limitation on current, voltage, power")
-        self.setLimitation();
+    def setModbusCharge(self):
+        if self.ControlMode == self.currentControlMode:
+            currentVal = -1 * self.currentVal;
+            self.setCurrent(currentVal);
+        elif self.ControlMode == self.powerControlMode:
+            powerVal = -1 * self.powerValue
+            self.setPower(powerVal)
 
-        logging.info("set current 0")
-        self.setCurrent(0);
+        pass
 
-        logging.info("set power 0")
-        self.setPower(0)
 
-        if(not self.LoopIfNotMeetReq(self.checkModbusIfInit, 20)):
-            print("checkModbusIfInit doesn't meet the requirement")
-        else:
-            print("checkModbusIfInit pass the test")
-
-        # close the modbus device
-        print("ModbusInit job completed")
+# -------------------------------- Tools Function ----------------------------
 
     def openModbus(self):
         # set up connection: port name, slave address (in decimal)
@@ -207,79 +278,10 @@ class ModbusHandler:
         # set the op mode off
         self.instrument.write_register(self.K_op_mode, 0, 0, 6)  # K_op_mode
 
-    def setLimitation(self):
-        # set the limitation among current, power, voltage
-        self.instrument.write_register(self.bat_max_chrg_crt, self.signedToUnsigned(self.max_crt * self.current_scale), 0, 6);
-        self.instrument.write_register(self.bat_max_dischrg_crt, self.signedToUnsigned(self.max_dis_crt * self.current_scale), 0, 6);
-        # set the charge power limitation
-        self.instrument.write_register(self.bat_max_chrg_power, self.signedToUnsigned(self.max_power * self.power_scale), 0, 6)
 
-        ## set Max voltage
-        self.instrument.write_register(self.bat_max_volt, self.signedToUnsigned(self.max_vol * self.voltage_scale), 0,
-                                       6)
-        ## set Min voltage
-        self.instrument.write_register(self.bat_min_volt, self.signedToUnsigned(self.min_vol * self.voltage_scale), 0,
-                                       6);
     def closeModbus(self):
         self.instrument.write_register(self.K_op_mode, 0, 0, 6)  # K_op_mode
 
-
-    # check function
-    def LoopIfNotMeetReq(self, handler1, times, *args, **kwargs):
-
-        for i in range(times):
-            if (handler1(*args)):
-                return True;
-        return False;
-
-    def checkModbusIfInit(self):
-        DCBusPower = self.getPower();
-        DCBusCurrent = self.getCurrent()
-        DCBusVoltage = self.getVoltage();
-        if (
-                DCBusPower > 0 - self.variance_power and DCBusPower < 0 + self.variance_power and DCBusCurrent > 0 - self.variance_current and DCBusCurrent < 0 + self.variance_current and DCBusVoltage < self.max_vol and DCBusVoltage > self.min_vol):
-            print("Current and power are all set nearly 0, meet the requirement")
-            return True;
-        print("----------------")
-        print("DCBusPower: " + str(DCBusPower))
-        print("DCBusCurrent: " + str(DCBusCurrent))
-        print("DCBusVoltage: " + str(DCBusVoltage))
-        str1 = "DCBusPower: " + str(DCBusPower) + ";" + "DCBusCurrent: " + str(
-            DCBusCurrent) + ";" + "DCBusVoltage: " + str(DCBusVoltage) + ";"
-        logging.info(str1)
-        return False;
-
-    def monitorModbusStatus(self):
-        DCBusPower = self.getPower();
-        DCBusCurrent = self.getCurrent();
-        DCBusVoltage = self.getVoltage();
-        DCref = self.instrument.read_register(30264, 0, 4);
-        print("----------------")
-        print("DCBusPower: " + str(DCBusPower))
-        print("DCBusCurrent: " + str(DCBusCurrent))
-        print("DCBusVoltage: " + str(DCBusVoltage))
-        print("DCBusRef: " + str(DCref));
-        print("DCBusPowerUnsigned: " + str(self.instrument.read_register(self.epcl_dc_link_pwr, 0, 4)))
-        print("remote voltage: " + str(self.instrument.read_register(30263, 0, 4) / self.voltage_scale))
-        str1 = "DCBusPower: " + str(DCBusPower) + ";" + "DCBusCurrent: " + str(
-            DCBusCurrent) + ";" + "DCBusVoltage: " + str(DCBusVoltage) + ";"
-        logging.info(str1)
-
-    def checkIfModbusCurrentRight(self, upLine, bottomLine):
-        current = self.getCurrent();
-        if (current < upLine and current > bottomLine):
-            return True;
-        else:
-            return False;
-
-    def checkIfModbusVoltageRight(self, upLine, bottomLine):
-        voltage = self.getVoltage();
-        if (voltage < upLine and voltage > bottomLine):
-            return True;
-        else:
-            return False;
-
-    # get and set function
 
     def getCurrent(self):
         DCBusCurrent = self.unsignedToSigned(
@@ -325,6 +327,52 @@ class ModbusHandler:
         if (unsignedValue >= 2 ** 15):
             return unsignedValue - 2 ** 16
         return unsignedValue;
+
+# ----------------------------- Check Function ----------------------------------------
+
+    # check function
+    def LoopIfNotMeetReq(self, handler1, times, *args, **kwargs):
+
+        for i in range(times):
+            if (handler1(*args)):
+                return True;
+        return False;
+
+
+
+    def monitorModbusStatus(self):
+        DCBusPower = self.getPower();
+        DCBusCurrent = self.getCurrent();
+        DCBusVoltage = self.getVoltage();
+        DCref = self.instrument.read_register(30264, 0, 4);
+        print("----------------")
+        print("DCBusPower: " + str(DCBusPower))
+        print("DCBusCurrent: " + str(DCBusCurrent))
+        print("DCBusVoltage: " + str(DCBusVoltage))
+        print("DCBusRef: " + str(DCref));
+        print("DCBusPowerUnsigned: " + str(self.instrument.read_register(self.epcl_dc_link_pwr, 0, 4)))
+        print("remote voltage: " + str(self.instrument.read_register(30263, 0, 4) / self.voltage_scale))
+        str1 = "DCBusPower: " + str(DCBusPower) + ";" + "DCBusCurrent: " + str(
+            DCBusCurrent) + ";" + "DCBusVoltage: " + str(DCBusVoltage) + ";"
+        logging.info(str1)
+
+    def checkIfModbusCurrentRight(self, upLine, bottomLine):
+        current = self.getCurrent();
+        if (current < upLine and current > bottomLine):
+            return True;
+        else:
+            return False;
+
+    def checkIfModbusVoltageRight(self, upLine, bottomLine):
+        voltage = self.getVoltage();
+        if (voltage < upLine and voltage > bottomLine):
+            return True;
+        else:
+            return False;
+
+
+
+
 
     def __del__(self):
         print("exit the program")

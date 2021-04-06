@@ -1,6 +1,6 @@
 import json
 
-with open('config.properties') as f:
+with open('../../main/Client/config.properties') as f:
   data = json.load(f)
 
 print(int(data["pumpPIN"]))
