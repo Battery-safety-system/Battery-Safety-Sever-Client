@@ -1,0 +1,2 @@
+date,time,modbus_Power,modbus_Current,modbus_Voltage,isModbusHighVoltageDagnerous,isModbusHighVoltageWarning,isModbusLowVoltageDangerous,isModbusLowVoltageWarning,isPcanTempDangerous,isPcanTempWarning,isPcanVoltageHighDangerous,isPcanVoltageHighWarning,isPcanVoltageLowDangerous,isPcanVoltageLowWarning,warning,dangerous
+08-04-2021,11:36:39,-0.004577916132576451,-0.03839213729028295,0.640888698995941,False,False,True,False,False,False,False,False,False,False,False,True

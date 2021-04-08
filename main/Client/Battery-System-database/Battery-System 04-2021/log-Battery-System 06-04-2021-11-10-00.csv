@@ -1,2 +1,0 @@
-date,time,Ardu_Press,Ardu_Temp1,Ardu_Temp2,modbus_Power,modbus_Current,modbus_Voltage,isModbusHighVoltageDagnerous,isModbusHighVoltageWarning,isModbusLowVoltageDangerous,isModbusLowVoltageWarning,isPcanTempDangerous,isPcanTempWarning,isPcanVoltageHighDangerous,isPcanVoltageHighWarning,isPcanVoltageLowDangerous,isPcanVoltageLowWarning,warning,dangerous
-06-04-2021,11:10:00,90,27,23,-0.04120124519318806,-0.5758820593542442,381.0846278267769,False,True,False,False,False,False,False,False,False,False,True,False
