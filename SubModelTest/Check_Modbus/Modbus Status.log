@@ -3923,3 +3923,20 @@ INFO:root:----------------
 INFO:root:set the limitation on current, voltage, power
 INFO:root:DCBusPower: 0.2517853872917048;DCBusCurrent: 2.053979345030138;DCBusVoltage: 377.6665547654652;
 INFO:root:DCBusPower: -0.03662332906061161;DCBusCurrent: -0.09598034322570738;DCBusVoltage: 363.17026276436656;
+INFO:root:Initialize the modbusHandler
+INFO:root:----------------
+INFO:root:Initialize the modbusHandler
+INFO:root:----------------
+INFO:root:set the limitation on current, voltage, power
+INFO:root:DCBusPower: -0.07324665812122322;DCBusCurrent: 0.24954889238683917;DCBusVoltage: 245.36881618701742;
+INFO:root:DCBusPower: 0.23347372276139902;DCBusCurrent: 0.5758820593542442;DCBusVoltage: 233.00881984923853;
+INFO:root:Initialize the modbusHandler
+INFO:root:----------------
+INFO:root:set the limitation on current, voltage, power
+INFO:root:DCBusPower: -0.004577916132576451;DCBusCurrent: -1.6124697661918839;DCBusVoltage: 151.73802911465802;
+INFO:root:DCBusPower: -0.27925288408716353;DCBusCurrent: -1.2285483932890544;DCBusVoltage: 235.87755973998227;
+INFO:root:Initialize the modbusHandler
+INFO:root:----------------
+INFO:root:set the limitation on current, voltage, power
+INFO:root:DCBusPower: -0.009155832265152902;DCBusCurrent: -0.0767842745805659;DCBusVoltage: 213.23282570879238;
+INFO:root:DCBusPower: -0.27925288408716353;DCBusCurrent: -1.055783775482781;DCBusVoltage: 275.7957701345866;

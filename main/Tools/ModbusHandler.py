@@ -5,8 +5,6 @@ sys.path.append("/home/pi/Desktop/Battery-Safety-Sever-Client")
 import minimalmodbus
 import time
 import logging
-import sys
-sys.path.append("/home/pi/Desktop/Battery-Safety-Sever-Client")
 from main.Tools.Status import Status
 
 class ModbusHandler:
@@ -16,7 +14,8 @@ class ModbusHandler:
 
         with open('config.properties') as f:
             data = json.load(f)
-            data = data["ModbusHandler"]
+            print(data)
+            data = data['ModbusHandler']
             for key in data:
                 setattr(self, key, data[key]);
 
@@ -40,11 +39,15 @@ class ModbusHandler:
         logging.info("set power 0")
         self.setPower(0)
 
-        if(not self.LoopIfNotMeetReq(self.checkModbusIfInit, 20)):
+        if(not self.LoopIfNotMeetReq(self.checkModbusIfInit, 200)):
             print("checkModbusIfInit doesn't meet the requirement")
+            self.closeModbus()
+            raise Exception("checkModbusIfInit errors")
         else:
+            
             print("checkModbusIfInit pass the test")
-
+        
+        self.PreviousTime = time.time();
         # close the modbus device
         print("ModbusInit job completed")
 
@@ -65,17 +68,17 @@ class ModbusHandler:
     def checkModbusIfInit(self):
         DCBusPower = self.getPower();
         DCBusCurrent = self.getCurrent()
-        DCBusVoltage = self.getVoltage();
+        RemoteVoltage = self.getVoltage();
         if (
-                DCBusPower > 0 - self.variance_power and DCBusPower < 0 + self.variance_power and DCBusCurrent > 0 - self.variance_current and DCBusCurrent < 0 + self.variance_current and DCBusVoltage < self.max_vol and DCBusVoltage > self.min_vol):
+                DCBusPower > 0 - self.variance_power and DCBusPower < 0 + self.variance_power and DCBusCurrent > 0 - self.variance_current and DCBusCurrent < 0 + self.variance_current and RemoteVoltage < self.max_vol and RemoteVoltage > self.min_vol):
             print("Current and power are all set nearly 0, meet the requirement")
             return True;
         print("----------------")
         print("DCBusPower: " + str(DCBusPower))
         print("DCBusCurrent: " + str(DCBusCurrent))
-        print("DCBusVoltage: " + str(DCBusVoltage))
+        print("RemoteVoltage: " + str(RemoteVoltage))
         str1 = "DCBusPower: " + str(DCBusPower) + ";" + "DCBusCurrent: " + str(
-            DCBusCurrent) + ";" + "DCBusVoltage: " + str(DCBusVoltage) + ";"
+            DCBusCurrent) + ";" + "RemoteVoltage: " + str(RemoteVoltage) + ";"
         logging.info(str1)
         return False;
 
@@ -90,11 +93,11 @@ class ModbusHandler:
         # # powerLow
         # currentWarning = 100;
         # currentDangerous = 110;
-        volLowWarning = 322
-#         volLowWarning = 264
+#         volLowWarning = 322
+        volLowWarning = 268
         volHighWarning = 384  # test
         volHighDangerous = 390;
-        volLowDangerous = 364
+        volLowDangerous = 264
 
         power = self.info_dict["modbus_Power"]
         current = self.info_dict["modbus_Power"]
@@ -168,9 +171,9 @@ class ModbusHandler:
     def getDatas(self):
         DCBusPower = self.getPower();
         DCBusCurrent = self.getCurrent();
-        DCBusVoltage = self.getVoltage();
+        RemoteVoltage = self.getVoltage();
         RemoteVoltage = self.getRemoteVoltage();
-        data_list = [DCBusPower, DCBusCurrent, DCBusVoltage]
+        data_list = [DCBusPower, DCBusCurrent, RemoteVoltage]
         self.data_list = data_list;
         self.info_dict["modbus_Power"] = DCBusPower; self.info_dict["modbus_Current"] = DCBusCurrent; self.info_dict["modbus_Voltage"] = RemoteVoltage;
         self.info_dict["remoteVoltage"] = RemoteVoltage
@@ -230,9 +233,12 @@ class ModbusHandler:
         return DCBusPower;
 
     def getVoltage(self):
-        DCBusVoltage = self.unsignedToSigned(
-            self.instrument.read_register(self.epcl_dc_link_volt, 0, 4)) / self.voltage_scale;
-        return DCBusVoltage
+#         RemoteVoltage = self.unsignedToSigned(
+#             self.instrument.read_register(self.epcl_dc_link_volt, 0, 4)) / self.voltage_scale;
+#         return RemoteVoltage
+
+        RemoteVoltage = (self.instrument.read_register(30263, 0, 4) / self.voltage_scale)
+        return RemoteVoltage;
     def getRemoteVoltage(self):
         RemoteVoltage = (self.instrument.read_register(30263, 0, 4) / self.voltage_scale)
         return RemoteVoltage;
@@ -281,17 +287,17 @@ class ModbusHandler:
     def monitorModbusStatus(self):
         DCBusPower = self.getPower();
         DCBusCurrent = self.getCurrent();
-        DCBusVoltage = self.getVoltage();
+        RemoteVoltage = self.getVoltage();
         DCref = self.instrument.read_register(30264, 0, 4);
         print("----------------")
         print("DCBusPower: " + str(DCBusPower))
         print("DCBusCurrent: " + str(DCBusCurrent))
-        print("DCBusVoltage: " + str(DCBusVoltage))
+        print("RemoteVoltage: " + str(RemoteVoltage))
         print("DCBusRef: " + str(DCref));
         print("DCBusPowerUnsigned: " + str(self.instrument.read_register(self.epcl_dc_link_pwr, 0, 4)))
-        print("remote voltage: " + str(self.instrument.read_register(30263, 0, 4) / self.voltage_scale))
+#         print("remote voltage: " + str(self.instrument.read_register(30263, 0, 4) / self.voltage_scale))
         str1 = "DCBusPower: " + str(DCBusPower) + ";" + "DCBusCurrent: " + str(
-            DCBusCurrent) + ";" + "DCBusVoltage: " + str(DCBusVoltage) + ";"
+            DCBusCurrent) + ";" + "RemoteVoltage: " + str(RemoteVoltage) + ";"
         logging.info(str1)
 
     def checkIfModbusCurrentRight(self, upLine, bottomLine):
@@ -327,4 +333,4 @@ class ModbusHandler:
         # self.setPower(0)
         pass;
 
-ModbusHandler(1);
+# ModbusHandler(1);

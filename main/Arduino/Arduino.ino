@@ -5,12 +5,12 @@ int Temp2_PIN = A1;
 int Press_PIN = A2;
 int test_PIN = A3;
 // set value
-int Pump_PIN = 4;
-int Fan_PIN = 8;
+int Pump_PIN = 7;
+int Fan_PIN = 6;
 
 int Relay1_PIN = 5;
-int Relay2_PIN = 6;
-int Relay3_PIN = 7;
+int Relay2_PIN = 3;
+int Relay3_PIN = 4;
 
 void setup() {
   // put your setup code here, to run once:
@@ -25,6 +25,12 @@ void setup() {
   pinMode(Relay2_PIN, OUTPUT);
   pinMode(Relay3_PIN, OUTPUT);
   pinMode(Fan_PIN, OUTPUT);
+  
+  digitalWrite( Pump_PIN, 0);
+  digitalWrite( Relay1_PIN, 0);
+  digitalWrite( Relay2_PIN, 0);
+  digitalWrite( Relay3_PIN, 0);
+  digitalWrite( Fan_PIN, 0);
 //  Serial.setTimeout(100); // set new value to 100 milliseconds
 
 }

@@ -6,7 +6,7 @@ import logging
 class ModbusHandler:
     def __init__(self):
         logging.basicConfig(filename='Modbus Status.log', level=logging.DEBUG)
-        self.USB_Port = '/dev/ttyUSB1'
+        self.USB_Port = '/dev/ttyUSB0'
         self.slaveAddress = 2;
         
         self.current_mode = 2;
@@ -257,6 +257,8 @@ class ModbusHandler:
         # # self.setVoltage(0)
         # self.setPower(0)
         pass;
+    def close(self):
+        self.instrument.write_register(41026, 0, 0, 6)  # K_op_mode
 
 m1 = ModbusHandler();
-# m1.run();
+m1.close();

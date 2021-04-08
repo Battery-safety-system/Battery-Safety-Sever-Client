@@ -12,7 +12,7 @@ class PcanConnection(object):
         self.channel = 'can0'
         self.bus = can.interface.Bus(channel= self.channel, bustype= self.bustype)
 
-        self.exitNum = 30
+        self.exitNum = 40
         self.message_dbc = self.getMessageDBC();
         self.reverse_message_dbc =  {v: k for k, v in self.message_dbc.items()}
 
@@ -281,6 +281,7 @@ class PcanConnection(object):
                 status.isPcanTempDangerous = True;
                 status.temperature_voliated_battery.append(battery);
             elif CMA_Max_Temp >= self.CMA_Temp_Warning:
+                print("CMA_Max_Temp: " + str(CMA_Max_Temp))
                 status.warning = True;
                 status.isPcanTempWarning = True;
                 status.temperature_voliated_battery.append(battery);

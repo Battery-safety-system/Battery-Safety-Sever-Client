@@ -24,10 +24,13 @@ class Battery_System:
 
         print("Init Arduino")
         ArduinoLabelList = self.arduinoInit();
+        self.ArduinoHandlerObj.initRelayStepOne()
         print("********************************************")
 
         print("Init Modbus")
         modbusLabels = self.modbusInit();
+        
+#         self.ArduinoHandlerObj.initRelayStepTwo()
         print("********************************************")
 
         print("Init Label lists and datas")
@@ -69,8 +72,8 @@ class Battery_System:
         self.ArduinoHandlerObj.ReceiveInfoFromArduino()  # get temp1, temp2, real1, real2 values
         ArduinoLabelList = self.ArduinoHandlerObj.getLabListFromContentDict()
         # Init the device
-        ArduinoInfoList = self.ArduinoHandlerObj.judgeArduinoInfo(self.StatusObj);
-        self.ArduinoHandlerObj.activateDevice(ArduinoInfoList)
+#         ArduinoInfoList = self.ArduinoHandlerObj.judgePumpInfo(self.StatusObj);
+#         self.ArduinoHandlerObj.activateDevice(ArduinoInfoList)
 
         return ArduinoLabelList;
 
@@ -109,6 +112,7 @@ class Battery_System:
         while True:
             print("current time is " + time.strftime('%H-%M-%S'))
             print(self.ModbusHandlerObj.info_dict)
+            print(vars(self.StatusObj))
             if self.currentState == self.normalState:
                 print("normal state \n")
                 self.normalHandler();
@@ -134,7 +138,7 @@ class Battery_System:
 
         self.storeDate();
 
-        self.transferToPc();
+#         self.transferToPc();
 
         self.ModbusHandlerObj.run();
 
@@ -148,7 +152,7 @@ class Battery_System:
 
         self.activeDevice();
 
-        self.transferToPc();
+#         self.transferToPc();
 
         self.updateStatus();
         #
@@ -163,7 +167,7 @@ class Battery_System:
         
         self.ArduinoHandlerObj.setRelayoff();
         print("set relay off")
-        self.transferToPc();
+#         self.transferToPc();
 
         self.updateStatus();
 
@@ -194,7 +198,10 @@ class Battery_System:
 
         # get label, datas from arduino( mainly temp, pressure)
         print("Recieve information from Arduino")
-        self.ArduinoHandlerObj.ReceiveInfoFromArduino()  # get temp1, temp2, real1, real2 values
+        try:
+            self.ArduinoHandlerObj.ReceiveInfoFromArduino()  # get temp1, temp2, real1, real2 values
+        except:
+            print("Error from Arduino HandlerObj")
         ArduinoLabelList = self.ArduinoHandlerObj.getLabListFromContentDict()
         ArduinoDataList = self.ArduinoHandlerObj.getDataListFromContentDict();
 
@@ -222,7 +229,7 @@ class Battery_System:
         self.FileObj.WritetoCVS(self.data_list, self.label_list);
 
     def transferToPc(self):
-        # send data, label to the pc
+        # send data, label to the pcupdateStatus
         print("send Label, status, datas to PC")
         if len(self.label_list) != len(self.data_list):
             return ;
@@ -251,7 +258,7 @@ class Battery_System:
     def activeDevice(self):
         # active the device and check if its out of warnig level and dangerous level and do responding operation from status
         print("activate device: pump and relay with Arduino")
-        ArduinoInfoList = self.ArduinoHandlerObj.judgeArduinoInfo(self.StatusObj);
+        ArduinoInfoList = self.ArduinoHandlerObj.judgePumpInfo(self.StatusObj);
         self.ArduinoHandlerObj.activateDevice(ArduinoInfoList)
         if self.StatusObj.isVoltageVio():
             if self.StatusObj.isVoltageLowVio():
