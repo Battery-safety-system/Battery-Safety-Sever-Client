@@ -52,7 +52,7 @@ class Battery_System:
 
         self.PcanConnectionObj = PcanConnection();
         PcanLabels = self.PcanConnectionObj.getLabels();
-        print("pcan labels" + str(PcanLabels))
+        print("pcan labels " + str(PcanLabels))
         return PcanLabels;
 
     def statusInit(self):
@@ -92,7 +92,7 @@ class Battery_System:
     def PcInit(self):
         self.PCConnectionObj = PCConnection()
         self.PCConnectionObj.connect()
-        # self.PCConnectionObj.sendContent({"labels": self.MessageObj.final_label_list})
+        self.PCConnectionObj.sendContent({"labels": self.MessageObj.final_label_list})
 
 
     def stateInit(self):
@@ -134,7 +134,7 @@ class Battery_System:
 
         self.storeDate();
 
-        # self.transferToPc();
+        self.transferToPc();
 
         self.ModbusHandlerObj.run();
 
@@ -148,7 +148,7 @@ class Battery_System:
 
         self.activeDevice();
 
-        # self.transferToPc();
+        self.transferToPc();
 
         self.updateStatus();
         #
@@ -163,7 +163,7 @@ class Battery_System:
         
         self.ArduinoHandlerObj.setRelayoff();
         print("set relay off")
-        # self.transferToPc();
+        self.transferToPc();
 
         self.updateStatus();
 

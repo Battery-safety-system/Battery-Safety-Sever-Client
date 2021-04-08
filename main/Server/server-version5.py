@@ -18,25 +18,28 @@ class Server_PC:
         self.DataHandlerObj = DataHandler();
 
     def run(self):
-        datas = [];
-        status = [];
-        labels = []
+
         while True:
             print('start the loop')
+            datas = [];
+            labels = []
             try:
                 content = self.ConnectionObj.receiveContent()
-                datas = content["datas"]
-                status = content["status"]
-                labels = content["labels"]
+                for key in content:
+                    labels.append(key)
+                    datas.append(content[key])
             except Exception as e:
                 print(e)
                 self.ConnectionObj.reconnect()
                 self.FileObj.createWholeFileSystemVar()
                 self.FileObj.createWholeFilesWithFloders()
                 continue
-
-            print(self.DataHandlerObj.getDeviceInfoString(status))
-            print(self.DataHandlerObj.getStatusInfoString(status))
+            print("warning status: " + str(content["warning"]))
+            print("dangerous status: " + str(content["dangerous"]))
+            for key in content:
+                assert isinstance(key, str)
+                if "is" in key:
+                    print(key + ": " + content[key])
             self.FileObj.WritetoCVS(datas, labels)
             print('end the loop \n')
 
