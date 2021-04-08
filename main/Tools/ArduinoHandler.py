@@ -4,6 +4,9 @@ import json
 import sys
 sys.path.append("/home/pi/Desktop/Battery-Safety-Sever-Client")
 from main.Tools.Status import Status
+import time;
+import logging
+logging.basicConfig(filename='../Client/Modbus Status.log', level=logging.DEBUG)
 class ArduinoHandler:
     def __init__(self):
         self.ser = serial.Serial('/dev/ttyACM0', 9600)
@@ -79,7 +82,16 @@ class ArduinoHandler:
         pass;
 # ---------------------------Receive Section ----------------------------
     def ReceiveInfoFromArduino(self):
-        contentStr = self.receive();
+        currentTime = time.time();
+        while(True):
+            contentStr = self.receive();
+            if(self.checkIfInfoRightFromArduino(contentStr)):
+                break;
+            if(time.time() - currentTime > 3):
+                logging.error("ArduinoHandler: ReceiveInforFromArduino: Receive Error!!")
+                return ;
+
+
         print(contentStr, '')
         print("get All Information from Arduino")
         contentArr = contentStr.split(',');
@@ -96,12 +108,26 @@ class ArduinoHandler:
             elif(keyword[5:9] == "Pres") :
                 res = self.convertPressToRealValue(val);
                 contentDict[keyword] = int(res);
-            else:
-                print("getInfo key Error!!!");
-                pass
+
 
         print("contentDict is: " + str(contentDict))
         self.contentDict = contentDict;
+
+    def checkIfInfoRightFromArduino(self, contentStr):
+        assert isinstance(contentStr, str)
+        try:
+            contentArr = contentStr.split(',')
+            for oneInfo in contentArr:
+                arr = oneInfo.split(':');
+                keyword = arr[0];
+                content = arr[1];
+                val = int(content);
+
+                if (not (keyword[5:9] == "Temp" or keyword[5:9] == "Pres")):
+                    return False
+            return True;
+        except:
+            return False;
 
     def convertTempToRealValue(self, Volval):
         voltage = (Volval /1024.0 * 5.0)

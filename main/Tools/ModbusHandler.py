@@ -13,69 +13,18 @@ class ModbusHandler:
     def __init__(self, ControlMode):
         logging.basicConfig(filename='Modbus Status.log', level=logging.DEBUG)
         self.ControlMode = ControlMode;
-        self.currentControlMode = 1;
-        self.powerControlMode = 2;
 
-        self.USB_Port = '/dev/ttyUSB0'
-        self.slaveAddress = 2;
+        with open('config.properties') as f:
+            data = json.load(f)
+            data = data["ModbusHandler"]
+            for key in data:
+                setattr(self, key, data[key]);
 
-        self.current_mode = 2;
-        self.power_mode = 1;
-        self.voltage_mode = 4
-
-        self.max_vol = 384
-        self.min_vol = 264
-        self.max_crt = -100;
-        self.max_dis_crt = 100
-        self.max_power = 30;
-
-        self.current_scale = 52.094
-        self.voltage_scale = 32.767
-        self.power_scale = 218.44
-
-        # setting register
-        self.security_code = 41024
-        self.Heartbeat = 41025
-        self.K_op_mode = 41026
-        self.Op_mode_setpoint = 41027
-        self.bat_max_volt = 41028
-        self.bat_min_volt = 41029
-        self.bat_max_chrg_power = 41032
-        self.bat_max_chrg_crt = 41030
-        self.bat_max_dischrg_crt = 41031
-        # reading register
-        self.epcl_dc_link_volt = 30265
-        self.epcl_dc_link_pwr = 30266
-        self.epc1_dc_link_crnt = 30267
-
-        # the variance
-        self.variance_current = 0.5;
-#         self.variance_voltage = 20;
-        self.variance_power = 0.5;
-
-        # the initial current, voltage, power values
-        self.init_current = 2;
-        self.init_power = 5;
-
+        # for key in data:
         #
-        logging.info("Initialize the modbusHandler")
+        #     print(key +":" + str(getattr(self, key)))
+
         self.Init();
-
-        # start work; set init variable and current;
-        self.CurrentList = [0, 1, 0, -1];
-        self.currentVal = 3;
-
-        self.powerValue = 20;
-        self.PowerList = [0, 1, 0.5, 0.8, 0, 1.2, 0, -1];
-
-        self.PreviousTime = time.time();
-        self.intervalCount = 0;
-        self.IntervalTime = 10; # test
-
-        # Labels and Datas
-        self.label_list = ["modbus_Power", "modbus_Current", "modbus_Voltage"]
-        self.data_list = []
-        self.info_dict = {};
 
     def Init(self):
 
@@ -155,26 +104,7 @@ class ModbusHandler:
         statusObj.isModbusHighVoltageDagnerous = False;
         statusObj.isModbusLowVoltageWarning = False;
         statusObj.isModbusLowVoltageDangerous = False;
-        # statusObj.isModbusPowerViolated = False;
-        # statusObj.isArduTempHigh = False;
-        # statusObj.isArduPressViolated = False
-        # if (abs(power) >=  powerWarning and abs(power) < powerDangerous):
-        #     logging.warning("Modbus power violated warning")
-        #     statusObj.isModbusPowerViolated = True;
-        #     statusObj.warning = True;
-        # elif (abs(power) > powerDangerous):
-        #     logging.error("Modbus Power violated Dangerous")
-        #     statusObj.isModbusPowerViolated = True;
-        #     statusObj.dangerous = True;
-        #
-        # if (abs(current) >=  currentWarning and abs(current) < currentDangerous):
-        #     logging.warning("Modbus current violated warning")
-        #     statusObj.isModbusCurrentViolated = True;
-        #     statusObj.warning = True;
-        # elif (abs(current) > currentDangerous):
-        #     logging.error("Modbus Power violated Dangerous")
-        #     statusObj.isModbusCurrentViolated = True;
-        #     statusObj.dangerous = True;
+
 
         if (abs(vol) <=  volLowWarning and abs(vol) > volLowDangerous):
             logging.warning("Modbus voltage Low violated warning")
@@ -242,7 +172,7 @@ class ModbusHandler:
         RemoteVoltage = self.getRemoteVoltage();
         data_list = [DCBusPower, DCBusCurrent, DCBusVoltage]
         self.data_list = data_list;
-        self.info_dict["modbus_Power"] = DCBusPower; self.info_dict["modbus_Current"] = DCBusCurrent; self.info_dict["modbus_Voltage"] = DCBusVoltage;
+        self.info_dict["modbus_Power"] = DCBusPower; self.info_dict["modbus_Current"] = DCBusCurrent; self.info_dict["modbus_Voltage"] = RemoteVoltage;
         self.info_dict["remoteVoltage"] = RemoteVoltage
         print("ModbusHandler" + str(self.info_dict))
         return self.data_list;
@@ -397,4 +327,4 @@ class ModbusHandler:
         # self.setPower(0)
         pass;
 
-
+ModbusHandler(1);
