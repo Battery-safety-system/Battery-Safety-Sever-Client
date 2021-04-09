@@ -14,8 +14,9 @@ import time;
 class Battery_System:
     def __init__(self):
 
-
-
+        self.isRelayOff = False;
+        self.isModbusOff = False;
+        self.isPumpFanOff = True;
         print("Initialize status")
         status_labels = self.statusInit();
         print("********************************************")
@@ -40,15 +41,14 @@ class Battery_System:
         print("********************************************")
 
         # init the PC Connection
-#         print("initialize PC Connection")
-#             # PCConnectionObj = PCConnection();
-# 
-# #         try:
-# #             self.PcInit();
-# #         except Exception as e:
-# #             print(e)
-# #             exit ;
-#         print("********************************************")
+        print("initialize PC Connection")
+
+        try:
+            self.PcInit();
+        except Exception as e:
+            print(e)
+            exit ;
+        print("********************************************")
 
         print("Init Modbus")
         modbusLabels = []
@@ -169,7 +169,7 @@ class Battery_System:
 
         self.storeDate();
 
-#         self.transferToPc();
+        self.transferToPc();
 
         self.ModbusHandlerObj.run();
 
@@ -183,23 +183,16 @@ class Battery_System:
 
         self.activeDeviceInWarningState();
 
-#         self.transferToPc();
+        self.transferToPc();
 
         self.updateStatusInNormalWarningState();
         #
 
     def dangerousHandler(self):
-
+    
         self.collectData();
 
-        self.storeDate();
-        try:
-            self.ModbusHandlerObj.closeModbus();
-        except:
-            pass;
-        print("begin Arduino Handler")
-        self.ArduinoHandlerObj.setRelayoff();
-
+        self.activeDeviceInDangerousState();
 #         self.transferToPc();
 
         self.updateStatusInDangerousState();
@@ -245,13 +238,15 @@ class Battery_System:
 
 
         # get labels, data from modbus (mainly DC current, DC power)
-        try:
-            self.ModbusHandlerObj.run();
-        except Exception as e:
-            print("Error on Modbus Reading, Please check Modbus connection")
-        modbus_labels = self.ModbusHandlerObj.getLabels();
-        modbus_datas = self.ModbusHandlerObj.getDatas();
-        self.ModbusHandlerObj.setStatusByVoltageInNormalWarningState(self.StatusObj)
+        if (self.currentState != self.dangerousState):
+            try:
+                self.ModbusHandlerObj.run();
+            except Exception as e:
+                print("Error on Modbus Reading, Please check Modbus connection")
+            modbus_labels = self.ModbusHandlerObj.getLabels();
+            modbus_datas = self.ModbusHandlerObj.getDatas();
+            self.ModbusHandlerObj.setStatusByVoltageInNormalWarningState(self.StatusObj)
+
 
         # get all the labels and datas from status
         status_labels = self.StatusObj.getLabels();
@@ -302,6 +297,20 @@ class Battery_System:
         else:
             self.currentState = self.normalState;
 
+    def activeDeviceInDangerousState(self):
+        if (not self.isModbusOff):
+            self.ModbusHandlerObj.closeModbus();
+            self.isModbusOff = True;
+        
+        if (not self.isRelayOff):
+            time.sleep(2)
+            self.ArduinoHandlerObj.setRelayoff();
+            self.isRelayOff = True;
+            
+        if (self.StatusObj.istempHighVio() and self.isPumpFanOff):
+            self.isPumpFanOff = True;
+            self.ArduinoHandlerObj.setPumpFanOn();
+
     def activeDeviceInWarningState(self):
         # active the device and check if its out of warnig level and dangerous level and do responding operation from status
         # print("activate device: pump and relay with Arduino")
@@ -328,7 +337,7 @@ class Battery_System:
         self.PcanConnectionObj.close();
         print("pcan off")
 
-        self.PCConnectionObj.close();
+#         self.PCConnectionObj.close();
 
 # ------------------------------------------ monitor Function ---------------------------------------------
     def monitorWarningDangerousStatus(self, statusObj):
@@ -355,14 +364,15 @@ class Battery_System:
 
     # def __del__(self):
     #     self.closeAllDevice();
-
-try:
-    Battery1 = Battery_System();
-    Battery1.run();
-except Exception as e:
-    print(e)
-    print("Battery Error!!! Close all the system")
-    Battery1.closeAllDevice();
+Battery1 = Battery_System();
+Battery1.run();
+# try:
+#     Battery1 = Battery_System();
+#     Battery1.run();
+# except Exception as e:
+#     print(e)
+#     print("Battery Error!!! Close all the system")
+#     Battery1.closeAllDevice();
 # try:
 #
 # except:

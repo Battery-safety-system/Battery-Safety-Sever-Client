@@ -42,12 +42,13 @@ class PcanConnection(object):
 #         self.CMA_Voltage_High_Warning = 44.5 #test
         self.CMA_Voltage_Low_Warning = 34
 #         self.CMA_Voltage_Low_Warning = 44 # test
-
+        
+#         self.CMA_Temp_Dangerous = 19 # test
         self.CMA_Temp_Dangerous = 50
-#         self.CMA_Temp_Warning = 40;
-        self.CMA_Temp_Warning = 19; # test
-#         self.CMA_Temp_security = 30 
-        self.CMA_Temp_security = 18 # test
+        self.CMA_Temp_Warning = 40;
+        #self.CMA_Temp_Warning = 19; # test
+        self.CMA_Temp_security = 30 
+        #self.CMA_Temp_security = 18 # test
 
         self.Cell_Voltage_High_Warning = 4.1
 #         self.Cell_Voltage_High_Warning = 3.7 # test
@@ -317,7 +318,7 @@ class PcanConnection(object):
                 if battery not in status.temperature_voliated_battery:
                     status.temperature_voliated_battery.append(battery);
                 
-            elif CMA_Max_Temp >= self.CMA_Temp_Warning:
+            if CMA_Max_Temp >= self.CMA_Temp_Warning:
                 # print("CMA_Max_Temp: " + str(CMA_Max_Temp))
                 status.warning = True;
                 status.isPcanTempWarning = True;

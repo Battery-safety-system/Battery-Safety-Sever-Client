@@ -1,0 +1,8 @@
+Modbus disconnect: 1. The reason Why Modbus disconnect automatically is because I set relay off before modbus off
+In dangerous State, the program will exit: 1. because I close the modbus, instrument will not work, so it will close soon; 
+temp: dangerous to security has some problem: problem1: if the modbus off, what should I do next; 
+Problem3: temp dangerous;  
+modbusHandler: run()(collectData -> updateCurrent -> conflict with setDischarge); 
+it alawys diconnect when temp dangerous? why? 
+rasie Exception when temperature vio -> updatecurrent; 
+send content Error: receive content truncate; and there is no send content at all. please check it; 
