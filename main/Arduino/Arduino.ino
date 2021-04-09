@@ -45,7 +45,7 @@ void loop() {
   String mapStatus = "Ardu_Temp1:" + String(Temp1) + ",Ardu_Temp2:" + String(Temp2) + ",Ardu_Press:" + String(Press) ;
   Serial.println(mapStatus);
   
-  delay(500);
+  delay(1000);
   if(Serial.available() != 0) {
     char input[INPUT_SIZE + 1];
     byte size = Serial.readBytes(input, INPUT_SIZE);

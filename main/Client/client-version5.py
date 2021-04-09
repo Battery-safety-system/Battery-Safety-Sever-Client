@@ -14,15 +14,7 @@ import time;
 class Battery_System:
     def __init__(self):
 
-        print("Initialize PCAN")
-        PcanLabels = [];
-        try:
-            PcanLabels = self.pcanInit();
-        except Exception as e:
-            print(e)
-            return ;
-            # print("")
-        print("********************************************")
+
 
         print("Initialize status")
         status_labels = self.statusInit();
@@ -33,19 +25,30 @@ class Battery_System:
             ArduinoLabelList = self.arduinoInit();
         except Exception as e:
             print(e);
-            return ;
+            raise Exception("Init Arduino Error")
+        print("********************************************")
+        
+        
+        print("Initialize PCAN")
+        PcanLabels = [];
+        try:
+            PcanLabels = self.pcanInit();
+        except Exception as e:
+            print(e)
+            exit ;
+            # print("")
         print("********************************************")
 
         # init the PC Connection
-        print("initialize PC Connection")
-            # PCConnectionObj = PCConnection();
-
-        try:
-            self.PcInit();
-        except Exception as e:
-            print(e)
-            return ;
-        print("********************************************")
+#         print("initialize PC Connection")
+#             # PCConnectionObj = PCConnection();
+# 
+# #         try:
+# #             self.PcInit();
+# #         except Exception as e:
+# #             print(e)
+# #             exit ;
+#         print("********************************************")
 
         print("Init Modbus")
         modbusLabels = []
@@ -54,8 +57,9 @@ class Battery_System:
         except Exception as e:
             print(e);
             self.closeAllDevice();
-            return ;
+            exit ;
         print("********************************************")
+
 
 
         print("Init Label lists and datas")
@@ -89,8 +93,9 @@ class Battery_System:
         self.ArduinoHandlerObj = ArduinoHandler();
         self.ArduinoHandlerObj.ReceiveInfoFromArduino()  # get temp1, temp2, real1, real2 values
         ArduinoLabelList = self.ArduinoHandlerObj.getLabListFromContentDict()
+        
         self.ArduinoHandlerObj.initPumpFanRelay();
-
+        time.sleep(1)
         return ArduinoLabelList;
 
 
@@ -158,7 +163,7 @@ class Battery_System:
 
         self.storeDate();
 
-        self.transferToPc();
+#         self.transferToPc();
 
         self.ModbusHandlerObj.run();
 
@@ -182,9 +187,11 @@ class Battery_System:
         self.collectData();
 
         self.storeDate();
-
-        self.ModbusHandlerObj.closeModbus();
-        
+        try:
+            self.ModbusHandlerObj.closeModbus();
+        except:
+            pass;
+        print("begin Arduino Handler")
         self.ArduinoHandlerObj.setRelayoff();
 
 #         self.transferToPc();
@@ -245,11 +252,11 @@ class Battery_System:
         status_datas = self.StatusObj.getStatusDatas();
 
         # merge status, arduino, modbus, pcan to data list and label list, and status dict;
-        self.createLabelsAndInitDatas(pcanLabels + ArduinoLabelList + modbus_labels + status_labels);
+        self.createLabelsAndInitDatas(pcanLabels , ArduinoLabelList , modbus_labels , status_labels);
         self.data_list = pcanDatas + ArduinoDataList + modbus_datas + status_datas;
         self.data_list.insert(0, time.strftime('%H:%M:%S'))
         self.data_list.insert(0, time.strftime('%d-%m-%Y'))
-        self.data_list.append(self.convertStateToStr(self.currentState));
+        self.data_list.append(self.convertStateToStr());
 
 
     def storeDate(self):
@@ -308,8 +315,9 @@ class Battery_System:
             print(e)
         print("Modbus off")
         self.ArduinoHandlerObj.setRelayoff();
+        print("set Relay off")
         self.ArduinoHandlerObj.setPumpFanOff();
-        self.ArduinoHandlerObj.closeArduionConnection();
+#         self.ArduinoHandlerObj.closeArduionConnection();
         print("Arduino off")
         self.PcanConnectionObj.close();
         print("pcan off")
@@ -345,7 +353,8 @@ class Battery_System:
 try:
     Battery1 = Battery_System();
     Battery1.run();
-except:
+except Exception as e:
+    print(e)
     print("Battery Error!!! Close all the system")
     Battery1.closeAllDevice();
 # try:

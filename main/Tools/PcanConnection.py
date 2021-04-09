@@ -11,7 +11,7 @@ class PcanConnection(object):
         self.channel = 'can0'
         self.bus = can.interface.Bus(channel= self.channel, bustype= self.bustype)
 
-        self.exitNum = 40
+        self.exitNum = 20
         self.message_dbc = self.getMessageDBC();
         self.reverse_message_dbc =  {v: k for k, v in self.message_dbc.items()}
 
@@ -33,10 +33,15 @@ class PcanConnection(object):
         self.init();
 
         # status
+#         self.CMA_Voltage_High_Dangerous = 44.5 # test
         self.CMA_Voltage_High_Dangerous = 48.5
-        self.CMA_Voltage_Low_Dangerous = 33
+#         self.CMA_Voltage_Low_Dangerous = 33
+        self.CMA_Voltage_Low_Dangerous = 44.5 # test
+        
         self.CMA_Voltage_High_Warning = 47.5
+#         self.CMA_Voltage_High_Warning = 44.5 #test
         self.CMA_Voltage_Low_Warning = 34
+#         self.CMA_Voltage_Low_Warning = 44 # test
 
         self.CMA_Temp_Dangerous = 50
         self.CMA_Temp_Warning = 40;
@@ -54,7 +59,7 @@ class PcanConnection(object):
         self.getBatteryListFromPcan();
         self.getReqMessageList();
         self.getLabelListPlusMessageDictFromPcan()
-        if(self.checkIfPcanLabelsReadingRight()):
+        if(not self.checkIfPcanLabelsReadingRight()):
             raise Exception("Error!!!! Pcan Init has Problem, pcan Reading is Wrong")
         # print(f'label list: {self.label_list}')
         # 1.4 construct the label list
@@ -117,12 +122,13 @@ class PcanConnection(object):
 # ------------------------ get Info from Pcan function --------------------------------------
 
     def getBatteryListFromPcan(self):
-        # print("Begin getBatteryListFromPcan()")
+#         print("Begin getBatteryListFromPcan()")
         self.sendMessage(self.sync_message);
         count = 0;
         label_list = [];
         while True:
             message = self.bus.recv();
+#             print(message.arbitration_id)
             if(message.arbitration_id not in self.message_dbc):
                 count += 1;
             else:
@@ -133,7 +139,10 @@ class PcanConnection(object):
                 break;
         # label shoud be sorted [BMU01_pdo01, BMU02_pdo02 ...]
         if(len(label_list) == 0):
-            raise Exception("PcannConnection Error!!!! label list length is 0")
+#             print("label_list is " + str(label_list))
+            self.getBatteryListFromPcan()
+            return;
+#             raise Exception("PcannConnection Error!!!! label list length is 0")
         label_list.sort();
         battery_list = list(set([int(elem[3:5]) for elem in label_list]));
         self.battery_list = battery_list;
@@ -212,7 +221,7 @@ class PcanConnection(object):
         Req_list = ['self.' + 'BMU' + str(battery_id).zfill(2) + '_Req_send_message' for battery_id in
                     self.battery_list];
         for ele in Req_list:
-            print(ele)
+#             print(ele)
             Req_message_list.append(eval(ele));
         self.Req_message_list = Req_message_list;
         # print("ReqMessage List id: ")
@@ -257,25 +266,34 @@ class PcanConnection(object):
 
     def detectVoltage(self, status):
         assert isinstance(status, Status)
-
+        max_CMA_Voltage = -1;
+        min_CMA_Voltage = 1000;
         for battery in self.battery_list:
             battery_str = 'BMU' + str(battery).zfill(2)
             label = battery_str + '_' + 'CMA_Voltage';
             CMA_Voltage = self.message_data_dict[label];
-            if CMA_Voltage >= self.CMA_Voltage_High_Dangerous:
-                status.dangerous = True;
-                status.isPcanVoltageHighDangerous = True;
+            if(max_CMA_Voltage < CMA_Voltage):
+                max_CMA_Voltage = CMA_Voltage
+            if(min_CMA_Voltage > CMA_Voltage):
+                min_CMA_Voltage = CMA_Voltage
+        print("max_CMA_Voltage: " + str(max_CMA_Voltage))
+        print("min_CMA_Voltage: " + str(min_CMA_Voltage))
+        if max_CMA_Voltage >= self.CMA_Voltage_High_Dangerous:
+            status.dangerous = True;
+            status.isPcanVoltageHighDangerous = True;
 
-            if CMA_Voltage >= self.CMA_Voltage_High_Warning:
-                status.warning = True;
-                status.isPcanVoltageHighWarning = True;
-            if CMA_Voltage <= self.CMA_Voltage_Low_Dangerous:
-                status.dangerous = True;
-                status.isPcanVoltageLowDangerous = True;
-            if CMA_Voltage <= self.CMA_Voltage_Low_Warning:
-                status.warning = True;
-                status.isPcanVoltageLowWarning = True
-                pass;
+        if max_CMA_Voltage >= self.CMA_Voltage_High_Warning:
+            status.warning = True;
+            status.isPcanVoltageHighWarning = True;
+        if min_CMA_Voltage <= self.CMA_Voltage_Low_Dangerous:
+            status.dangerous = True;
+            status.isPcanVoltageLowDangerous = True;
+            
+        if min_CMA_Voltage <= self.CMA_Voltage_Low_Warning:
+            status.warning = True;
+            status.isPcanVoltageLowWarning = True
+
+    
 
     def detectTemp(self, status):
         assert isinstance(status, Status)

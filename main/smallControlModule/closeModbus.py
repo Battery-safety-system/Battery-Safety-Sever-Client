@@ -12,12 +12,13 @@ class ModbusHandler:
         logging.basicConfig(filename='Modbus Status.log', level=logging.DEBUG)
         self.ControlMode = ControlMode;
 
-        with open('config.properties') as f:
+        with open('../Client/config.properties') as f:
             data = json.load(f)
             print(data)
             data = data['ModbusHandler']
             for key in data:
                 setattr(self, key, data[key]);
+        self.openModbus()
 
     def openModbus(self):
         # set up connection: port name, slave address (in decimal)

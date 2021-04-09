@@ -32,7 +32,7 @@ class ModbusHandler:
 
         self.setPower(0)
 
-        if(not self.LoopIfNotMeetReq(self.checkModbusIfInit, 20)):
+        if(not self.LoopIfNotMeetReq(self.checkModbusIfInit, 70)):
             print("checkModbusIfInit doesn't meet the requirement")
             self.closeModbus()
             raise Exception("checkModbusIfInit errors")
@@ -61,14 +61,15 @@ class ModbusHandler:
         DCBusPower = self.getPower();
         DCBusCurrent = self.getCurrent()
         RemoteVoltage = self.getVoltage();
+#         print("----------------")
+#         print("DCBusPower: " + str(DCBusPower))
+#         print("DCBusCurrent: " + str(DCBusCurrent))
+#         print("RemoteVoltage: " + str(RemoteVoltage))
         if (
                 DCBusPower > 0 - self.variance_power and DCBusPower < 0 + self.variance_power and DCBusCurrent > 0 - self.variance_current and DCBusCurrent < 0 + self.variance_current and RemoteVoltage < self.max_vol and RemoteVoltage > self.min_vol):
             # print("Current and power are all set nearly 0, meet the requirement")
             return True;
-        print("----------------")
-        print("DCBusPower: " + str(DCBusPower))
-        print("DCBusCurrent: " + str(DCBusCurrent))
-        print("RemoteVoltage: " + str(RemoteVoltage))
+
         str1 = "DCBusPower: " + str(DCBusPower) + ";" + "DCBusCurrent: " + str(
             DCBusCurrent) + ";" + "RemoteVoltage: " + str(RemoteVoltage) + ";"
         # logging.info(str1)
@@ -80,11 +81,15 @@ class ModbusHandler:
 
     def setStatusByVoltageInNormalWarningState(self, statusObj):
         assert isinstance(statusObj, Status)
-#         volLowWarning = 322
+#         volLowWarning = 322# test
         volLowWarning = 268
-        volHighWarning = 384  # test
+#         volLowWarning = 346# test
+        volHighWarning = 384  
+#         volHighWarning = 344  # test
         volHighDangerous = 390;
+#         volHighDangerous = 352# test
         volLowDangerous = 264
+#         volLowDangerous = 346# test
         vol = self.info_dict["modbus_Voltage"]
         #
         statusObj.isModbusHighVoltageWarning = False;
@@ -267,6 +272,7 @@ class ModbusHandler:
         for i in range(times):
             if (handler1(*args)):
                 return True;
+            time.sleep(0.5)
         return False;
 
 
@@ -309,9 +315,9 @@ class ModbusHandler:
             return False;
 
     def checkIfModbusVoltageInit(self):
-        vol = self.info_dict["modbus_Voltage"]
+#         vol = self.info_dict["modbus_Voltage"]
 
-        if (self.checkIfModbusVoltageRight(vol, 0 - self.variance_voltage, 0 + self.variance_voltage)):
+        if (self.checkIfModbusVoltageRight( 0 + self.variance_voltage, 0 - self.variance_voltage)):
             return True;
         else:
             return False;

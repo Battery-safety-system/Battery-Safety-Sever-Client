@@ -45,3 +45,12 @@ class ArduinoHandler:
             contentStr += str(arduinoInfo['pin_number'] ) + ":" + str(arduinoInfo['pin_value']) + "&";
         contentStr = contentStr[0:len(contentStr) - 1];
         self.send(contentStr.encode());
+    def receive(self):
+        return self.ser.readline().decode("utf-8");
+
+    def send(self, contentStr):
+        self.ser.write(contentStr);
+        
+ar1 = ArduinoHandler();
+ar1.setPumpFanOff();
+ar1.setRelayoff();

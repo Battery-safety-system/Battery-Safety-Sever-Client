@@ -26,15 +26,15 @@ class ArduinoHandler:
         ArduinoInfoList = []
         ArduinoInfoList.append({"device": "Relay", "pin_number": self.Relay1PIN, "pin_value": 1});
         ArduinoInfoList.append({"device": "Relay", "pin_number": self.Relay2PIN, "pin_value": 1});
-
         self.activateDevice(ArduinoInfoList)
+        print("initRelayStepOne: time sleep 15s")
         time.sleep(10)
         pass
     def initRelayStepTwo(self):
         ArduinoInfoList = []
         ArduinoInfoList.append({"device": "Relay", "pin_number": self.Relay2PIN, "pin_value": 1});
         self.activateDevice(ArduinoInfoList)
-        
+        print("initRelayStepTwo: time sleep 15s")
         time.sleep(10)
         ArduinoInfoList = []
         ArduinoInfoList.append({"device": "Relay", "pin_number": self.Relay3PIN, "pin_value": 0});
@@ -67,7 +67,7 @@ class ArduinoHandler:
 
     def initPumpFanRelay(self):
         self.setRelayoff();
-        self.setPumpFanoff();
+        self.setPumpFanOff();
 # ---------------------------Tools Section -------------------------------
     def receive(self):
         return self.ser.readline().decode("utf-8");

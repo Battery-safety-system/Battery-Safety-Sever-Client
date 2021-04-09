@@ -47,7 +47,7 @@ class ModbusHandler:
 
         #
         logging.info("Initialize the modbusHandler")
-        self.Init();
+#         self.Init();
 
         # start work; set init variable and current;
         self.CurrentList = [0, 1, 0, -1];
