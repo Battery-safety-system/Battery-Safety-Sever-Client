@@ -136,6 +136,12 @@ class Battery_System:
         while True:
             print("current time is " + time.strftime('%H-%M-%S'))
             print(self.ModbusHandlerObj.info_dict)
+            dict_info = vars(self.StatusObj)
+            for ele in dict_info:
+                if "is" in ele and dict_info[ele]:
+                    print(ele)
+                    
+            
             # print(vars(self.StatusObj))
 
             if self.currentState == self.normalState:
