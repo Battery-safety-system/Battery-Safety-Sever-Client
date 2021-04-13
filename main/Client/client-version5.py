@@ -36,8 +36,16 @@ class Battery_System:
             return ;
         print("********************************************")
 
-        #         # init the PC Connection
-        #         print("initialize PC Connection")
+        # init the PC Connection
+        print("initialize PC Connection")
+            # PCConnectionObj = PCConnection();
+
+        try:
+            self.PcInit();
+        except Exception as e:
+            print(e)
+            return ;
+        print("********************************************")
 
         print("Init Modbus")
         modbusLabels = []
@@ -106,7 +114,7 @@ class Battery_System:
     def PcInit(self):
         self.PCConnectionObj = PCConnection()
         self.PCConnectionObj.connect()
-        # self.PCConnectionObj.sendContent({"labels": self.MessageObj.final_label_list})
+
 
 
     def stateInit(self):
@@ -150,7 +158,7 @@ class Battery_System:
 
         self.storeDate();
 
-#         self.transferToPc();
+        self.transferToPc();
 
         self.ModbusHandlerObj.run();
 
@@ -245,18 +253,23 @@ class Battery_System:
 
 
     def storeDate(self):
-        print("Store Labels, Status, datas to Repository")
+        # print("Store Labels, Status, datas to Repository")
         self.FileObj.WritetoCVS(self.data_list, self.label_list);
 
     def transferToPc(self):
         # send data, label to the pcupdateStatus
-        print("send Label, status, datas to PC")
-        if len(self.label_list) != len(self.data_list):
+        # print("send Label, status, datas to PC")
+
+        try:
+            dictContent = {self.label_list[i]: self.data_list[i] for i in range(len(self.label_list))}
+        except Exception as e:
+            print(e)
+            print("Error!!! label_list and data_list doesn't match")
             return ;
-        dictContent = {self.label_list[i]: self.data_list[i] for i in range(len(self.label_list))}
         try:
             self.PCConnectionObj.sendContent(dictContent)
         except Exception as e:
+            print(e)
             self.PCConnectionObj.reconnectAfterLoops();
 
 
@@ -300,6 +313,8 @@ class Battery_System:
         print("Arduino off")
         self.PcanConnectionObj.close();
         print("pcan off")
+
+        self.PCConnectionObj.close();
 
 # ------------------------------------------ monitor Function ---------------------------------------------
     def monitorWarningDangerousStatus(self, statusObj):

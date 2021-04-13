@@ -12,7 +12,7 @@ class PCConnection(object):
     """docstring for PCConnection"""
 
     def __init__(self):
-        super(PCConnection, self).__init__()
+        # super(PCConnection, self).__init__()
         self.ip_addre = '192.168.137.1'
         self.ip_port = 6699
         self.errorTimes = 0;

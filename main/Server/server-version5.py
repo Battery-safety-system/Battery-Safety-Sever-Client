@@ -2,32 +2,35 @@
 import sys
 sys.path.append("C:\\Users\\SERF1\\Desktop\\Battery-Safety-Sever-Client")
 from main.Tools.File import File
-from main.Tools.ServerDataHandler import DataHandler
 from main.Tools.ServerConnection import Connection
-
+import time
 
 class Server_PC:
     def __init__(self):
         ## section1: file and floder creation
         print("check the connection")
         self.ConnectionObj = Connection();
-        content = self.ConnectionObj.receiveContent()
-        print("initialize the File")
-        self.FileObj = File(content["labels"])
+        print("*****************************************")
 
-        self.DataHandlerObj = DataHandler();
+        content = self.ConnectionObj.receiveContent()
+        self.getLabelsDatasFromContent(content);
+        print("*****************************************")
+
+
+        print("initialize the File")
+        self.FileObj = File(self.labels)
+
+
 
     def run(self):
 
         while True:
             print('start the loop')
-            datas = [];
-            labels = []
+            print("current time is " + time.strftime('%H-%M-%S'))
             try:
                 content = self.ConnectionObj.receiveContent()
-                for key in content:
-                    labels.append(key)
-                    datas.append(content[key])
+                self.getLabelsDatasFromContent(content);
+
             except Exception as e:
                 print(e)
                 self.ConnectionObj.reconnect()
@@ -38,11 +41,17 @@ class Server_PC:
             print("dangerous status: " + str(content["dangerous"]))
             for key in content:
                 assert isinstance(key, str)
-                if "is" in key:
+                if "is" in key and not content[key]:
                     print(key + ": " + content[key])
-            self.FileObj.WritetoCVS(datas, labels)
-            print('end the loop \n')
+            self.FileObj.WritetoCVS(self.datas, self.labels)
+            print('complete the loop \n')
 
+    def getLabelsDatasFromContent(self, content):
+        self.labels = []
+        self.datas = [];
+        for key in content:
+            self.labels.append(key)
+            self.datas.append(content[key])
 
 server_PC = Server_PC();
 server_PC.run();
