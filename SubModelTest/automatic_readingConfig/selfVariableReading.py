@@ -18,8 +18,15 @@ class Number:
             if not i[0].startswith('_') and i[0].startswith('is'):
                 if not inspect.ismethod(i[1]):
                     setattr(self, i[0], False)
+class delFun:
+    def __init__(self):
+        # raise Exception("Error");
+        print("ha")
+    def __del__(self):
+        print("create the result")
+
 # Driver's code
-n = Number()
+# n = Number()
 # for i in inspect.getmembers(n):
 #
 #     # to remove private and protected
@@ -30,5 +37,7 @@ n = Number()
 #         # doesnot start with a underscore
 #         if not inspect.ismethod(i[1]):
 #             print(i)
-n.setFalse();
-n.show();
+# n.setFalse();
+# n.show();
+
+df =  delFun();

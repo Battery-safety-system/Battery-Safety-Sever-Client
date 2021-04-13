@@ -19,10 +19,10 @@ class PCConnection(object):
         self.isError = False;
 
     def connect(self):
-        print("Try to connect to PC")
+
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.client.connect((self.ip_addre, self.ip_port))
-        print('socket has connected')
+
 
     def sendContent(self, dictContent):
         if(self.isError == True and self.errorTimes < 60):
@@ -37,7 +37,7 @@ class PCConnection(object):
             raise Exception("sendContent: Error");
 
     def close(self):
-        print("PC Connection close")
+        # print("PC Connection close")
         self.client.close();
 
     def reconnectAfterLoops(self):

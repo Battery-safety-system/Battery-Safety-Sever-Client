@@ -1,6 +1,5 @@
 import cantools
 import can
-import time
 import sys
 sys.path.append("/home/pi/Desktop/Battery-Safety-Sever-Client")
 from main.Tools.Status import Status
@@ -16,7 +15,7 @@ class PcanConnection(object):
         self.message_dbc = self.getMessageDBC();
         self.reverse_message_dbc =  {v: k for k, v in self.message_dbc.items()}
 
-        self.db=cantools.database.load_file('Goodwood_15BMUs_IFSpecV3_Node.dbc');
+        self.db = cantools.database.load_file('Goodwood_15BMUs_IFSpecV3_Node.dbc');
 
         self.setSyncMessage(); ##
         self.setReqMessage(); # self.Req_message
@@ -50,137 +49,17 @@ class PcanConnection(object):
 
         self.cellVoltageNum = 12
 
-        print("PCAN Connection Initialization end");
-
     def init(self):
         # 1.1 get the battery number
         self.getBatteryListFromPcan();
         self.getReqMessageList();
         self.getLabelListPlusMessageDictFromPcan()
-        print(f'label list: {self.label_list}')
+        if(self.checkIfPcanLabelsReadingRight()):
+            raise Exception("Error!!!! Pcan Init has Problem, pcan Reading is Wrong")
+        # print(f'label list: {self.label_list}')
         # 1.4 construct the label list
         self.getFinalLabelList();
         pass
-
-# ------------ Main Function --------------------------------
-    def getLabels(self):
-        return self.final_label_list;
-
-    def getDatas(self):
-        return self.message_data_list;
-
-    def close(self):
-        self.bus.shutdown();
-
-# ---------------------- Pcan Data Collection and handling function
-#   communication Information
-    def sendMessage(self, message):
-        print("Send Message: " + str(message.arbitration_id))
-        self.bus.send(message);
-        print("sendMessage() end");
-
-    def sendMessageList(self, messageList):
-        print("send Message list id: " + str([message.arbitration_id for message in messageList]))
-        for Req_message in messageList:
-            self.bus.send(Req_message);
-        print("sendMessageList() end");
-
-    def getBatteryListFromPcan(self):
-        print("Begin getBatteryListFromPcan()")
-        self.sendMessage(self.sync_message);
-        count = 0;
-        label_list = [];
-        while True:
-            message = self.bus.recv();
-            if(message.arbitration_id not in self.message_dbc):
-                count += 1;
-            else:
-                message_name = self.message_dbc[message.arbitration_id];
-                label_list.append(message_name);
-                count = 0;
-            if(count > self.exitNum):
-                break;
-        # label shoud be sorted [BMU01_pdo01, BMU02_pdo02 ...]
-        label_list.sort();
-        battery_list = list(set([int(elem[3:5]) for elem in label_list]));
-        self.battery_list = battery_list;
-        print("battery_list: " + str(battery_list))
-        print("getBatteryListFromPcan() end");
-        
-    def getLabelListPlusMessageDictFromPcan(self):
-        print("Begin getLabelListPlusMessageDictFromPcan()")
-                # 1.3 get the total pdo number with Req sending
-        self.sendMessage(self.sync_message);
-        self.sendMessageList(self.Req_message_list);
-        count = 0;
-        label_list = [];
-        message_dict = {}
-        while True:
-            message = self.bus.recv();
-            if(message.arbitration_id not in self.message_dbc):
-                count += 1;
-            else:
-                message_name = self.message_dbc[message.arbitration_id];
-                message_dict[message_name] = message;
-                label_list.append(message_name);
-                count = 0;
-            if(count > self.exitNum):
-                break;
-        label_list.sort(); #[BMU01_pdo01, BMU02_pdo02 ...]
-
-        self.label_list = label_list;
-        self.message_dict = message_dict;
-        print("getLabelListPlusMessageDictFromPcan() end");
-
-    def getFinalLabelList(self):
-        print("Begin getFinalLabelList()")
-        final_label_list = [] # BMU01_Max_temp, BMU01_Min_temp
-        for label in self.label_list:
-            A_message = self.message_dict[label];
-            battery_name = label[0:5] #BMU01 or BMU02
-            data_decode = self.db.decode_message(A_message.arbitration_id, A_message.data);
-            for key, value in data_decode.items(): # key: Max_temp
-                final_label = battery_name + '_' + key;
-                final_label_list.append(final_label);
-        final_label_list.sort();
-        self.final_label_list = final_label_list;
-        print("final_label_list: " + str(final_label_list))
-        print("getFinalLabelList() end");
-
-    def getDataFromPcan(self):
-        print("Begin getDataFromPcan()")
-        self.sendMessage(self.sync_message);
-        self.sendMessageList(self.Req_message_list)
-        message_dict = {};
-        count = 0;
-        while True:
-            message = self.bus.recv();
-            if(message.arbitration_id not in self.message_dbc ):
-                count += 1;
-                if(count > self.exitNum ):
-                    break;
-                continue;
-            message_name = self.message_dbc[message.arbitration_id]
-            message_dict[message_name] = message;
-            count = 0;
-        self.message_dict = message_dict;
-        self.handleData();
-        print("getDataFromPcan() end");
-        return self.message_data_list;
-
-
-    def getAllInfo(self):
-        print("Begin getAllInfo()")
-        # 1.1 get the battery number
-        self.getBatteryListFromPcan();
-        self.getReqMessageList();
-        self.getLabelListPlusMessageDictFromPcan()
-        print(f'label list: {self.label_list}')
-        # 1.4 construct the label list
-        self.getFinalLabelList(); # update the final labels
-        self.getDataFromPcan(); # update the data
-        print("getAllInfos() end");
-
 
     def getMessageDBC(self):
         message_dbc = {};
@@ -210,8 +89,125 @@ class PcanConnection(object):
         sync_data = sync.encode({'Sync_Count': 0xFF});
         self.sync_message = can.Message(arbitration_id=0x80, data=sync_data, extended_id=False)
 
+
+# ----------------------------- Main Function --------------------------------
+    def getLabels(self):
+        return self.final_label_list;
+
+    def getDatas(self):
+        return self.message_data_list;
+
+    def close(self):
+        self.bus.shutdown();
+
+
+
+# -------------------------- sending function ----------------------------------------
+    def sendMessage(self, message):
+        # print("Send Message: " + str(message.arbitration_id))
+        self.bus.send(message);
+        # print("sendMessage() end");
+
+    def sendMessageList(self, messageList):
+        # print("send Message list id: " + str([message.arbitration_id for message in messageList]))
+        for Req_message in messageList:
+            self.bus.send(Req_message);
+        # print("sendMessageList() end");
+
+# ------------------------ get Info from Pcan function --------------------------------------
+
+    def getBatteryListFromPcan(self):
+        # print("Begin getBatteryListFromPcan()")
+        self.sendMessage(self.sync_message);
+        count = 0;
+        label_list = [];
+        while True:
+            message = self.bus.recv();
+            if(message.arbitration_id not in self.message_dbc):
+                count += 1;
+            else:
+                message_name = self.message_dbc[message.arbitration_id];
+                label_list.append(message_name);
+                count = 0;
+            if(count > self.exitNum):
+                break;
+        # label shoud be sorted [BMU01_pdo01, BMU02_pdo02 ...]
+        if(len(label_list) == 0):
+            raise Exception("PcannConnection Error!!!! label list length is 0")
+        label_list.sort();
+        battery_list = list(set([int(elem[3:5]) for elem in label_list]));
+        self.battery_list = battery_list;
+        # print("battery_list: " + str(battery_list))
+        # print("getBatteryListFromPcan() end");
+        
+    def getLabelListPlusMessageDictFromPcan(self):
+        # print("Begin getLabelListPlusMessageDictFromPcan()")
+                # 1.3 get the total pdo number with Req sending
+        self.sendMessage(self.sync_message);
+        self.sendMessageList(self.Req_message_list);
+        count = 0;
+        label_list = [];
+        message_dict = {}
+        while True:
+            message = self.bus.recv();
+            if(message.arbitration_id not in self.message_dbc):
+                count += 1;
+            else:
+                message_name = self.message_dbc[message.arbitration_id];
+                message_dict[message_name] = message;
+                label_list.append(message_name);
+                count = 0;
+            if(count > self.exitNum):
+                break;
+
+        if (len(label_list) < 10):
+            raise Exception("Error!!! PcanConnection: getLabelListPlusMessageDictFromPcan: Pcan label_list reading error, check Pcan Connection please")
+            # self.getLabelListPlusMessageDictFromPcan();
+            # return ;
+
+        label_list.sort(); #[BMU01_pdo01, BMU02_pdo02 ...]
+        self.label_list = label_list;
+        self.message_dict = message_dict;
+        # print("getLabelListPlusMessageDictFromPcan() end");
+
+    def getFinalLabelList(self):
+        # print("Begin getFinalLabelList()")
+        final_label_list = [] # BMU01_Max_temp, BMU01_Min_temp
+        for label in self.label_list:
+            A_message = self.message_dict[label];
+            battery_name = label[0:5] #BMU01 or BMU02
+            data_decode = self.db.decode_message(A_message.arbitration_id, A_message.data);
+            for key, value in data_decode.items(): # key: Max_temp
+                final_label = battery_name + '_' + key;
+                final_label_list.append(final_label);
+        final_label_list.sort();
+        self.final_label_list = final_label_list;
+        # print("final_label_list: " + str(final_label_list))
+        # print("getFinalLabelList() end");
+
+    def getDataFromPcan(self):
+        # print("Begin getDataFromPcan()")
+        self.sendMessage(self.sync_message);
+        self.sendMessageList(self.Req_message_list)
+        message_dict = {};
+        count = 0;
+        while True:
+            message = self.bus.recv();
+            if(message.arbitration_id not in self.message_dbc ):
+                count += 1;
+                if(count > self.exitNum ):
+                    break;
+                continue;
+            message_name = self.message_dbc[message.arbitration_id]
+            message_dict[message_name] = message;
+            count = 0;
+        self.message_dict = message_dict;
+        self.handleData();
+        # print("getDataFromPcan() end");
+        return self.message_data_list;
+
     def getReqMessageList(self):
-        print("Begin getReqMessageList()")
+        # print("Begin getReqMessageList()")
         Req_message_list = [];
         Req_list = ['self.' + 'BMU' + str(battery_id).zfill(2) + '_Req_send_message' for battery_id in
                     self.battery_list];
@@ -219,14 +215,26 @@ class PcanConnection(object):
             print(ele)
             Req_message_list.append(eval(ele));
         self.Req_message_list = Req_message_list;
-        print("ReqMessage List id: ")
-        print([ Req_message.arbitration_id  for Req_message in self.Req_message_list]);
-        print("ReqMessage List: " + str(self.Req_message_list))
-        print("getReqMessageList() end");
+        # print("ReqMessage List id: ")
+        # print([ Req_message.arbitration_id  for Req_message in self.Req_message_list]);
+        # print("ReqMessage List: " + str(self.Req_message_list))
+        # print("getReqMessageList() end");
 
+
+    def getAllInfo(self):
+        # print("Begin getAllInfo()")
+        # 1.1 get the battery number
+        self.getBatteryListFromPcan();
+        self.getReqMessageList();
+        self.getLabelListPlusMessageDictFromPcan()
+        # print(f'label list: {self.label_list}')
+        # 1.4 construct the label list
+        self.getFinalLabelList(); # update the final labels
+        self.getDataFromPcan(); # update the data
+        # print("getAllInfos() end");
 
     def handleData(self):
-        print("Begin handleData()");
+        # print("Begin handleData()");
         message_data_dict = {}  # {BMU01_MAXTemp: xxx, BMU01_MinTemp: xxx, ...}
         message_data_list = [];  # date, time, BMU01_MAXTemp, BMU01_MinTemp, ... (based on the label)
         for label in self.label_list:  # BMU01_pdo1, BMU01_pdo2
@@ -243,7 +251,7 @@ class PcanConnection(object):
 
         self.message_data_dict = message_data_dict;
         self.message_data_list = message_data_list;
-        print("handleData() end")
+        # print("handleData() end")
 
 # ------------------------- Status Function --------------------------------------
 
@@ -281,7 +289,7 @@ class PcanConnection(object):
                 status.isPcanTempDangerous = True;
                 status.temperature_voliated_battery.append(battery);
             elif CMA_Max_Temp >= self.CMA_Temp_Warning:
-                print("CMA_Max_Temp: " + str(CMA_Max_Temp))
+                # print("CMA_Max_Temp: " + str(CMA_Max_Temp))
                 status.warning = True;
                 status.isPcanTempWarning = True;
                 status.temperature_voliated_battery.append(battery);
@@ -307,8 +315,8 @@ class PcanConnection(object):
                     Max_Cell_Voltage = self.message_data_dict[label]
                 if(self.message_data_dict[label] < Min_Cell_Voltage ):
                     Min_Cell_Voltage = self.message_data_dict[label];
-            print("Max_Cell_Voltage: " + str(Max_Cell_Voltage));
-            print("Min_Cell_voltage: " + str(Min_Cell_Voltage))
+            # print("Max_Cell_Voltage: " + str(Max_Cell_Voltage));
+            # print("Min_Cell_voltage: " + str(Min_Cell_Voltage))
             if Max_Cell_Voltage >= self.Cell_Voltage_High_Dangerous:
                 status.isPcanVoltageHighDangerous = True;
                 status.dangerous = True;
@@ -324,9 +332,16 @@ class PcanConnection(object):
 
 
     def detectStatus(self, status):
-        print("Begin to detect the status")
+        # print("Begin to detect the status")
         self.detectVoltage(status);
         self.detectTemp(status);
         self.detectCellVoltageViolated(status);
-        print(self.message_data_dict)
-        print("detectStatus End")
+        # print(self.message_data_dict)
+        # print("detectStatus End")
+
+
+    def checkIfPcanLabelsReadingRight(self):
+        if(self.label_list == 0):
+            return False;
+        else:
+            return True;

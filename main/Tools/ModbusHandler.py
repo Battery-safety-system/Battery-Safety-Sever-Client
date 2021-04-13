@@ -12,16 +12,12 @@ class ModbusHandler:
         logging.basicConfig(filename='Modbus Status.log', level=logging.DEBUG)
         self.ControlMode = ControlMode;
 
-        with open('config.properties') as f:
+        with open('../Client/config.properties') as f:
             data = json.load(f)
             print(data)
             data = data['ModbusHandler']
             for key in data:
                 setattr(self, key, data[key]);
-
-        # for key in data:
-        #
-        #     print(key +":" + str(getattr(self, key)))
 
         self.Init();
 
@@ -30,26 +26,22 @@ class ModbusHandler:
         logging.info("----------------")
         self.openModbus();
 
-        logging.info("set the limitation on current, voltage, power")
         self.setLimitation();
 
-        logging.info("set current 0")
         self.setCurrent(0);
 
-        logging.info("set power 0")
         self.setPower(0)
 
-        if(not self.LoopIfNotMeetReq(self.checkModbusIfInit, 200)):
+        if(not self.LoopIfNotMeetReq(self.checkModbusIfInit, 20)):
             print("checkModbusIfInit doesn't meet the requirement")
             self.closeModbus()
             raise Exception("checkModbusIfInit errors")
-        else:
-            
-            print("checkModbusIfInit pass the test")
+        # else:
+        #     print("checkModbusIfInit pass the test")
         
         self.PreviousTime = time.time();
         # close the modbus device
-        print("ModbusInit job completed")
+        # print("ModbusInit job completed")
 
     def setLimitation(self):
         # set the limitation among current, power, voltage
@@ -71,7 +63,7 @@ class ModbusHandler:
         RemoteVoltage = self.getVoltage();
         if (
                 DCBusPower > 0 - self.variance_power and DCBusPower < 0 + self.variance_power and DCBusCurrent > 0 - self.variance_current and DCBusCurrent < 0 + self.variance_current and RemoteVoltage < self.max_vol and RemoteVoltage > self.min_vol):
-            print("Current and power are all set nearly 0, meet the requirement")
+            # print("Current and power are all set nearly 0, meet the requirement")
             return True;
         print("----------------")
         print("DCBusPower: " + str(DCBusPower))
@@ -79,28 +71,20 @@ class ModbusHandler:
         print("RemoteVoltage: " + str(RemoteVoltage))
         str1 = "DCBusPower: " + str(DCBusPower) + ";" + "DCBusCurrent: " + str(
             DCBusCurrent) + ";" + "RemoteVoltage: " + str(RemoteVoltage) + ";"
-        logging.info(str1)
+        # logging.info(str1)
         return False;
 
 
 
 # -------------------------- Status Function -----------------------------------------
 
-    def setStatus(self, statusObj):
+    def setStatusByVoltageInNormalWarningState(self, statusObj):
         assert isinstance(statusObj, Status)
-        # powerWarning = 30
-        # powerDangerous = 35;
-        # # powerLow
-        # currentWarning = 100;
-        # currentDangerous = 110;
 #         volLowWarning = 322
         volLowWarning = 268
         volHighWarning = 384  # test
         volHighDangerous = 390;
         volLowDangerous = 264
-
-        power = self.info_dict["modbus_Power"]
-        current = self.info_dict["modbus_Power"]
         vol = self.info_dict["modbus_Voltage"]
         #
         statusObj.isModbusHighVoltageWarning = False;
@@ -130,6 +114,9 @@ class ModbusHandler:
             statusObj.dangerous = True;
         pass
 
+
+
+
 # ---------------------- Main Function -------------------------------------------------
     def updateCurrent(self):
         currentTime = time.time();
@@ -156,7 +143,7 @@ class ModbusHandler:
             # check if the real value is one the range of expected values
             self.LoopIfNotMeetReq(self.checkIfModbusPowerRight, 20, powerVal - self.variance_power,
                                   powerVal + self.variance_power)
-# test
+
 
     def run(self):
         if self.ControlMode == self.currentControlMode:
@@ -172,7 +159,7 @@ class ModbusHandler:
         DCBusPower = self.getPower();
         DCBusCurrent = self.getCurrent();
         RemoteVoltage = self.getVoltage();
-        RemoteVoltage = self.getRemoteVoltage();
+
         data_list = [DCBusPower, DCBusCurrent, RemoteVoltage]
         self.data_list = data_list;
         self.info_dict["modbus_Power"] = DCBusPower; self.info_dict["modbus_Current"] = DCBusCurrent; self.info_dict["modbus_Voltage"] = RemoteVoltage;
@@ -201,7 +188,7 @@ class ModbusHandler:
         pass
 
 
-# -------------------------------- Tools Function ----------------------------
+# -------------------------------- Modbus Tools Function ----------------------------
 
     def openModbus(self):
         # set up connection: port name, slave address (in decimal)
@@ -221,6 +208,8 @@ class ModbusHandler:
         self.instrument.write_register(self.K_op_mode, 0, 0, 6)  # K_op_mode
 
 
+# ------------------------------------- get Function -----------------------------------------------
+
     def getCurrent(self):
         DCBusCurrent = self.unsignedToSigned(
             self.instrument.read_register(self.epc1_dc_link_crnt, 0, 4)) / self.current_scale;
@@ -233,16 +222,13 @@ class ModbusHandler:
         return DCBusPower;
 
     def getVoltage(self):
-#         RemoteVoltage = self.unsignedToSigned(
-#             self.instrument.read_register(self.epcl_dc_link_volt, 0, 4)) / self.voltage_scale;
-#         return RemoteVoltage
+        RemoteVoltage = (self.instrument.read_register(30263, 0, 4) / self.voltage_scale)
+        return RemoteVoltage;
+    # def getRemoteVoltage(self):
+    #     RemoteVoltage = (self.instrument.read_register(30263, 0, 4) / self.voltage_scale)
+    #     return RemoteVoltage;
 
-        RemoteVoltage = (self.instrument.read_register(30263, 0, 4) / self.voltage_scale)
-        return RemoteVoltage;
-    def getRemoteVoltage(self):
-        RemoteVoltage = (self.instrument.read_register(30263, 0, 4) / self.voltage_scale)
-        return RemoteVoltage;
-    
+# ---------------------------------------- set Function -------------------------------------------
     def setCurrent(self, value):
         self.instrument.write_register(self.K_op_mode, self.current_mode, 0, 6)  # K_op_mode
         print("SETTING POINTS")
@@ -262,6 +248,7 @@ class ModbusHandler:
         self.instrument.write_register(self.Op_mode_setpoint, self.signedToUnsigned(value * self.voltage_scale), 0,
                                        6)  # Op_mode_setpoint
 
+# ------------------------------------ Data Handler Function ------------------------------------
     def signedToUnsigned(self, signedValue):
         if (signedValue < 0):
             signedValue += 2 ** 16;
@@ -321,16 +308,24 @@ class ModbusHandler:
         else:
             return False;
 
+    def checkIfModbusVoltageInit(self):
+        vol = self.info_dict["modbus_Voltage"]
+
+        if (self.checkIfModbusVoltageRight(vol, 0 - self.variance_voltage, 0 + self.variance_voltage)):
+            return True;
+        else:
+            return False;
+
+    # def checkIfModbusLabels(self):
+
+
 
 
 
 
     def __del__(self):
         print("exit the program")
-        self.instrument.write_register(41026, 0, 0, 6)  # K_op_mode
-        # self.setCurrent(0)
-        # # self.setVoltage(0)
-        # self.setPower(0)
-        pass;
-
-# ModbusHandler(1);
+        try:
+            self.instrument.write_register(41026, 0, 0, 6)  # K_op_mode
+        except:
+            print("Modbus Delete: Cannot close Modbus")

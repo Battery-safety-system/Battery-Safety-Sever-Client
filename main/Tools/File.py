@@ -14,29 +14,25 @@ class File(object):
 
     def __init__(self, labels):
 
-        print("Initialize File Object")
+        # print("Initialize File Object")
         self.labels = labels
         self.createWholeFileSystemVar()
         self.createWholeFilesWithFloders()
-        print("File Object Intialization End")
+        # print("File Object Intialization End")
 
     def WritetoCVS(self, list_vol_temp, summary_head):
 
-        print("Begin WritetoCVS")
+        # print("Begin WritetoCVS")
         self.updateFileByLabels(summary_head)
         self.updateFilesWithFlodersByDates();
         self.writeList(list_vol_temp);
-        print("WritetoCVS End")
+        # print("WritetoCVS End")
 
     def updateFileByLabels(self, summary_head):
+        assert isinstance(self.labels, list)
+        assert isinstance(summary_head, list)
         if(self.labels != summary_head):
-#             for i in range(len(self.labels)):
-#                 if (self.labels[i] != summary_head[i]):
-#                     print("labels: " + self.labels[i])
-#                     print("summary_head: " + summary_head[i])
-            print("labels and summary_head are different")
-            print("labels: " + str(self.labels))
-            print("summary_head: " + str(summary_head))
+            print("warning!!!! labels and summary_head are different, please check Pcan")
             self.labels = summary_head
             self.createWholeFileSystemVar();
             self.createWholeFilesWithFloders();
@@ -58,14 +54,14 @@ class File(object):
             writer1.writerow(list);
 
     def createWholeFileSystemVar(self):
-        print("updateWholeFileSystem() Begin")
+        # print("updateWholeFileSystem() Begin")
         self.path = os.getcwd();
         self.dataBasePath = self.path + "/" + "Battery-System-database"
         self.Repo = time.strftime('Battery-System %m-%Y')
         self.floder = self.path + "/" + "Battery-System-database" + "/" + self.Repo
         self.file = "log" + time.strftime('-Battery-System %d-%m-%Y') + "-" + time.strftime('%H-%M-%S') + ".csv"
         self.day = time.strftime('%d')
-        print("updateWholeFileSystem() End")
+        # print("updateWholeFileSystem() End")
 
     def createWholeFilesWithFloders(self):
         self.createFloderIfNull(self.dataBasePath);

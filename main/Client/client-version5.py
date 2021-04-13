@@ -15,7 +15,13 @@ class Battery_System:
     def __init__(self):
 
         print("Initialize PCAN")
-        PcanLabels = self.pcanInit();
+        PcanLabels = [];
+        try:
+            PcanLabels = self.pcanInit();
+        except Exception as e:
+            print(e)
+            return ;
+            # print("")
         print("********************************************")
 
         print("Initialize status")
@@ -23,27 +29,33 @@ class Battery_System:
         print("********************************************")
 
         print("Init Arduino")
-        ArduinoLabelList = self.arduinoInit();
-        self.ArduinoHandlerObj.initRelayStepOne()
+        try:
+            ArduinoLabelList = self.arduinoInit();
+        except Exception as e:
+            print(e);
+            return ;
         print("********************************************")
+
+        #         # init the PC Connection
+        #         print("initialize PC Connection")
 
         print("Init Modbus")
-        modbusLabels = self.modbusInit();
-        
-#         self.ArduinoHandlerObj.initRelayStepTwo()
+        modbusLabels = []
+        try:
+            modbusLabels = self.modbusInit();
+        except Exception as e:
+            print(e);
+            self.closeAllDevice();
+            return ;
         print("********************************************")
+
 
         print("Init Label lists and datas")
-        self.labelAndDataInit(PcanLabels, ArduinoLabelList, modbusLabels, status_labels);
-        print("********************************************")
-
+        self.createLabelsAndInitDatas(PcanLabels, ArduinoLabelList, modbusLabels, status_labels);
         print("initialize Floder and Files")
         self.FileObj = File(self.label_list)
         print("********************************************")
 
-
-#         # init the PC Connection
-#         print("initialize PC Connection")
 
         print("Init State Machine")
         self.stateInit();
@@ -51,8 +63,6 @@ class Battery_System:
 
 
     def pcanInit(self):
-        # init PcanConnectionOBJ
-
         self.PcanConnectionObj = PcanConnection();
         PcanLabels = self.PcanConnectionObj.getLabels();
         print("pcan labels " + str(PcanLabels))
@@ -62,40 +72,41 @@ class Battery_System:
         print("initialize Status")
         self.StatusObj = Status()
         status_labels = self.StatusObj.getLabels();
-        print("status labels " + str(status_labels))
+        # print("status labels " + str(status_labels))
         return status_labels;
-        pass;
+
 
     def arduinoInit(self):
 
         self.ArduinoHandlerObj = ArduinoHandler();
         self.ArduinoHandlerObj.ReceiveInfoFromArduino()  # get temp1, temp2, real1, real2 values
         ArduinoLabelList = self.ArduinoHandlerObj.getLabListFromContentDict()
-        # Init the device
-#         ArduinoInfoList = self.ArduinoHandlerObj.judgePumpInfo(self.StatusObj);
-#         self.ArduinoHandlerObj.activateDevice(ArduinoInfoList)
+        self.ArduinoHandlerObj.initPumpFanRelay();
 
         return ArduinoLabelList;
 
 
     def modbusInit(self):
+        self.ArduinoHandlerObj.initRelayStepOne()
         currentControlMode = 1;
         powerControlMode = 2;
         self.ModbusHandlerObj = ModbusHandler(powerControlMode);
         modbusLabels = self.ModbusHandlerObj.getLabels();
+        self.ArduinoHandlerObj.initRelayStepTwo()
         return modbusLabels;
 
 
-    def labelAndDataInit(self, PcanLabels, ArduinoLabelList, modbusLabels, status_labels):
+    def createLabelsAndInitDatas(self, PcanLabels, ArduinoLabelList, modbusLabels, status_labels):
         self.label_list = PcanLabels + ArduinoLabelList + modbusLabels + status_labels;
         self.label_list.insert(0, 'time');
         self.label_list.insert(0, 'date');  # final_label_list: [date time BMU01_Max_temp .... BMU02_Max_temp ...]
+        self.label_list.append("CurrentState")
         self.data_list = [];
 
     def PcInit(self):
         self.PCConnectionObj = PCConnection()
         self.PCConnectionObj.connect()
-        self.PCConnectionObj.sendContent({"labels": self.MessageObj.final_label_list})
+        # self.PCConnectionObj.sendContent({"labels": self.MessageObj.final_label_list})
 
 
     def stateInit(self):
@@ -112,7 +123,8 @@ class Battery_System:
         while True:
             print("current time is " + time.strftime('%H-%M-%S'))
             print(self.ModbusHandlerObj.info_dict)
-            print(vars(self.StatusObj))
+            # print(vars(self.StatusObj))
+
             if self.currentState == self.normalState:
                 print("normal state \n")
                 self.normalHandler();
@@ -142,7 +154,7 @@ class Battery_System:
 
         self.ModbusHandlerObj.run();
 
-        self.updateStatus();
+        self.updateStatusInNormalWarningState();
 
     def warningHandler(self):
 
@@ -150,11 +162,11 @@ class Battery_System:
 
         self.storeDate();
 
-        self.activeDevice();
+        self.activeDeviceInWarningState();
 
 #         self.transferToPc();
 
-        self.updateStatus();
+        self.updateStatusInNormalWarningState();
         #
 
     def dangerousHandler(self):
@@ -166,63 +178,71 @@ class Battery_System:
         self.ModbusHandlerObj.closeModbus();
         
         self.ArduinoHandlerObj.setRelayoff();
-        print("set relay off")
+
 #         self.transferToPc();
 
-        self.updateStatus();
+        self.updateStatusInDangerousState();
 
     def securityHandler(self):
         
         self.ModbusHandlerObj.closeModbus();
         print("Modbus off")
         self.ArduinoHandlerObj.setRelayoff();
-        self.ArduinoHandlerObj.setPumpoff();
+        self.ArduinoHandlerObj.setPumpFanOff();
         self.ArduinoHandlerObj.closeArduionConnection();
         print("Arduino off")
         self.PcanConnectionObj.close();
         print("pcan off")
         pass;
 
-# --------------------------------------------Tools Section ------------------------------------------
+# -------------------------------------------- State Function ------------------------------------------
+
 
     def collectData(self):
-        print("collect Data in client-version5.py")
-        print("Initiate the status ")
+        # print("collect Data in client-version5.py")
+        # print("Initiate the status ")
         self.StatusObj.InitStatus();
 
-        print("start the Pcan Module")
-        self.PcanConnectionObj.getAllInfo();
+        # print("start the Pcan Module")
+        try:
+            self.PcanConnectionObj.getAllInfo();
+        except Exception as e:
+            print(e)
+            raise Exception("Error!!!! PcanConnection cannot getAllInfo")
         pcanDatas = self.PcanConnectionObj.getDatas();
         pcanLabels = self.PcanConnectionObj.getLabels();
         self.PcanConnectionObj.detectStatus(self.StatusObj);
 
         # get label, datas from arduino( mainly temp, pressure)
-        print("Recieve information from Arduino")
+        # print("Recieve information from Arduino")
         try:
             self.ArduinoHandlerObj.ReceiveInfoFromArduino()  # get temp1, temp2, real1, real2 values
         except:
-            print("Error from Arduino HandlerObj")
+            print("Error on Arduino Reading, Please check Arduino Connection")
         ArduinoLabelList = self.ArduinoHandlerObj.getLabListFromContentDict()
         ArduinoDataList = self.ArduinoHandlerObj.getDataListFromContentDict();
 
 
         # get labels, data from modbus (mainly DC current, DC power)
-        self.ModbusHandlerObj.run();
+        try:
+            self.ModbusHandlerObj.run();
+        except Exception as e:
+            print("Error on Modbus Reading, Please check Modbus connection")
         modbus_labels = self.ModbusHandlerObj.getLabels();
         modbus_datas = self.ModbusHandlerObj.getDatas();
-        self.ModbusHandlerObj.setStatus(self.StatusObj)
+        self.ModbusHandlerObj.setStatusByVoltageInNormalWarningState(self.StatusObj)
 
         # get all the labels and datas from status
         status_labels = self.StatusObj.getLabels();
         status_datas = self.StatusObj.getStatusDatas();
 
         # merge status, arduino, modbus, pcan to data list and label list, and status dict;
-        self.label_list = pcanLabels + ArduinoLabelList + modbus_labels + status_labels;
-        self.label_list.insert(0, 'time');
-        self.label_list.insert(0, 'date');  # final_label_list: [date time BMU01_Max_temp .... BMU02_Max_temp ...]
+        self.createLabelsAndInitDatas(pcanLabels + ArduinoLabelList + modbus_labels + status_labels);
         self.data_list = pcanDatas + ArduinoDataList + modbus_datas + status_datas;
         self.data_list.insert(0, time.strftime('%H:%M:%S'))
         self.data_list.insert(0, time.strftime('%d-%m-%Y'))
+        self.data_list.append(self.convertStateToStr(self.currentState));
+
 
     def storeDate(self):
         print("Store Labels, Status, datas to Repository")
@@ -241,12 +261,13 @@ class Battery_System:
 
 
 
-    def updateStatus(self):
-        print("Update the value of Modbus based on status")
-        if self.currentState == self.dangerousState:
-            if not self.StatusObj.dangerous and not self.StatusObj.warning:
-                self.currentState = self.securityState;
-            return ;
+    def updateStatusInDangerousState(self):
+        if(self.ModbusHandlerObj.checkIfModbusVoltageInit() and not self.StatusObj.istempHighVio()):
+            self.currentState = self.securityState;
+
+
+
+    def updateStatusInNormalWarningState(self):
 
         if self.StatusObj.dangerous:
             self.currentState = self.dangerousState;
@@ -255,21 +276,67 @@ class Battery_System:
         else:
             self.currentState = self.normalState;
 
-    def activeDevice(self):
+    def activeDeviceInWarningState(self):
         # active the device and check if its out of warnig level and dangerous level and do responding operation from status
-        print("activate device: pump and relay with Arduino")
-        ArduinoInfoList = self.ArduinoHandlerObj.judgePumpInfo(self.StatusObj);
-        self.ArduinoHandlerObj.activateDevice(ArduinoInfoList)
+        # print("activate device: pump and relay with Arduino")
+        if (self.StatusObj.istempHighVio()):
+            self.ArduinoHandlerObj.setPumpFanOn();
+
         if self.StatusObj.isVoltageVio():
             if self.StatusObj.isVoltageLowVio():
                 self.ModbusHandlerObj.setModbusCharge();
             else:
                 self.ModbusHandlerObj.setModbusDischarge();
 
+    def closeAllDevice(self):
+        try:
+            self.ModbusHandlerObj.closeModbus();
+        except Exception as e:
+            print(e)
+        print("Modbus off")
+        self.ArduinoHandlerObj.setRelayoff();
+        self.ArduinoHandlerObj.setPumpFanOff();
+        self.ArduinoHandlerObj.closeArduionConnection();
+        print("Arduino off")
+        self.PcanConnectionObj.close();
+        print("pcan off")
 
-Battery1 = Battery_System();
-Battery1.run();
+# ------------------------------------------ monitor Function ---------------------------------------------
+    def monitorWarningDangerousStatus(self, statusObj):
+        assert isinstance(statusObj, Status)
+        dict_status = vars(statusObj)
+        warningAndDangerousList = [];
+        for ele in dict_status:
+            content = dict_status[ele]
+            if(content == True):
+                warningAndDangerousList.append(ele);
+        print("warning and dangerous list: " + str(warningAndDangerousList))
 
+
+# ------------------------------------ Tools Function ---------------------------------------
+    def convertStateToStr(self):
+        if(self.currentState == 1):
+            return "normalState"
+        elif (self.currentState == 2):
+            return "warningState"
+        elif(self.currentState == 3):
+            return "dangerousState"
+        elif (self.currentState == 4):
+            return "securityState"
+
+    # def __del__(self):
+    #     self.closeAllDevice();
+
+try:
+    Battery1 = Battery_System();
+    Battery1.run();
+except:
+    print("Battery Error!!! Close all the system")
+    Battery1.closeAllDevice();
+# try:
+#
+# except:
+#     Battery1.closeAllDevice();
 
 
 

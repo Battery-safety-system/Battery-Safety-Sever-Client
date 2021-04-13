@@ -64,6 +64,10 @@ class ArduinoHandler:
                 tempList.append(temp)
         self.tempList = tempList
         self.ohmsList = ohmsList;
+
+    def initPumpFanRelay(self):
+        self.setRelayoff();
+        self.setPumpFanoff();
 # ---------------------------Tools Section -------------------------------
     def receive(self):
         return self.ser.readline().decode("utf-8");
@@ -73,58 +77,33 @@ class ArduinoHandler:
 
 # ---------------------------Main Function -----------------------------
     def getLabListFromContentDict(self):
-#         labelList = [];
-#         for key in self.contentDict:
-#             labelList.append(key)
-#         labelList.sort();
         return self.labels
-#         return labelList;
 
     def getDataListFromContentDict(self):
         dataList = [];
         labelList = self.getLabListFromContentDict();
         for ele in labelList:
-            print("contentDict: " + str(self.contentDict))
             dataList.append(self.contentDict[ele])
         return dataList
-
-    def setRelayoff(self):
-        ArduinoInfoList = []
-        ArduinoInfoList.append({"device": "Relay", "pin_number": self.Relay1PIN, "pin_value": 0});
-        ArduinoInfoList.append({"device": "Relay", "pin_number": self.Relay2PIN, "pin_value": 0});
-        ArduinoInfoList.append({"device": "Relay", "pin_number": self.Relay3PIN, "pin_value": 0});
-        self.activateDevice(ArduinoInfoList);
-
-    def setPumpoff(self):#         if (StatusObj.isPcanVoltageHighDangerous or  StatusObj.isModbusHighVoltageDagnerous):
-#             ArduinoInfoList.append({"device": "Relay", "pin_number": self.Relay1PIN, "pin_value": 0});
-#             ArduinoInfoList.append({"device": "Relay", "pin_number": self.Relay2PIN, "pin_value": 0});
-#             ArduinoInfoList.append({"device": "Relay", "pin_number": self.Relay3PIN, "pin_value": 0});
-#             print("voltage is out of control, relay is off")
-        ArduinoInfoList = []
-        ArduinoInfoList.append({"device": "Pump", "pin_number": self.pumpPIN, "pin_value": 0});
-        ArduinoInfoList.append({"device": "Fan", "pin_number": self.FanPIN, "pin_value": 0});
-        self.activateDevice(ArduinoInfoList);
 
     def closeArduionConnection(self):
         self.ser.close();
         pass;
 # ---------------------------Receive Section ----------------------------
     def ReceiveInfoFromArduino(self):
+        # print("")
         currentTime = time.time();
         while(True):
             try:
                 contentStr = self.receive();
             except:
-                return; 
+                continue;
             if(self.checkIfInfoRightFromArduino(contentStr)):
                 break;
             if(time.time() - currentTime > 3):
                 logging.error("ArduinoHandler: ReceiveInforFromArduino: Receive Error!!")
+                print("ArduinoHandler: ReceiveInforFromArduino: Receive Error!!")
                 return ;
-
-
-        print(contentStr, '')
-        print("get All Information from Arduino")
         contentArr = contentStr.split(',');
         contentDict = {};
         for oneInfo in contentArr:
@@ -133,15 +112,12 @@ class ArduinoHandler:
             content = arr[1];
             val = int(content);
 
-            if(keyword[5:9] == "Temp") :
+            if (keyword[5:9] == "Temp"):
                 res = self.convertTempToRealValue(val);
                 contentDict[keyword] = int(res);
-            elif(keyword[5:9] == "Pres") :
+            elif (keyword[5:9] == "Pres"):
                 res = self.convertPressToRealValue(val);
                 contentDict[keyword] = int(res);
-
-
-        print("contentDict is: " + str(contentDict))
         self.contentDict = contentDict;
 
     def checkIfInfoRightFromArduino(self, contentStr):
@@ -150,14 +126,9 @@ class ArduinoHandler:
             contentArr = contentStr.split(',')
             for oneInfo in contentArr:
                 arr = oneInfo.split(':');
-                keyword = arr[0];#         if (StatusObj.isPcanVoltageHighDangerous or  StatusObj.isModbusHighVoltageDagnerous):
-#             ArduinoInfoList.append({"device": "Relay", "pin_number": self.Relay1PIN, "pin_value": 0});
-#             ArduinoInfoList.append({"device": "Relay", "pin_number": self.Relay2PIN, "pin_value": 0});
-#             ArduinoInfoList.append({"device": "Relay", "pin_number": self.Relay3PIN, "pin_value": 0});
-#             print("voltage is out of control, relay is off")
+                keyword = arr[0];
                 content = arr[1];
                 val = int(content);
-
                 if (not (keyword[5:9] == "Temp" or keyword[5:9] == "Pres")):
                     return False
             return True;
@@ -166,7 +137,7 @@ class ArduinoHandler:
 
     def convertTempToRealValue(self, Volval):
         voltage = (Volval /1024.0 * 5.0)
-        print(voltage)
+        # print(voltage)
         ohms = (2200 * voltage) / (5.0 - voltage)
         for i in range(1, len(self.ohmsList)):
             val = self.ohmsList[i];
@@ -207,7 +178,9 @@ class ArduinoHandler:
         contentStr = contentStr[0:len(contentStr) - 1];
         self.send(contentStr.encode());
 
-    def judgePumpInfo(self, StatusObj):
+
+# ------------------------------ setting Section --------------------------------------------------
+    def judgePumpFanInfo(self, StatusObj):
         assert isinstance(StatusObj, Status)
         ## logic: get info list
         ArduinoInfoList = [];
@@ -221,23 +194,25 @@ class ArduinoHandler:
             print("temp is in control, the pump is off")
             ArduinoInfoList.append({"device": "Pump", "pin_number": self.pumpPIN, "pin_value": 0});
             ArduinoInfoList.append({"device": "Fan", "pin_number": self.FanPIN, "pin_value": 0});
-
-#         if (StatusObj.isP# a1 = ArduinoHandler();
-# a1.setRelayoff()
-# a1.setPumpoff()canVoltageHighDangerous or  StatusObj.isModbusHighVoltageDagnerous):
-#             ArduinoInfoList.append({"device": "Relay", "pin_number": self.Relay1PIN, "pin_value": 0});
-#             ArduinoInfoList.append({"device": "Relay", "pin_number": self.Relay2PIN, "pin_value": 0});
-#             ArduinoInfoList.append({"device": "Relay", "pin_number": self.Relay3PIN, "pin_value": 0});
-#             print("voltage is out of control, relay is off")
-
-#         else:
-#             ArduinoInfoList.append({"device": "Relay", "pin_number": self.Relay1PIN, "pin_value": 1});
-#             ArduinoInfoList.append({"device": "Relay", "pin_number": self.Relay2PIN, "pin_value": 1});
-#             ArduinoInfoList.append({"device": "Relay", "pin_number": self.Relay3PIN, "pin_value": 1});
-#             print("voltage is in control, the relay is on")
         return ArduinoInfoList;
 
-# a1 = ArduinoHandler();
-# a1.setRelayoff()
-# a1.setPumpoff()
+    def setPumpFanOn(self):
+        ArduinoInfoList = [];
+        ArduinoInfoList.append({"device": "Pump", "pin_number": self.pumpPIN, "pin_value": 1});
+        ArduinoInfoList.append({"device": "Fan", "pin_number": self.FanPIN, "pin_value": 1});
+        self.activateDevice(ArduinoInfoList);
+
+    def setPumpFanOff(self):
+        ArduinoInfoList = [];
+        ArduinoInfoList.append({"device": "Pump", "pin_number": self.pumpPIN, "pin_value": 0});
+        ArduinoInfoList.append({"device": "Fan", "pin_number": self.FanPIN, "pin_value": 0});
+        self.activateDevice(ArduinoInfoList);
+
+    def setRelayoff(self):
+        ArduinoInfoList = []
+        ArduinoInfoList.append({"device": "Relay", "pin_number": self.Relay1PIN, "pin_value": 0});
+        ArduinoInfoList.append({"device": "Relay", "pin_number": self.Relay2PIN, "pin_value": 0});
+        ArduinoInfoList.append({"device": "Relay", "pin_number": self.Relay3PIN, "pin_value": 0});
+        self.activateDevice(ArduinoInfoList);
+
 
