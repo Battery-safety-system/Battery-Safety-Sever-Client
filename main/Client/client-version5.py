@@ -269,7 +269,7 @@ class Battery_System:
         try:
             self.PCConnectionObj.sendContent(dictContent)
         except Exception as e:
-            print("client-version5: transferToPc: " + e);
+            print("client-version5: transferToPc: " + str(e));
             return ;
 
 
@@ -317,8 +317,8 @@ class Battery_System:
             except Exception as e:
                 print(e)
 
-            
-        if (self.StatusObj.istempHighVio() and self.StatusObj.isPumpFanOff):
+        print("self.StatusObj.isPumpFanOff: " + str(self.StatusObj.isPumpFanOff))
+        if (self.StatusObj.istempHighVio() ):
             try:
                 self.ArduinoHandlerObj.setPumpFanOn();
                 self.StatusObj.isPumpFanOff = False;
@@ -331,9 +331,10 @@ class Battery_System:
         if (self.StatusObj.istempHighVio()):
             try:
                 self.ArduinoHandlerObj.setPumpFanOn();
+                self.StatusObj.isPumpFanOff = False;
             except Exception as e:
                 raise Exception("client_activeDeviceInWarningState: " + str(e))
-            self.StatusObj.isPumpFanOff = False;
+            
 
         if self.StatusObj.isVoltageVio():
             if self.StatusObj.isVoltageLowVio():

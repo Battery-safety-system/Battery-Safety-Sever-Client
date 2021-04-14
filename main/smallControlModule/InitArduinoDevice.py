@@ -52,5 +52,6 @@ class ArduinoHandler:
         self.ser.write(contentStr);
         
 ar1 = ArduinoHandler();
-ar1.setPumpFanOff();
 ar1.setRelayoff();
+time.sleep(2)
+ar1.setPumpFanOff();

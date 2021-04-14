@@ -16,3 +16,7 @@ directly return;
 what error the system cannot do:
 1. modbus cannot close;
 2. relay cannot close;
+
+
+isPUMPFanOFF
+isPUMPFAnOn doens't work as we want

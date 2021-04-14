@@ -90,10 +90,12 @@ class ArduinoHandler:
         self.ser.close();
         pass;
 # ---------------------------Receive Section ----------------------------
-    def LoopObserveFunction(self, callBackFun, times, *args, **kwargs):
+    def LoopObserveFunctionRead(self, callBackFun, checkFun, times, *args, **kwargs):
         for i in range(times):
             try:
-                return callBackFun(*args);
+                content = callBackFun(*args);
+                if(checkFun(content)):
+                    return content ;
             except Exception as e:
                 continue;
         return None;
@@ -110,8 +112,9 @@ class ArduinoHandler:
 
     def ReceiveInfoFromArduino(self):
         currentTime = time.time();
-        contentStr = LoopObserveFunction(self.receive, 3);
-        if (contentStr == None or self.checkIfInfoRightFromArduino(contentStr)):
+        contentStr = self.LoopObserveFunctionRead(self.receive, self.checkIfInfoRightFromArduino, 3);
+        print("Arduino REading: " + str(contentStr))
+        if (contentStr == None ):
             logging.error("ArduinoHandler: ReceiveInforFromArduino: Receive Error!!")
             raise Exception("ArduinoHandler: ReceiveInfoFromArduino: contentStr is not right...")
 
@@ -189,7 +192,7 @@ class ArduinoHandler:
         for arduinoInfo in ArduinoInfoList:
             contentStr += str(arduinoInfo['pin_number'] ) + ":" + str(arduinoInfo['pin_value']) + "&";
         contentStr = contentStr[0:len(contentStr) - 1];
-        if(self.LoopObserveFunctionWrite(self.send, 3, contentStr.encode())):
+        if(not self.LoopObserveFunctionWrite(self.send, 3, contentStr.encode())):
             raise Exception("ArduinoHandler: activateDevice: Error!!! cannot send ArduinoInfoList, devices cannot open correctly!!!");
 
 
@@ -236,6 +239,6 @@ class ArduinoHandler:
         try:
             self.activateDevice(ArduinoInfoList);
         except Exception as e:
-            raise ("ArduinoHandler_setRelayoff: " + e)
+            raise Exception("ArduinoHandler_setRelayoff: " + str(e))
 
 

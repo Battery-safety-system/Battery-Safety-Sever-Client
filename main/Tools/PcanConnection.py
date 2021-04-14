@@ -43,7 +43,7 @@ class PcanConnection(object):
         self.CMA_Voltage_Low_Warning = 34
 #         self.CMA_Voltage_Low_Warning = 44 # test
         
-#         self.CMA_Temp_Dangerous = 19 # test
+#         self.CMA_Temp_Dangerous = 21 # test
         self.CMA_Temp_Dangerous = 50
         self.CMA_Temp_Warning = 40;
         #self.CMA_Temp_Warning = 19; # test

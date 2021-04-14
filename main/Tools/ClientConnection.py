@@ -31,7 +31,7 @@ class PCConnection(object):
             print("Try to reconnect after " + str(self.recurTimes - self.errorTimes))
             return ;
         dict_pickle = pickle.dumps(dictContent);
-        if(self.LoopIfNotMeetReq(self.sendMessage, 5, dict_pickle)):
+        if(not self.LoopIfMeetReq(self.sendMessage, 3, dict_pickle)):
             self.reconnectAfterLoops();
             raise Exception("ClientConnection: sendContent: Error!!! cannot send dict_pickle in ClientConnection")
 
@@ -54,14 +54,14 @@ class PCConnection(object):
                 print("Reconnection failed")
 
 
-    def LoopIfNotMeetReq(self, handler1, times, *args, **kwargs):
+    def LoopIfMeetReq(self, handler1, times, *args, **kwargs):
 
         for i in range(times):
             if (handler1(*args)):
                 return True;
         return False;
     def sendMessage(self, dict_pickle):
-        self.client.settimeout(20)
+#         self.client.settimeout(20)
         try:
             self.client.send(dict_pickle)
         except Exception as e:
