@@ -1,8 +1,6 @@
 #!/usr/bin/python3
 import time
-import can
 
-import cantools
 import os
 import csv
 import socket
@@ -37,8 +35,16 @@ class Connection(object):
         print(u'the client %s:%s has connected.' % (host, port))
 
     def receiveContent(self):
-        self.connect.settimeout(15)
+        self.connect.settimeout(40)
         content = pickle.loads(self.connect.recv(9216));
+        # while True:
+        #     try:
+        #         content = pickle.loads(self.connect.recv(9216));
+        #         break;
+        #     except:
+        #         continue
+
+
         return content;
 
 
