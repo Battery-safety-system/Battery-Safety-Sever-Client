@@ -6,7 +6,7 @@ import os
 import csv
 import socket
 import pickle
-
+import json
 
 class PCConnection(object):
     """docstring for PCConnection"""
@@ -30,7 +30,8 @@ class PCConnection(object):
             self.errorTimes += 1;
             print("Try to reconnect after " + str(self.recurTimes - self.errorTimes))
             return ;
-        dict_pickle = pickle.dumps(dictContent);
+        dict_pickle = json.dumps(dictContent).encode('utf-8')
+#         dict_pickle = pickle.dumps(dictContent);
         if(not self.LoopIfMeetReq(self.sendMessage, 3, dict_pickle)):
             self.reconnectAfterLoops();
             raise Exception("ClientConnection: sendContent: Error!!! cannot send dict_pickle in ClientConnection")
@@ -65,6 +66,7 @@ class PCConnection(object):
         try:
             self.client.send(dict_pickle)
         except Exception as e:
+            print("Error!!! how to solve it")
             return False
         return  True;
 

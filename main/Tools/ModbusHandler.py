@@ -6,6 +6,7 @@ import minimalmodbus
 import time
 import logging
 from main.Tools.Status import Status
+import csv
 
 class ModbusHandler:
     def __init__(self, ControlMode):
@@ -18,7 +19,18 @@ class ModbusHandler:
             data = data['ModbusHandler']
             for key in data:
                 setattr(self, key, data[key]);
-
+        
+        self.PowerList = []
+        with open('../Client/cmsDART_3_300_sec_interval.csv') as file:
+            reader = csv.reader(file)
+            for row in reader:
+                try:
+#                     print(row)
+                    power = float(row[1])
+                    self.PowerList.append(power)
+                except Exception as e:
+                    continue; 
+        print("PowerList" + str(self.PowerList))
         self.Init();
 
     def Init(self):
@@ -138,6 +150,7 @@ class ModbusHandler:
 
     def updatePower(self):
         currentTime = time.time();
+        print("powerValue: " + str(self.powerValue * self.PowerList[self.intervalCount % len(self.PowerList)]))
         if (currentTime - self.PreviousTime > self.IntervalTime):
             self.intervalCount += 1;
             self.PreviousTime = time.time();
@@ -146,8 +159,10 @@ class ModbusHandler:
             # set the current value
             self.setPower(powerVal);
             # check if the real value is one the range of expected values
-            self.LoopIfNotMeetReq(self.checkIfModbusPowerRight, 20, powerVal - self.variance_power,
-                                  powerVal + self.variance_power)
+            
+            if(not self.LoopIfNotMeetReq(self.checkIfModbusPowerRight, 20, powerVal - self.variance_power,
+                                  powerVal + self.variance_power)):
+                raise Exception("ModbusHandler: updatePower Error!!!")
 
 
     def updateCurrentOrPower(self):
@@ -307,9 +322,10 @@ class ModbusHandler:
         else:
             return False;
     
-    def checkIfModbusPowerRight(self, upLine, bottomLine):
-        voltage = self.getVoltage();
-        if (voltage < upLine and voltage > bottomLine):
+    def checkIfModbusPowerRight(self, bottomLine, upLine ):
+        power = self.getPower();
+#         print("power is : " + str(power))
+        if (power < upLine and power > bottomLine):
             return True;
         else:
             return False;

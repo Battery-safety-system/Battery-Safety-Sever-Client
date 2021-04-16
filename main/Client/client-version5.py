@@ -263,6 +263,8 @@ class Battery_System:
     def transferToPc(self):
         try:
             dictContent = {self.label_list[i]: self.data_list[i] for i in range(len(self.label_list))}
+#             dictContent = {"test": "test"}
+            print(dictContent)
         except Exception as e:
             print("client-version5: transferToPc: " + e)
             return ;
