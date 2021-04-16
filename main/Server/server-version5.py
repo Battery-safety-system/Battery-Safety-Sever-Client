@@ -11,8 +11,13 @@ class Server_PC:
         print("check the connection")
         self.ConnectionObj = Connection();
         print("*****************************************")
-
-        content = self.ConnectionObj.receiveContent()
+        while True:
+            try:
+                content = self.ConnectionObj.receiveContent()
+                break;
+            except Exception as e:
+                print(e)
+                content = self.ConnectionObj.receiveContent()
         self.getLabelsDatasFromContent(content);
         print("*****************************************")
 

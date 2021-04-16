@@ -5,4 +5,14 @@ Problem3: temp dangerous;
 modbusHandler: run()(collectData -> updateCurrent -> conflict with setDischarge); 
 it alawys diconnect when temp dangerous? why? 
 rasie Exception when temperature vio -> updatecurrent; 
-send content Error: receive content truncate; and there is no send content at all. please check it; 
+send content Error: receive content truncate; and there is no send content at all. please check it;
+
+
+exception:
+1. if client-version5: dictContent = {self.label_list[i]: self.data_list[i] for i in range(len(self.label_list))} error!!:
+directly return;
+
+
+what error the system cannot do:
+1. modbus cannot close;
+2. relay cannot close;

@@ -21,6 +21,11 @@ class Status(object):
         self.isModbusLowVoltageWarning = False;
         self.isModbusLowVoltageDangerous = False;
 
+        ## device
+        self.isRelayOff = False;
+        self.isModbusOff = False;
+        self.isPumpFanOff = True;
+
         ## Total Status
         self.warning = False;
         self.dangerous = False

@@ -14,9 +14,7 @@ class Connection(object):
             data = json.load(f)
         self.ip_port = int(data["ip_port"])
         self.ip_addr = data["ip_addr"]
-        #
-        # self.ip_addr='192.168.137.1'
-        # self.ip_port = 6699
+        self.content = {};
         self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
         self.connectToClient();
@@ -35,18 +33,25 @@ class Connection(object):
         print(u'the client %s:%s has connected.' % (host, port))
 
     def receiveContent(self):
-        self.connect.settimeout(40)
-        content = pickle.loads(self.connect.recv(9216));
-        # while True:
-        #     try:
-        #         content = pickle.loads(self.connect.recv(9216));
-        #         break;
-        #     except:
-        #         continue
+        if(self.LoopIfNotMeetReq(self.receiveContentFromClient, 3)):
+            return self.content;
+        else:
+            raise Exception("Error!!! cannot receiveContent in ServerConnection")
 
 
-        return content;
 
+    def LoopIfNotMeetReq(self, handler1, times, *args, **kwargs):
 
+        for i in range(times):
+            if (handler1(*args)):
+                return True;
+        return False;
         
-
+    def receiveContentFromClient(self):
+        self.connect.settimeout(40)
+        try:
+            self.content = pickle.loads(self.connect.recv(9216))
+            return True;
+        except Exception as e:
+            print(e);
+            return False

@@ -246,7 +246,8 @@ class PcanConnection(object):
         # print(f'label list: {self.label_list}')
         # 1.4 construct the label list
         self.getFinalLabelList(); # update the final labels
-        self.getDataFromPcan(); # update the data
+        while (self.getDataFromPcan() == {}):   # update the data
+            pass
         # print("getAllInfos() end");
 
     def handleData(self):
@@ -271,7 +272,7 @@ class PcanConnection(object):
 
 # ------------------------- Status Function --------------------------------------
 
-    def detectVoltage(self, status):
+    def updateStatusWithCMAVoltage(self, status):
         assert isinstance(status, Status)
         max_CMA_Voltage = -1;
         min_CMA_Voltage = 1000;
@@ -302,7 +303,7 @@ class PcanConnection(object):
 
     
 
-    def detectTemp(self, status):
+    def updateStatusWithTemp(self, status):
         assert isinstance(status, Status)
         max_temp = -1; 
         for battery in self.battery_list:
@@ -336,7 +337,7 @@ class PcanConnection(object):
 
 
 
-    def detectCellVoltageViolated(self, status):
+    def updateStatusWithCellVoltage(self, status):
         assert isinstance(status, Status)
         Max_Cell_Voltage = -1;
         Min_Cell_Voltage = 1000;
@@ -364,11 +365,11 @@ class PcanConnection(object):
             status.warning = True;
 
 
-    def detectStatus(self, status):
+    def updateStatus(self, status):
         # print("Begin to detect the status")
-        self.detectVoltage(status);
-        self.detectTemp(status);
-        self.detectCellVoltageViolated(status);
+        self.updateStatusWithCMAVoltage(status);
+        self.updateStatusWithTemp(status);
+        self.updateStatusWithCellVoltage(status);
         # print(self.message_data_dict)
         # print("detectStatus End")
 

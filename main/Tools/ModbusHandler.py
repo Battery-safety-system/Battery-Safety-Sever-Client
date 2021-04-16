@@ -150,7 +150,7 @@ class ModbusHandler:
                                   powerVal + self.variance_power)
 
 
-    def run(self):
+    def updateCurrentOrPower(self):
         if self.ControlMode == self.currentControlMode:
             self.updateCurrent();
         elif self.ControlMode == self.powerControlMode:

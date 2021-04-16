@@ -21,6 +21,13 @@ class Number:
 class delFun:
     def __init__(self):
         # raise Exception("Error");
+        try:
+            1/0;
+        except Exception as e:
+            raise e;
+
+
+        exit()
         print("ha")
     def __del__(self):
         print("create the result")
