@@ -33,31 +33,31 @@ class PcanConnection(object):
         self.init();
 
         # status
-#         self.CMA_Voltage_High_Dangerous = 44.5 # test
+#         self.CMA_Voltage_High_Dangerous = 42.9 # test
         self.CMA_Voltage_High_Dangerous = 48.5
         self.CMA_Voltage_Low_Dangerous = 33
-#         self.CMA_Voltage_Low_Dangerous = 44.5 # test
+#         self.CMA_Voltage_Low_Dangerous = 42.5 # test
         
         self.CMA_Voltage_High_Warning = 47.5
-#         self.CMA_Voltage_High_Warning = 44.5 #test
+#         self.CMA_Voltage_High_Warning = 43.9 #test
         self.CMA_Voltage_Low_Warning = 34
-#         self.CMA_Voltage_Low_Warning = 44 # test
+#         self.CMA_Voltage_Low_Warning = 42.5 # test
         
-#         self.CMA_Temp_Dangerous = 21 # test
+#         self.CMA_Temp_Dangerous = 23 # test
         self.CMA_Temp_Dangerous = 50
         self.CMA_Temp_Warning = 40;
-        #self.CMA_Temp_Warning = 19; # test
+#         self.CMA_Temp_Warning = 23; # test
         self.CMA_Temp_security = 30 
         #self.CMA_Temp_security = 18 # test
 
         self.Cell_Voltage_High_Warning = 4.1
-#         self.Cell_Voltage_High_Warning = 3.7 # test
+#         self.Cell_Voltage_High_Warning = 3.56 # test
         self.Cell_Voltage_Low_Warning = 2.8
-#         self.Cell_Voltage_Low_Warning = 3.65 # test
+#         self.Cell_Voltage_Low_Warning = 3.61 # test
         self.Cell_Voltage_High_Dangerous = 4.2
-#         self.Cell_Voltage_High_Dangerous = 3.7 3 test
-        self.Cell_Voltage_Low_Dangerous = 2.7
-#         self.Cell_Voltage_Low_Dangerous = 3.65 # test
+#         self.Cell_Voltage_High_Dangerous = 3.56 #3 test
+#         self.Cell_Voltage_Low_Dangerous = 2.7
+        self.Cell_Voltage_Low_Dangerous = 3.62 # test
 
         self.cellVoltageNum = 12
 
@@ -284,8 +284,8 @@ class PcanConnection(object):
                 max_CMA_Voltage = CMA_Voltage
             if(min_CMA_Voltage > CMA_Voltage):
                 min_CMA_Voltage = CMA_Voltage
-#         print("max_CMA_Voltage: " + str(max_CMA_Voltage))
-#         print("min_CMA_Voltage: " + str(min_CMA_Voltage))
+        print("max_CMA_Voltage: " + str(max_CMA_Voltage))
+        print("min_CMA_Voltage: " + str(min_CMA_Voltage))
         if max_CMA_Voltage >= self.CMA_Voltage_High_Dangerous:
             status.dangerous = True;
             status.isPcanVoltageHighDangerous = True;
@@ -299,6 +299,7 @@ class PcanConnection(object):
             
         if min_CMA_Voltage <= self.CMA_Voltage_Low_Warning:
             status.warning = True;
+            print("CMA_Voltage warning")
             status.isPcanVoltageLowWarning = True
 
     
@@ -349,21 +350,25 @@ class PcanConnection(object):
                     Max_Cell_Voltage = self.message_data_dict[label]
                 if(self.message_data_dict[label] < Min_Cell_Voltage ):
                     Min_Cell_Voltage = self.message_data_dict[label];
-#         print("Max_Cell_Voltage: " + str(Max_Cell_Voltage));
-#         print("Min_Cell_voltage: " + str(Min_Cell_Voltage))
+        print("Max_Cell_Voltage: " + str(Max_Cell_Voltage));
+        print("Min_Cell_voltage: " + str(Min_Cell_Voltage))
         if Max_Cell_Voltage >= self.Cell_Voltage_High_Dangerous:
+            print("max cell voltage high dangerous : " + str(Max_Cell_Voltage))
             status.isPcanVoltageHighDangerous = True;
             status.dangerous = True;
         if Max_Cell_Voltage >= self.Cell_Voltage_High_Warning:
+            print("max cell voltage high warning : " + str(Max_Cell_Voltage))
             status.isPcanVoltageHighWarning = True;
             status.warning = True;
         if Min_Cell_Voltage <= self.Cell_Voltage_Low_Dangerous:
+            print("min cell voltage low dangerous : " + str(Min_Cell_Voltage))
             status.isPcanVoltageHighWarning = True;
             status.dangerous = True;
         if Min_Cell_Voltage <= self.Cell_Voltage_Low_Warning:
+            print("cell voltage low warning: " + str(Min_Cell_Voltage))
             status.isPcanVoltageLowWarning = True;
             status.warning = True;
-
+        
 
     def updateStatus(self, status):
         # print("Begin to detect the status")

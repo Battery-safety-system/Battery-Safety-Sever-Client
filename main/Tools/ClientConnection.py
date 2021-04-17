@@ -62,9 +62,9 @@ class PCConnection(object):
                 return True;
         return False;
     def sendMessage(self, dict_pickle):
-#         self.client.settimeout(20)
+        self.client.settimeout(20)
         try:
-            self.client.sendall(dict_pickle)
+            self.client.send(dict_pickle)
         except Exception as e:
             print("Error!!! how to solve it")
             return False

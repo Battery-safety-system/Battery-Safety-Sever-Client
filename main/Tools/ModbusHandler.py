@@ -26,7 +26,7 @@ class ModbusHandler:
             reader = csv.reader(file)
             for row in reader:
                 try:
-                    power = float(row[1])
+                    power = float(row[1]) / self.powerValue
                     self.PowerList.append(power)
                     timeInterval = float(row[0])
                     self.intervalTimeList.append(timeInterval)
@@ -92,13 +92,13 @@ class ModbusHandler:
 
     def setStatusByVoltageInNormalWarningState(self, statusObj):
         assert isinstance(statusObj, Status)
-#         volLowWarning = 322# test
+#         volLowWarning = 343# test
         volLowWarning = 268
 #         volLowWarning = 346# test
         volHighWarning = 384  
-#         volHighWarning = 344  # test
+#         volHighWarning = 342  # test
         volHighDangerous = 390;
-#         volHighDangerous = 352# test
+#         volHighDangerous = 341# test
         volLowDangerous = 264
 #         volLowDangerous = 346# test
         vol = self.info_dict["modbus_Voltage"]
@@ -136,7 +136,9 @@ class ModbusHandler:
 # ---------------------- Main Function -------------------------------------------------
     def updateCurrent(self):
         currentTime = time.time();
-        self.intervalTime = self.intervalTimeList[self.intervalCount % len(self.CurrentList)];
+        count = 0 if self.intervalCount < 0 else self.intervalCount;
+        self.intervalTime = self.intervalTimeList[count % len(self.CurrentList)];
+        print("current time interval is: " + str(self.intervalTime))
         if (currentTime - self.PreviousTime > self.IntervalTime):
             self.intervalCount += 1;
             self.PreviousTime = time.time();
@@ -261,7 +263,7 @@ class ModbusHandler:
 
     def setPower(self, value):
         self.instrument.write_register(self.K_op_mode, self.power_mode, 0, 6)  # K_op_mode
-        print("power unsigned value " + str(self.signedToUnsigned(value * self.power_scale)))
+#         print("power unsigned value " + str(self.signedToUnsigned(value * self.power_scale)))
         #         self.instrument.write_register(self.Op_mode_setpoint, 65028, 0, 6) # Op_mode_setpoint
         self.instrument.write_register(self.Op_mode_setpoint, self.signedToUnsigned(value * self.power_scale), 0,
                                        6)  # Op_mode_setpoint

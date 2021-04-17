@@ -119,12 +119,12 @@ class Battery_System:
             print("current time is " + time.strftime('%H-%M-%S'))
             print(self.ModbusHandlerObj.info_dict)
 
-            dict_info = vars(self.StatusObj)
-            for ele in dict_info:
-                if "is" in ele and dict_info[ele]:
-                    print(ele)
-
-
+#             dict_info = vars(self.StatusObj)
+#             for ele in dict_info:
+#                 if "is" in ele and dict_info[ele]:
+#                     print(ele)
+            
+            self.monitorWarningDangerousStatus(self.StatusObj)
 
             if self.currentState == self.normalState:
                 print("normal state \n")
@@ -379,6 +379,8 @@ class Battery_System:
             content = dict_status[ele]
             if(content == True):
                 warningAndDangerousList.append(ele);
+        for ele in warningAndDangerousList:
+            print(ele + " : " + str(dict_status[ele]))
         print("warning and dangerous list: " + str(warningAndDangerousList))
 
 
@@ -394,21 +396,23 @@ class Battery_System:
             return "securityState"
 
     def __del__(self):
+        
         self.closeAllDevice();
 
-Battery1 = Battery_System();
-Battery1.run();
-# try:
-#     Battery1 = Battery_System();
-#     Battery1.run();
-# except Exception as e:
-#     print(e)
-#     print("Battery Error!!! Close all the system")
-#     Battery1.closeAllDevice();
+# Battery1 = Battery_System();
+# Battery1.run();
+try:
+    Battery1 = Battery_System();
+    Battery1.run();
+except Exception as e:
+    print(e)
+
+    Battery1.closeAllDevice();
 # try:
 #
 # except:
 #     Battery1.closeAllDevice();
+
 
 
 
