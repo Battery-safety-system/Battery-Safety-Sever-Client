@@ -36,8 +36,8 @@ class Server_PC:
     def writeToFile(self):
         for key in self.content:
             assert isinstance(key, str)
-            if "is" in key and not self.content[key]:
-                print(key + ": " + self.content[key])
+            if "is" in key and self.content[key]:
+                print(key + ": " + str(self.content[key]))
         self.FileObj.WritetoCVS(self.datas, self.labels)
 
     def updateLabelsFromContent(self):
@@ -53,6 +53,7 @@ class Server_PC:
         while(True):
             try:
                 self.content = self.ConnectionObj.receiveContent()
+                self.monitorStatus(self.content)
                 self.updateLabelsFromContent();
                 self.updateDatasFromContent();
                 break;
@@ -60,6 +61,18 @@ class Server_PC:
                 print(e);
                 self.ConnectionObj.reconnect()
 
+
+    def monitorStatus(self, content):
+        assert isinstance(content, dict);
+        print("monitor important status")
+        for key in content:
+            if "is" in key and content[key]:
+                print(key + ": " + content[key]);
+
+        print("monitor modbus information")
+        for key in content:
+            if "modbus" in key:
+                print(key + ": " + content[key])
 
     def getLabels(self):
         return self.labels;

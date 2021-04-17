@@ -45,7 +45,7 @@ class Connection(object):
     def receiveContentFromClient(self):
         # self.connect.settimeout(40)
         try:
-            orig_content = self.connect.recv(1024 * 1024)
+            orig_content = self.connect.recv(1024 * 1024 * 1024)
             print(orig_content);
 
             self.content = pickle.loads(orig_content)
@@ -55,7 +55,7 @@ class Connection(object):
             print(e);
             return False
     def receTest(self):
-        orig_content = self.connect.recv(1024 * 1024)
+        orig_content = self.connect.recv(1024 * 1024 * 200)
         print(orig_content);
 
         self.content = pickle.loads(orig_content)

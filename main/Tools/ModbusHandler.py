@@ -19,15 +19,17 @@ class ModbusHandler:
             data = data['ModbusHandler']
             for key in data:
                 setattr(self, key, data[key]);
-        
+
+        self.intervalTimeList = [];
         self.PowerList = []
         with open('../Client/cmsDART_3_300_sec_interval.csv') as file:
             reader = csv.reader(file)
             for row in reader:
                 try:
-#                     print(row)
                     power = float(row[1])
                     self.PowerList.append(power)
+                    timeInterval = float(row[0])
+                    self.intervalTimeList.append(timeInterval)
                 except Exception as e:
                     continue; 
         print("PowerList" + str(self.PowerList))
@@ -48,12 +50,9 @@ class ModbusHandler:
             print("checkModbusIfInit doesn't meet the requirement")
             self.closeModbus()
             raise Exception("checkModbusIfInit errors")
-        # else:
-        #     print("checkModbusIfInit pass the test")
         
-        self.PreviousTime = time.time();
-        # close the modbus device
-        # print("ModbusInit job completed")
+        self.PreviousTime = -1000;
+        self.updateCurrentOrPower();
 
     def setLimitation(self):
         # set the limitation among current, power, voltage
@@ -137,6 +136,7 @@ class ModbusHandler:
 # ---------------------- Main Function -------------------------------------------------
     def updateCurrent(self):
         currentTime = time.time();
+        self.intervalTime = self.intervalTimeList[self.intervalCount % len(self.CurrentList)];
         if (currentTime - self.PreviousTime > self.IntervalTime):
             self.intervalCount += 1;
             self.PreviousTime = time.time();
@@ -150,7 +150,10 @@ class ModbusHandler:
 
     def updatePower(self):
         currentTime = time.time();
-        print("powerValue: " + str(self.powerValue * self.PowerList[self.intervalCount % len(self.PowerList)]))
+        count = 0 if self.intervalCount < 0 else self.intervalCount;
+
+        self.intervalTime = self.intervalTimeList[count % len(self.PowerList)];
+        print("powerValue: " + str(self.powerValue * self.PowerList[count % len(self.PowerList)]))
         if (currentTime - self.PreviousTime > self.IntervalTime):
             self.intervalCount += 1;
             self.PreviousTime = time.time();
@@ -308,14 +311,14 @@ class ModbusHandler:
             DCBusCurrent) + ";" + "RemoteVoltage: " + str(RemoteVoltage) + ";"
         logging.info(str1)
 
-    def checkIfModbusCurrentRight(self, upLine, bottomLine):
+    def checkIfModbusCurrentRight(self, bottomLine, upLine ):
         current = self.getCurrent();
         if (current < upLine and current > bottomLine):
             return True;
         else:
             return False;
 
-    def checkIfModbusVoltageRight(self, upLine, bottomLine):
+    def checkIfModbusVoltageRight(self, bottomLine, upLine ):
         voltage = self.getVoltage();
         if (voltage < upLine and voltage > bottomLine):
             return True;
@@ -333,7 +336,7 @@ class ModbusHandler:
     def checkIfModbusVoltageInit(self):
 #         vol = self.info_dict["modbus_Voltage"]
 
-        if (self.checkIfModbusVoltageRight( 0 + self.variance_voltage, 0 - self.variance_voltage)):
+        if (self.checkIfModbusVoltageRight( 0 - self.variance_voltage, 0 + self.variance_voltage)):
             return True;
         else:
             return False;
