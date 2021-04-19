@@ -48,9 +48,13 @@ class Connection(object):
         return False;
         
     def receiveContentFromClient(self):
-        self.connect.settimeout(40)
+        # self.connect.settimeout(40)
         try:
-            self.content = pickle.loads(self.connect.recv(9216))
+            orig_content = self.connect.recv(1024 * 1024)
+            print(orig_content);
+
+            self.content = pickle.loads(orig_content)
+            print("content : " + str(self.content))
             return True;
         except Exception as e:
             print(e);
