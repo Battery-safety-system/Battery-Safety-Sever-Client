@@ -16,44 +16,36 @@ class File(object):
 
         # print("Initialize File Object")
         self.labels = labels
-        self.createWholeFileSystemVar()
+        self.updateWholeFileSystemVar()
         self.createWholeFilesWithFloders()
         # print("File Object Intialization End")
 
     def WritetoCVS(self, list_vol_temp, summary_head):
+        assert isinstance(list_vol_temp, list);
+        assert isinstance(summary_head, list);
 
-        # print("Begin WritetoCVS")
-        self.updateFileByLabels(summary_head)
-        self.updateFilesWithFlodersByDates();
-        self.writeList(list_vol_temp);
-        # print("WritetoCVS End")
-
-    def updateFileByLabels(self, summary_head):
-        assert isinstance(self.labels, list)
-        assert isinstance(summary_head, list)
-        if(self.labels != summary_head):
-            print("warning!!!! labels and summary_head are different, please check Pcan")
+        if (self.labels != summary_head):
             self.labels = summary_head
-            self.createWholeFileSystemVar();
+            self.updateWholeFileSystemVar();
             self.createWholeFilesWithFloders();
+        elif (time.strftime('%d') != self.day):
+            self.updateWholeFileSystemVar();
+            self.createWholeFilesWithFloders();
+        self.writeList(list_vol_temp);
+
 
     def createFloderIfNull(self, path):
         if (not os.path.isdir(path)):
             os.mkdir(path)
 
 
-    def updateFilesWithFlodersByDates(self):
-        current_day = time.strftime('%d')
-        if (current_day != self.day):
-            self.createWholeFileSystemVar();
-            self.createWholeFilesWithFloders();
 
     def writeList(self, list):
         with open(self.floder + '/' + self.file, 'a', newline='') as csvfile:
             writer1 = csv.writer(csvfile);
             writer1.writerow(list);
 
-    def createWholeFileSystemVar(self):
+    def updateWholeFileSystemVar(self):
         # print("updateWholeFileSystem() Begin")
         self.path = os.getcwd();
         self.dataBasePath = self.path + "/" + "Battery-System-database"

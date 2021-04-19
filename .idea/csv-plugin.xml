@@ -38,6 +38,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\main\Server\server-version5.py">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\main\Tools\ArduinoHandler.py">
           <value>
             <Attribute>

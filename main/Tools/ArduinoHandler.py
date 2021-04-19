@@ -9,7 +9,7 @@ import logging
 logging.basicConfig(filename='../Client/Modbus Status.log', level=logging.DEBUG)
 class ArduinoHandler:
     def __init__(self):
-        self.ser = serial.Serial('/dev/ttyACM0', 9600)
+        self.ser = serial.Serial('/dev/ttyACM0', 9600, timeout=10)
         # output device
         self.setPINValue();
         self.ohmsList = [];
@@ -90,20 +90,31 @@ class ArduinoHandler:
         self.ser.close();
         pass;
 # ---------------------------Receive Section ----------------------------
-    def ReceiveInfoFromArduino(self):
-        # print("")
-        currentTime = time.time();
-        while(True):
+    def LoopObserveFunction(self, callBackFun, times, *args, **kwargs):
+        for i in range(times):
             try:
-                contentStr = self.receive();
-            except:
+                return callBackFun(*args);
+            except Exception as e:
                 continue;
-            if(self.checkIfInfoRightFromArduino(contentStr)):
-                break;
-            if(time.time() - currentTime > 3):
-                logging.error("ArduinoHandler: ReceiveInforFromArduino: Receive Error!!")
-                print("ArduinoHandler: ReceiveInforFromArduino: Receive Error!!")
-                return ;
+        return None;
+
+    def LoopObserveFunctionWrite(self, callBackFun, times, *args, **kwargs):
+        for i in range(times):
+            try:
+                callBackFun(*args)
+                return True;
+            except Exception as e:
+                continue;
+        return False;
+
+
+    def ReceiveInfoFromArduino(self):
+        currentTime = time.time();
+        contentStr = LoopObserveFunction(self.receive, 3);
+        if (contentStr == None or self.checkIfInfoRightFromArduino(contentStr)):
+            logging.error("ArduinoHandler: ReceiveInforFromArduino: Receive Error!!")
+            raise Exception("ArduinoHandler: ReceiveInfoFromArduino: contentStr is not right...")
+
         contentArr = contentStr.split(',');
         contentDict = {};
         for oneInfo in contentArr:
@@ -173,10 +184,14 @@ class ArduinoHandler:
 
     def activateDevice(self, ArduinoInfoList):
         contentStr = "";
+        if (ArduinoInfoList == []):
+            return;
         for arduinoInfo in ArduinoInfoList:
             contentStr += str(arduinoInfo['pin_number'] ) + ":" + str(arduinoInfo['pin_value']) + "&";
         contentStr = contentStr[0:len(contentStr) - 1];
-        self.send(contentStr.encode());
+        if(self.LoopObserveFunctionWrite(self.send, 3, contentStr.encode())):
+            raise Exception("ArduinoHandler: activateDevice: Error!!! cannot send ArduinoInfoList, devices cannot open correctly!!!");
+
 
 
 # ------------------------------ setting Section --------------------------------------------------
@@ -200,19 +215,27 @@ class ArduinoHandler:
         ArduinoInfoList = [];
         ArduinoInfoList.append({"device": "Pump", "pin_number": self.pumpPIN, "pin_value": 1});
         ArduinoInfoList.append({"device": "Fan", "pin_number": self.FanPIN, "pin_value": 1});
-        self.activateDevice(ArduinoInfoList);
-
+        try:
+            self.activateDevice(ArduinoInfoList);
+        except Exception as e:
+            raise("ArduinoHandler_setPumpFanOn: " + e)
     def setPumpFanOff(self):
         ArduinoInfoList = [];
         ArduinoInfoList.append({"device": "Pump", "pin_number": self.pumpPIN, "pin_value": 0});
         ArduinoInfoList.append({"device": "Fan", "pin_number": self.FanPIN, "pin_value": 0});
-        self.activateDevice(ArduinoInfoList);
+        try:
+            self.activateDevice(ArduinoInfoList);
+        except Exception as e:
+            raise ("ArduinoHandler_setPumpFanOff: " + e)
 
     def setRelayoff(self):
         ArduinoInfoList = []
         ArduinoInfoList.append({"device": "Relay", "pin_number": self.Relay1PIN, "pin_value": 0});
         ArduinoInfoList.append({"device": "Relay", "pin_number": self.Relay2PIN, "pin_value": 0});
         ArduinoInfoList.append({"device": "Relay", "pin_number": self.Relay3PIN, "pin_value": 0});
-        self.activateDevice(ArduinoInfoList);
+        try:
+            self.activateDevice(ArduinoInfoList);
+        except Exception as e:
+            raise ("ArduinoHandler_setRelayoff: " + e)
 
 

@@ -32,7 +32,8 @@ class PCConnection(object):
             return ;
         dict_pickle = pickle.dumps(dictContent);
         if(self.LoopIfNotMeetReq(self.sendMessage, 5, dict_pickle)):
-            raise Exception("Error!!! cannot send dict_pickle in ClientConnection")
+            self.reconnectAfterLoops();
+            raise Exception("ClientConnection: sendContent: Error!!! cannot send dict_pickle in ClientConnection")
 
 
 

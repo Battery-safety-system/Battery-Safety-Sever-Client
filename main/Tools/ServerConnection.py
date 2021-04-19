@@ -36,7 +36,7 @@ class Connection(object):
         if(self.LoopIfNotMeetReq(self.receiveContentFromClient, 3)):
             return self.content;
         else:
-            raise Exception("Error!!! cannot receiveContent in ServerConnection")
+            raise Exception("ServerConnection_receiveContent: Error!!! cannot receiveContent in ServerConnection")
 
 
 

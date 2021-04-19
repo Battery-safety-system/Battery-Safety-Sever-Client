@@ -10,43 +10,33 @@ from main.Tools.ModbusHandler import ModbusHandler;
 
 import time;
 
-
+import logging
 class Battery_System:
     def __init__(self):
+        logging.basicConfig(filename='Client_Error_Record.log', level=logging.WARNING)
         print("Initialize status")
         status_labels = self.statusInit();
         print("********************************************")
 
         print("Init Arduino")
-        try:
-            ArduinoLabelList = self.arduinoInit();
-        except Exception as e:
-            raise e;
+        ArduinoLabelList = self.arduinoInit();
+
         print("********************************************")
         
         
         print("Initialize PCAN")
         PcanLabels = [];
-        try:
-            PcanLabels = self.pcanInit();
-        except Exception as e:
-            raise e;
+        PcanLabels = self.pcanInit();
         print("********************************************")
 
         # init the PC Connection
         print("initialize PC Connection")
-        try:
-            self.PcInit();
-        except Exception as e:
-            raise e;
+        self.PcInit();
         print("********************************************")
 
         print("Init Modbus")
         modbusLabels = []
-        try:
-            modbusLabels = self.modbusInit();
-        except Exception as e:
-            raise e;
+        modbusLabels = self.modbusInit();
         print("********************************************")
 
 
@@ -127,13 +117,13 @@ class Battery_System:
         while True:
             print("current time is " + time.strftime('%H-%M-%S'))
             print(self.ModbusHandlerObj.info_dict)
+
             dict_info = vars(self.StatusObj)
             for ele in dict_info:
                 if "is" in ele and dict_info[ele]:
                     print(ele)
-                    
-            
-            # print(vars(self.StatusObj))
+
+
 
             if self.currentState == self.normalState:
                 print("normal state \n")
@@ -155,9 +145,11 @@ class Battery_System:
         print("already in safe mode, the program exit()")
 
     def normalHandler(self):
-
-        self.collectDataInNormalWarningState();
-
+        try:
+            self.collectDataInNormalWarningState();
+        except Exception as e:
+            print(e)
+            return;
         self.storeDate();
 
         self.transferToPc();
@@ -167,10 +159,13 @@ class Battery_System:
         self.updateStatusInNormalWarningState();
 
     def warningHandler(self):
-
-        self.activeDeviceInWarningState();
-
-        self.collectDataInNormalWarningState();
+        try:
+            self.activeDeviceInWarningState();
+            self.collectDataInNormalWarningState();
+        except Exception as e:
+            print(e);
+            self.currentState = self.dangerousState;
+            return;
 
         self.storeDate();
 
@@ -180,10 +175,9 @@ class Battery_System:
         #
 
     def dangerousHandler(self):
+        self.activeDeviceInDangerousState();
     
         self.collectDataInDangerousState();
-
-        self.activeDeviceInDangerousState();
 
         self.updateStatusInDangerousState();
 
@@ -194,34 +188,54 @@ class Battery_System:
 # -------------------------------------------- State Function ------------------------------------------
 
     def collectDataInDangerousState(self):
-        self.PcanConnectionObj.getAllInfo();
-        self.PcanConnectionObj.updateStatus(self.StatusObj);
-        pass;
+        try:
+            self.PcanConnectionObj.getAllInfo();
+            self.PcanConnectionObj.updateStatus(self.StatusObj);
+        except Exception as e:
+            print(e)
 
 
     def collectDataInNormalWarningState(self):
         # print("collect Data in client-version5.py")
         # print("Initiate the status ")
         self.StatusObj.InitStatus();
+        try:
+            self.PcanConnectionObj.getAllInfo();
+            pcanDatas = self.PcanConnectionObj.getDatas();
+            pcanLabels = self.PcanConnectionObj.getLabels();
+            self.PcanConnectionObj.updateStatus(self.StatusObj);
+        except Exception as e:
+            # print("client: collectDataInNormalWarningState: Error!!! cannot receive message from pcan")
+            logging.error(time.strftime('%H-%M-%S') + "client: collectDataInNormalWarningState: " + "pcanconnection cannot get information");
+            raise "client: collectDataInNormalWarningState:" + e;
 
-        # print("start the Pcan Module")
-        self.PcanConnectionObj.getAllInfo();
-        pcanDatas = self.PcanConnectionObj.getDatas();
-        pcanLabels = self.PcanConnectionObj.getLabels();
-        self.PcanConnectionObj.updateStatus(self.StatusObj);
+
 
         # get label, datas from arduino( mainly temp, pressure)
         # print("Recieve information from Arduino")
-        self.ArduinoHandlerObj.ReceiveInfoFromArduino()  # get temp1, temp2, real1, real2 values
-        ArduinoLabelList = self.ArduinoHandlerObj.getLabListFromContentDict()
-        ArduinoDataList = self.ArduinoHandlerObj.getDataListFromContentDict();
+        try:
+            self.ArduinoHandlerObj.ReceiveInfoFromArduino()  # get temp1, temp2, real1, real2 values
+            ArduinoLabelList = self.ArduinoHandlerObj.getLabListFromContentDict()
+            ArduinoDataList = self.ArduinoHandlerObj.getDataListFromContentDict();
+        except Exception as e:
+            ArduinoLabelList = [];
+            ArduinoDataList = [];
+            logging.error(time.strftime('%H-%M-%S') + "client: collectDataInNormalWarningState: " + "arduino cannot get information or the information is not right")
+            print(e);
+
 
 
         # get labels, data from modbus (mainly DC current, DC power)
         # improvement: if the modbus handler
-        modbus_labels = self.ModbusHandlerObj.getLabels();
-        modbus_datas = self.ModbusHandlerObj.getDatas();
-        self.ModbusHandlerObj.setStatusByVoltageInNormalWarningState(self.StatusObj)
+        try:
+            modbus_labels = self.ModbusHandlerObj.getLabels();
+            modbus_datas = self.ModbusHandlerObj.getDatas();
+            self.ModbusHandlerObj.setStatusByVoltageInNormalWarningState(self.StatusObj)
+        except Exception as e:
+            logging.error(time.strftime(
+                '%H-%M-%S') + "client: collectDataInNormalWarningState: " + "Modbus cannot get information");
+            raise e;
+
 
 
         # get all the labels and datas from status
@@ -229,11 +243,17 @@ class Battery_System:
         status_datas = self.StatusObj.getStatusDatas();
 
         # merge status, arduino, modbus, pcan to data list and label list, and status dict;
-        self.createLabelsAndInitDatas(pcanLabels , ArduinoLabelList , modbus_labels , status_labels);
+        # self.createLabelsAndInitDatas(pcanLabels , ArduinoLabelList , modbus_labels , status_labels);
+        self.label_list = pcanLabels + ArduinoLabelList + modbus_labels + status_labels;
+        self.label_list.insert(0, 'time');
+        self.label_list.insert(0, 'date');  # final_label_list: [date time BMU01_Max_temp .... BMU02_Max_temp ...]
+        self.label_list.append("CurrentState")
+
         self.data_list = pcanDatas + ArduinoDataList + modbus_datas + status_datas;
         self.data_list.insert(0, time.strftime('%H:%M:%S'))
         self.data_list.insert(0, time.strftime('%d-%m-%Y'))
         self.data_list.append(self.convertStateToStr());
+
 
 
     def storeDate(self):
@@ -244,14 +264,14 @@ class Battery_System:
         try:
             dictContent = {self.label_list[i]: self.data_list[i] for i in range(len(self.label_list))}
         except Exception as e:
-            print(e)
-            print("client-version5: transferToPc: Error!!! label_list and data_list doesn't match")
+            print("client-version5: transferToPc: " + e)
             return ;
         try:
             self.PCConnectionObj.sendContent(dictContent)
         except Exception as e:
-            print(e)
-            self.PCConnectionObj.reconnectAfterLoops();
+            print("client-version5: transferToPc: " + e);
+            return ;
+
 
 
 # ------------------ update status in dangerous normal, warning ---------------------------------
@@ -282,23 +302,37 @@ class Battery_System:
 
     def activeDeviceInDangerousState(self):
         if (not self.StatusObj.isModbusOff):
-            self.ModbusHandlerObj.closeModbus();
-            self.StatusObj.isModbusOff = True;
+            try:
+                self.ModbusHandlerObj.closeModbus();
+                self.StatusObj.isModbusOff = True;
+            except Exception as e:
+                print(e)
+
         
         if (not self.StatusObj.isRelayOff):
             time.sleep(2)
-            self.ArduinoHandlerObj.setRelayoff();
-            self.StatusObj.isRelayOff = True;
+            try:
+                self.ArduinoHandlerObj.setRelayoff();
+                self.StatusObj.isRelayOff = True;
+            except Exception as e:
+                print(e)
+
             
         if (self.StatusObj.istempHighVio() and self.StatusObj.isPumpFanOff):
-            self.StatusObj.isPumpFanOff = False;
-            self.ArduinoHandlerObj.setPumpFanOn();
+            try:
+                self.ArduinoHandlerObj.setPumpFanOn();
+                self.StatusObj.isPumpFanOff = False;
+            except Exception as e:
+                print(e)
 
     def activeDeviceInWarningState(self):
         # active the device and check if its out of warnig level and dangerous level and do responding operation from status
         # print("activate device: pump and relay with Arduino")
         if (self.StatusObj.istempHighVio()):
-            self.ArduinoHandlerObj.setPumpFanOn();
+            try:
+                self.ArduinoHandlerObj.setPumpFanOn();
+            except Exception as e:
+                raise Exception("client_activeDeviceInWarningState: " + str(e))
             self.StatusObj.isPumpFanOff = False;
 
         if self.StatusObj.isVoltageVio():
@@ -320,7 +354,8 @@ class Battery_System:
             self.ArduinoHandlerObj.setPumpFanOff();
             self.StatusObj.isPumpFanOff = True;
             print("Arduino off")
-        except:
+        except Exception as e:
+            print(e)
             print("client-version5: closeAllDevice: Arduino off fail")
 
         try:
@@ -354,8 +389,9 @@ class Battery_System:
         elif (self.currentState == 4):
             return "securityState"
 
-    # def __del__(self):
-    #     self.closeAllDevice();
+    def __del__(self):
+        self.closeAllDevice();
+
 Battery1 = Battery_System();
 Battery1.run();
 # try:

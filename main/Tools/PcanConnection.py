@@ -246,8 +246,8 @@ class PcanConnection(object):
         # print(f'label list: {self.label_list}')
         # 1.4 construct the label list
         self.getFinalLabelList(); # update the final labels
-        while (self.getDataFromPcan() == {}):   # update the data
-            pass
+        self.getDataFromPcan()
+
         # print("getAllInfos() end");
 
     def handleData(self):
