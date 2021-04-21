@@ -6,6 +6,7 @@ import csv
 import socket
 import pickle
 import json
+import sys
 
 class Connection(object):
 
@@ -50,11 +51,22 @@ class Connection(object):
     def receiveContentFromClient(self):
         # self.connect.settimeout(40)
         try:
-            orig_content = self.connect.recv(1024 * 1024)
-            print(orig_content);
+            orig_content = b'';
+            while True:
+                content_part = self.connect.recv(1024 * 7)
+                # print()
+                orig_content += content_part;
+                if sys.getsizeof(orig_content) > 8810:
+                    print("size is: " + str(sys.getsizeof(orig_content)))
+                    break;
+            # print(orig_content_part1)
+            # print(orig_content_part2)
 
-            self.content = pickle.loads(orig_content)
-            print("content : " + str(self.content))
+            # print("orig_content: " + str(orig_content));
+            orig_str = orig_content.decode('utf-8')
+            self.content = json.loads(orig_str)
+            # self.content = pickle.loads(orig_content)
+            # print("content : " + str(self.content))
             return True;
         except Exception as e:
             print(e);

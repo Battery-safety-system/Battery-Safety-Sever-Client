@@ -36,8 +36,8 @@ class Server_PC:
     def writeToFile(self):
         for key in self.content:
             assert isinstance(key, str)
-            if "is" in key and not self.content[key]:
-                print(key + ": " + self.content[key])
+            if "is" in key and self.content[key]:
+                print(key + ": " + str(self.content[key]))
         self.FileObj.WritetoCVS(self.datas, self.labels)
 
     def updateLabelsFromContent(self):
