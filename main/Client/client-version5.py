@@ -114,6 +114,7 @@ class Battery_System:
 
     def run(self):
         print("Begin Loop Module")
+
         while True:
             print("current time is " + time.strftime('%H-%M-%S'))
             print(self.ModbusHandlerObj.info_dict)

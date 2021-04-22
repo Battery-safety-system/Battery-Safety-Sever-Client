@@ -25,10 +25,10 @@ with open(filename) as f:
         index = index + 1
     # print("new label: " + str(labels))
 
-print(dict1)
-# dict1repr(s) =
-list1 = [ dict1 for i in range(10)]
-content = pickle.dumps(list1);
-
-# # content = json.dumps(dict1).encode('utf-8')
+# print(dict1)
+# # dict1repr(s) =
+# list1 = [ dict1 for i in range(10)]
+# content = pickle.dumps(list1);
+dict1 = "{asdfasd}{afs}"
+content = json.dumps(dict1).encode('utf-8')
 client.send(content)

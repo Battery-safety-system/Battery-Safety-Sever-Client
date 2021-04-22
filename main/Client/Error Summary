@@ -27,10 +27,10 @@ content should more than 8000
 
 
 
-1. interval should depend on list
+1. interval should depend on list 11
 2. check the dangeroius warning status again
-3. checkif modbushandler should be bottom to upper
-4. check serverConnection the 9000 works well
+3. checkif modbushandler should be bottom to upper 1
+4. check serverConnection the 9000 works well ? doesn't I recommand to split the
 5. set the 15.25 at first.not 0: set the first element at the begining
 6. print power, current, votlage status(dangerous warning), device status
 7. why the server program print out 
@@ -42,3 +42,6 @@ BMU05_Discharge_Ah_from_BMU: 1776467
 BMU06_Discharge_Ah_from_BMU: 1115661
 BMU07_Discharge_Ah_from_BMU: 922385
 BMU08_Discharge_Ah_from_BMU: 1925050
+
+
+loop need to optimize

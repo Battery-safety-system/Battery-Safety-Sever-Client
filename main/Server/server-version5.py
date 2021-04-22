@@ -53,6 +53,7 @@ class Server_PC:
         while(True):
             try:
                 self.content = self.ConnectionObj.receiveContent()
+                self.monitorStatus(self.content)
                 self.updateLabelsFromContent();
                 self.updateDatasFromContent();
                 break;
@@ -60,6 +61,18 @@ class Server_PC:
                 print(e);
                 self.ConnectionObj.reconnect()
 
+
+    def monitorStatus(self, content):
+        assert isinstance(content, dict);
+        print("monitor important status")
+        for key in content:
+            if "is" in key and content[key]:
+                print(key + ": " + content[key]);
+
+        print("monitor modbus information")
+        for key in content:
+            if "modbus" in key:
+                print(key + ": " + content[key])
 
     def getLabels(self):
         return self.labels;
