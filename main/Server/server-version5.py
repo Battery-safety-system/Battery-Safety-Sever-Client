@@ -34,10 +34,10 @@ class Server_PC:
             print('complete the loop \n')
 
     def writeToFile(self):
-        for key in self.content:
-            assert isinstance(key, str)
-            if "is" in key and self.content[key]:
-                print(key + ": " + str(self.content[key]))
+        # for key in self.content:
+        #     assert isinstance(key, str)
+        #     # if "is" in key and self.content[key]:
+        #     #     print(key + ": " + str(self.content[key]))
         self.FileObj.WritetoCVS(self.datas, self.labels)
 
     def updateLabelsFromContent(self):
@@ -66,13 +66,14 @@ class Server_PC:
         assert isinstance(content, dict);
         print("monitor important status")
         for key in content:
-            if "is" in key and content[key]:
-                print(key + ": " + content[key]);
+            if "is" in key and "Dis" not in key and content[key]:
+                print(key + ": " + str(content[key]));
 
         print("monitor modbus information")
         for key in content:
             if "modbus" in key:
-                print(key + ": " + content[key])
+                print(key + ": " + str(content[key]))
+
 
     def getLabels(self):
         return self.labels;

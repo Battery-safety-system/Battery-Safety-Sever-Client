@@ -50,10 +50,11 @@ class Connection(object):
         return False;
         
     def receiveContentFromClient(self):
-        self.connect.settimeout(40)
+
         try:
             orig_content = "";
             while True:
+                self.connect.settimeout(40)
                 content_part = self.connect.recv(1024 * 7).decode('utf-8')
                 orig_content += content_part;
                 # if sys.getsizeof(orig_content) > 8810:
