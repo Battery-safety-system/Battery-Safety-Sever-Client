@@ -31,6 +31,12 @@ class ArduinoHandler:
         ArduinoInfoList.append({"device": "Pump", "pin_number": self.pumpPIN, "pin_value": 0});
         ArduinoInfoList.append({"device": "Fan", "pin_number": self.FanPIN, "pin_value": 0});
         self.activateDevice(ArduinoInfoList);
+        
+    def setPumpFanOn(self):
+        ArduinoInfoList = [];
+        ArduinoInfoList.append({"device": "Pump", "pin_number": self.pumpPIN, "pin_value": 1});
+        ArduinoInfoList.append({"device": "Fan", "pin_number": self.FanPIN, "pin_value": 1});
+        self.activateDevice(ArduinoInfoList);
 
     def setRelayoff(self):
         ArduinoInfoList = []
@@ -52,6 +58,10 @@ class ArduinoHandler:
         self.ser.write(contentStr);
         
 ar1 = ArduinoHandler();
-ar1.setRelayoff();
-time.sleep(2)
+# ar1.setRelayoff();
+# time.sleep(2)
 ar1.setPumpFanOff();
+# ar1.setPumpFanOn();
+# ArduinoInfoList = []
+# ArduinoInfoList.append({"device": "Fan", "pin_number": 7, "pin_value": 0});
+# ar1.activateDevice(ArduinoInfoList);

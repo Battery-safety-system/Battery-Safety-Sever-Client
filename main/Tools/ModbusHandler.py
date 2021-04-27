@@ -15,7 +15,6 @@ class ModbusHandler:
 
         with open('../Client/config.properties') as f:
             data = json.load(f)
-            print(data)
             data = data['ModbusHandler']
             for key in data:
                 setattr(self, key, data[key]);
@@ -26,7 +25,9 @@ class ModbusHandler:
             with open(self.controlValueFile) as file:
                 reader = csv.reader(file)
                 for row in reader:
-                    if (abs(row[1]) < self.max_crt):
+                    if("Current" in row[1]):
+                        continue; 
+                    if (abs(float(row[1])) < self.max_crt):
                         current = float(row[1]) / self.currentVal
                     else:
                         raise Exception(
@@ -42,7 +43,9 @@ class ModbusHandler:
             with open(self.controlValueFile) as file:
                 reader = csv.reader(file)
                 for row in reader:
-                    if (abs(row[1]) < self.max_power):
+                    if ("Power" in row[1]):
+                        continue; 
+                    if (abs(float(row[1])) < self.max_power):
                         power = float(row[1]) / self.powerValue
                     else:
                         raise Exception(
@@ -50,7 +53,7 @@ class ModbusHandler:
                     self.PowerList.append(power)
                     timeInterval = float(row[0])
                     self.intervalTimeList.append(timeInterval)
-            print("PowerList" + str(self.PowerList))
+            print("PowerList: " + str(self.PowerList))
 
         self.Init();
 
@@ -266,7 +269,7 @@ class ModbusHandler:
     def setCurrent(self, value):
         self.instrument.write_register(self.K_op_mode, self.current_mode, 0, 6)  # K_op_mode
         # print("SETTING POINTS")
-        print(self.signedToUnsigned(value * self.current_scale))
+#         print(self.signedToUnsigned(value * self.current_scale))
         #         self.instrument.write_register(self.Op_mode_setpoint,self.signedToUnsigned( value * self.current_scale ) , 0, 6)  # Op_mode_setpoint
         self.instrument.write_register(self.Op_mode_setpoint, self.signedToUnsigned(value * self.current_scale), 0, 6)
 

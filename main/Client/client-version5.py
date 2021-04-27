@@ -259,7 +259,7 @@ class Battery_System:
         try:
             dictContent = {self.label_list[i]: self.data_list[i] for i in range(len(self.label_list))}
 
-            print("info: client-version5: the content transfer to PC " + str(dictContent))
+#             print("info: client-version5: the content transfer to PC " + str(dictContent))
         except Exception as e:
             print("client-version5: transferToPc: " + e)
             return ;
@@ -367,7 +367,7 @@ class Battery_System:
 # ------------------------------------------ monitor Function ---------------------------------------------
     def monitorWarningDangerousStatus(self, statusObj):
         assert isinstance(statusObj, Status)
-        print(self.ModbusHandlerObj.info_dict)
+        print("ModbusHandlerObj.info_dict: " + str(self.ModbusHandlerObj.info_dict))
         dict_status = vars(statusObj)
         warningAndDangerousList = [];
 
@@ -382,7 +382,13 @@ class Battery_System:
         print("warning and dangerous list: " + str(warningAndDangerousList))
 
     def monitorPcanInfo(self):
-        dictContent = {self.label_list[i]: self.data_list[i] for i in range(len(self.label_list))};
+#         print("self.label_list: " + str(self.label_list))
+#         print("self.data_list: " + str(self.data_list))
+        try:
+            dictContent = {self.label_list[i]: self.data_list[i] for i in range(len(self.label_list))};
+        except Exception as e:
+#             print("")
+            return; 
         maximum_CMA_Voltage = -1000
         minimum_CMA_Voltage = 1000;
         for ele in dictContent:
@@ -406,8 +412,9 @@ class Battery_System:
         Max_Cell_Voltage = -1;
         Min_Cell_Voltage = 1000;
         for ele in dictContent:
-            if "Cell" in ele:
+            if "Cell" in ele and "Voltage" in ele and "13" not in ele and "14" not in ele:
                 cell_voltage = dictContent[ele]
+#                 print(ele)
                 if (cell_voltage > Max_Cell_Voltage):
                     Max_Cell_Voltage = cell_voltage;
                 if (cell_voltage < Min_Cell_Voltage):
@@ -431,15 +438,15 @@ class Battery_System:
         
         self.closeAllDevice();
 
-# Battery1 = Battery_System();
-# Battery1.run();
-try:
-    Battery1 = Battery_System();
-    Battery1.run();
-except Exception as e:
-    print(e)
-
-    Battery1.closeAllDevice();
+Battery1 = Battery_System();
+Battery1.run();
+# try:
+#     Battery1 = Battery_System();
+#     Battery1.run();
+# except Exception as e:
+#     print(e)
+# 
+#     Battery1.closeAllDevice();
 # try:
 #
 # except:

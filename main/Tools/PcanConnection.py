@@ -2,11 +2,12 @@ import cantools
 import can
 import sys
 sys.path.append("/home/pi/Desktop/Battery-Safety-Sever-Client")
+import json
 from main.Tools.Status import Status
 class PcanConnection(object):
     """docstring for PcanConnection"""
     def __init__(self):
-        with open('../Client/config.properties') as f:
+        with open('config.properties') as f:
             data = json.load(f)
             data = data["PcanConnection"]
             for key in data:
@@ -293,17 +294,19 @@ class PcanConnection(object):
         if max_CMA_Voltage >= self.CMA_Voltage_High_Dangerous:
             status.dangerous = True;
             status.isPcanVoltageHighDangerous = True;
-
+            print("Cma voltage high dangeroius")
         if max_CMA_Voltage >= self.CMA_Voltage_High_Warning:
             status.warning = True;
             status.isPcanVoltageHighWarning = True;
+            print("CMA_Voltage_high warning")
         if min_CMA_Voltage <= self.CMA_Voltage_Low_Dangerous:
             status.dangerous = True;
             status.isPcanVoltageLowDangerous = True;
+            print("CMA_Voltage_low dangerous")
             
         if min_CMA_Voltage <= self.CMA_Voltage_Low_Warning:
             status.warning = True;
-            # print("CMA_Voltage warning")
+            print("CMA_Voltage_low warning")
             status.isPcanVoltageLowWarning = True
 
     
@@ -321,11 +324,12 @@ class PcanConnection(object):
             if CMA_Max_Temp >= self.CMA_Temp_Dangerous:  ##40?
                 status.dangerous = True;
                 status.isPcanTempDangerous = True;
+                print("CMA_Max_Temp dangerous: " + str(CMA_Max_Temp))
                 if battery not in status.temperature_voliated_battery:
                     status.temperature_voliated_battery.append(battery);
                 
             if CMA_Max_Temp >= self.CMA_Temp_Warning:
-                # print("CMA_Max_Temp: " + str(CMA_Max_Temp))
+                print("CMA_Max_Temp warning: " + str(CMA_Max_Temp))
                 status.warning = True;
                 status.isPcanTempWarning = True;
                 if battery not in status.temperature_voliated_battery:
@@ -354,22 +358,22 @@ class PcanConnection(object):
                     Max_Cell_Voltage = self.message_data_dict[label]
                 if(self.message_data_dict[label] < Min_Cell_Voltage ):
                     Min_Cell_Voltage = self.message_data_dict[label];
-        # print("Max_Cell_Voltage: " + str(Max_Cell_Voltage));
-        # print("Min_Cell_voltage: " + str(Min_Cell_Voltage))
+#         print("Max_Cell_Voltage: " + str(Max_Cell_Voltage));
+#         print("Min_Cell_voltage: " + str(Min_Cell_Voltage))
         if Max_Cell_Voltage >= self.Cell_Voltage_High_Dangerous:
-            # print("max cell voltage high dangerous : " + str(Max_Cell_Voltage))
+            print("max cell voltage high dangerous : " + str(Max_Cell_Voltage))
             status.isPcanVoltageHighDangerous = True;
             status.dangerous = True;
         if Max_Cell_Voltage >= self.Cell_Voltage_High_Warning:
-            # print("max cell voltage high warning : " + str(Max_Cell_Voltage))
+            print("max cell voltage high warning : " + str(Max_Cell_Voltage))
             status.isPcanVoltageHighWarning = True;
             status.warning = True;
         if Min_Cell_Voltage <= self.Cell_Voltage_Low_Dangerous:
-            # print("min cell voltage low dangerous : " + str(Min_Cell_Voltage))
+            print("min cell voltage low dangerous : " + str(Min_Cell_Voltage))
             status.isPcanVoltageHighWarning = True;
             status.dangerous = True;
         if Min_Cell_Voltage <= self.Cell_Voltage_Low_Warning:
-            # print("cell voltage low warning: " + str(Min_Cell_Voltage))
+            print("cell voltage low warning: " + str(Min_Cell_Voltage))
             status.isPcanVoltageLowWarning = True;
             status.warning = True;
         
