@@ -50,27 +50,18 @@ class Connection(object):
         return False;
         
     def receiveContentFromClient(self):
-
-        try:
-            orig_content = "";
-            while True:
-                self.connect.settimeout(40)
-                content_part = self.connect.recv(1024 * 7).decode('utf-8')
-                orig_content += content_part;
-                # if sys.getsizeof(orig_content) > 8810:
-                #     print("size is: " + str(sys.getsizeof(orig_content)))
-                #     break;
-                if re.search("\{(.+)\}", orig_content):
-                    content = re.findall("\{(.+)\}", orig_content)[0]
-                    content = "{" + content + "}"
-                    self.content = json.loads(content)
-                    break;
-
-            # print("orig_content: " + str(orig_content));
-            # self.content = json.loads(orig_content)
-            # self.content = pickle.loads(orig_content)
-            # print("content : " + str(self.content))
-            return True;
-        except Exception as e:
-            print(e);
-            return False
+        orig_content = "";
+        for i in range(3):
+            try:
+                self.connect.settimeout(20)
+                content_part = self.connect.recv(1024 * 7).decode('utf-8');
+            except Exception as e:
+                print("ServerConnection: receiveContentFromClient: " + e)
+                return False
+            orig_content += content_part;
+            if re.search("\{(.+)\}", orig_content):
+                content = re.findall("\{(.+)\}", orig_content)[0]
+                content = "{" + content + "}"
+                self.content = json.loads(content)
+                return True;
+        return False;

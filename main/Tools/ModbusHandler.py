@@ -21,18 +21,37 @@ class ModbusHandler:
                 setattr(self, key, data[key]);
 
         self.intervalTimeList = [];
-        self.PowerList = []
-        with open('../Client/cmsDART_3_300_sec_interval.csv') as file:
-            reader = csv.reader(file)
-            for row in reader:
-                try:
-                    power = float(row[1]) / self.powerValue
+        if(self.ControlMode == self.currentControlMode):
+            self.CurrentList = [];
+            with open(self.controlValueFile) as file:
+                reader = csv.reader(file)
+                for row in reader:
+                    if (abs(row[1]) < self.max_crt):
+                        current = float(row[1]) / self.currentVal
+                    else:
+                        raise Exception(
+                            "ModbusHandler: __init__: Error!!! currentValue is out of maxium current value. Please check value control files.....")
+                    self.CurrentList.append(current)
+                    timeInterval = float(row[0])
+                    self.intervalTimeList.append(timeInterval)
+            print("CurrentList" + str(self.CurrentList))
+
+
+        if(self.ControlMode == self.powerControlMode):
+            self.PowerList = []
+            with open(self.controlValueFile) as file:
+                reader = csv.reader(file)
+                for row in reader:
+                    if (abs(row[1]) < self.max_power):
+                        power = float(row[1]) / self.powerValue
+                    else:
+                        raise Exception(
+                            "ModbusHandler: __init__: Error!!! powerValue is out of maxium power value. Please check value control files.....")
                     self.PowerList.append(power)
                     timeInterval = float(row[0])
                     self.intervalTimeList.append(timeInterval)
-                except Exception as e:
-                    continue; 
-        print("PowerList" + str(self.PowerList))
+            print("PowerList" + str(self.PowerList))
+
         self.Init();
 
     def Init(self):
@@ -72,18 +91,9 @@ class ModbusHandler:
         DCBusPower = self.getPower();
         DCBusCurrent = self.getCurrent()
         RemoteVoltage = self.getVoltage();
-#         print("----------------")
-#         print("DCBusPower: " + str(DCBusPower))
-#         print("DCBusCurrent: " + str(DCBusCurrent))
-#         print("RemoteVoltage: " + str(RemoteVoltage))
-        if (
-                DCBusPower > 0 - self.variance_power and DCBusPower < 0 + self.variance_power and DCBusCurrent > 0 - self.variance_current and DCBusCurrent < 0 + self.variance_current and RemoteVoltage < self.max_vol and RemoteVoltage > self.min_vol):
+        if (DCBusPower > 0 - self.variance_power and DCBusPower < 0 + self.variance_power and DCBusCurrent > 0 - self.variance_current and DCBusCurrent < 0 + self.variance_current and RemoteVoltage < self.max_vol and RemoteVoltage > self.min_vol):
             # print("Current and power are all set nearly 0, meet the requirement")
             return True;
-
-        str1 = "DCBusPower: " + str(DCBusPower) + ";" + "DCBusCurrent: " + str(
-            DCBusCurrent) + ";" + "RemoteVoltage: " + str(RemoteVoltage) + ";"
-        # logging.info(str1)
         return False;
 
 
@@ -92,15 +102,15 @@ class ModbusHandler:
 
     def setStatusByVoltageInNormalWarningState(self, statusObj):
         assert isinstance(statusObj, Status)
-#         volLowWarning = 343# test
-        volLowWarning = 268
-#         volLowWarning = 346# test
-        volHighWarning = 384  
-#         volHighWarning = 342  # test
-        volHighDangerous = 390;
-#         volHighDangerous = 341# test
-        volLowDangerous = 264
-#         volLowDangerous = 346# test
+# #         volLowWarning = 343# test
+#         volLowWarning = 268
+# #         volLowWarning = 346# test
+#         volHighWarning = 384
+# #         volHighWarning = 342  # test
+#         volHighDangerous = 390;
+# #         volHighDangerous = 341# test
+#         volLowDangerous = 264
+# #         volLowDangerous = 346# test
         vol = self.info_dict["modbus_Voltage"]
         #
         statusObj.isModbusHighVoltageWarning = False;
@@ -109,22 +119,22 @@ class ModbusHandler:
         statusObj.isModbusLowVoltageDangerous = False;
 
 
-        if (abs(vol) <=  volLowWarning and abs(vol) > volLowDangerous):
+        if (abs(vol) <=  self.volLowWarning and abs(vol) > self.volLowDangerous):
             logging.warning("Modbus voltage Low violated warning")
             statusObj.isModbusLowVoltageWarning = True;
             statusObj.warning = True;
 
-        if (abs(vol) <= volLowDangerous):
+        if (abs(vol) <= self.volLowDangerous):
             logging.error("Modbus Voltage Low violated Dangerous")
             statusObj.isModbusLowVoltageDangerous = True;
             statusObj.dangerous = True;
 
-        if (abs(vol) >= volHighWarning and abs(vol) < volHighDangerous):
+        if (abs(vol) >= self.volHighWarning and abs(vol) < self.volHighDangerous):
             logging.warning("Modbus voltage High violated warning")
             statusObj.isModbusHighVoltageWarning = True;
             statusObj.warning = True;
 
-        if (abs(vol) >= volHighDangerous):
+        if (abs(vol) >= self.volHighDangerous):
             logging.error("Modbus Voltage High violated Dangerous")
             statusObj.isModbusHighVoltageDagnerous = True;
             statusObj.dangerous = True;
@@ -188,8 +198,7 @@ class ModbusHandler:
         data_list = [DCBusPower, DCBusCurrent, RemoteVoltage]
         self.data_list = data_list;
         self.info_dict["modbus_Power"] = DCBusPower; self.info_dict["modbus_Current"] = DCBusCurrent; self.info_dict["modbus_Voltage"] = RemoteVoltage;
-        self.info_dict["remoteVoltage"] = RemoteVoltage
-        print("ModbusHandler" + str(self.info_dict))
+        # print("ModbusHandler" + str(self.info_dict))
         return self.data_list;
 
     def setModbusDischarge(self):
@@ -224,7 +233,7 @@ class ModbusHandler:
         self.instrument.write_register(self.security_code, 125, 0, 6)
 
         # Set the timeout register
-        self.instrument.write_register(self.Heartbeat, 333, 0, 6)
+        self.instrument.write_register(self.Heartbeat, self.heartBeatRate, 0, 6)
         # set the op mode off
         self.instrument.write_register(self.K_op_mode, 0, 0, 6)  # K_op_mode
 
@@ -247,7 +256,7 @@ class ModbusHandler:
         return DCBusPower;
 
     def getVoltage(self):
-        RemoteVoltage = (self.instrument.read_register(30263, 0, 4) / self.voltage_scale)
+        RemoteVoltage = (self.instrument.read_register(self.epcl_remote_volt, 0, 4) / self.voltage_scale)
         return RemoteVoltage;
     # def getRemoteVoltage(self):
     #     RemoteVoltage = (self.instrument.read_register(30263, 0, 4) / self.voltage_scale)
@@ -256,7 +265,7 @@ class ModbusHandler:
 # ---------------------------------------- set Function -------------------------------------------
     def setCurrent(self, value):
         self.instrument.write_register(self.K_op_mode, self.current_mode, 0, 6)  # K_op_mode
-        print("SETTING POINTS")
+        # print("SETTING POINTS")
         print(self.signedToUnsigned(value * self.current_scale))
         #         self.instrument.write_register(self.Op_mode_setpoint,self.signedToUnsigned( value * self.current_scale ) , 0, 6)  # Op_mode_setpoint
         self.instrument.write_register(self.Op_mode_setpoint, self.signedToUnsigned(value * self.current_scale), 0, 6)
@@ -336,19 +345,10 @@ class ModbusHandler:
             return False;
 
     def checkIfModbusVoltageInit(self):
-#         vol = self.info_dict["modbus_Voltage"]
-
         if (self.checkIfModbusVoltageRight( 0 - self.variance_voltage, 0 + self.variance_voltage)):
             return True;
         else:
             return False;
-
-    # def checkIfModbusLabels(self):
-
-
-
-
-
 
     def __del__(self):
         print("exit the program")

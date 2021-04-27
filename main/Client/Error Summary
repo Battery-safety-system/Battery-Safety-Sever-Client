@@ -49,15 +49,17 @@ settime if it works
 loop need to optimize
 
 new Exception: 
-1. when people set the wrong number(too much) we should raise error and exit
-2. print information: status error, 
-3. don't use the thonny but use the command line; 
-4. update the currentlist and power list
-5. server code doesn't exit: better add thread, if it doesn't work, then exit the old thread and create new thread; 
-6. for client, only monitor status once; 
-7. we shouldn't wait such long time for PC connection
-8. pcan variable to config files
-9. pcan reading times: 3
+1. when people set the wrong number(too much) we should raise error and exit! completed
+2. print information: status error,  completed; client completed
+3. don't use the thonny but use the command line;  completed;
+4. update the currentlist and power list; completed
+5. server code doesn't exit: better add thread, if it doesn't work, then exit the old thread and create new thread;  this is for server; completed;
+6. for client, only monitor status once;  completed
+7. we shouldn't wait such long time for PC connection; I already change the code, may be we can try again; completed;
+8. pcan variable to config files;  completed
+9. pcan reading times: 3; completed
 10. I don't want the print modbuspower part 1 loop delay from status: normal state; 
 
 I find although I don't see anything in server, but it still running, I guess it's because new thread run same way
+
+11.set the print to the monitor

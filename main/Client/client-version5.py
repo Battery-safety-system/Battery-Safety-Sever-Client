@@ -117,15 +117,9 @@ class Battery_System:
 
         while True:
             print("current time is " + time.strftime('%H-%M-%S'))
-            print(self.ModbusHandlerObj.info_dict)
 
-#             dict_info = vars(self.StatusObj)
-#             for ele in dict_info:
-#                 if "is" in ele and dict_info[ele]:
-#                     print(ele)
-            
             self.monitorWarningDangerousStatus(self.StatusObj)
-
+            self.monitorPcanInfo();
             if self.currentState == self.normalState:
                 print("normal state \n")
                 self.normalHandler();
@@ -264,8 +258,8 @@ class Battery_System:
     def transferToPc(self):
         try:
             dictContent = {self.label_list[i]: self.data_list[i] for i in range(len(self.label_list))}
-#             dictContent = {"test": "test"}
-            print(dictContent)
+
+            print("info: client-version5: the content transfer to PC " + str(dictContent))
         except Exception as e:
             print("client-version5: transferToPc: " + e)
             return ;
@@ -320,7 +314,7 @@ class Battery_System:
             except Exception as e:
                 print(e)
 
-        print("self.StatusObj.isPumpFanOff: " + str(self.StatusObj.isPumpFanOff))
+        # print("self.StatusObj.isPumpFanOff: " + str(self.StatusObj.isPumpFanOff))
         if (self.StatusObj.istempHighVio() ):
             try:
                 self.ArduinoHandlerObj.setPumpFanOn();
@@ -373,15 +367,53 @@ class Battery_System:
 # ------------------------------------------ monitor Function ---------------------------------------------
     def monitorWarningDangerousStatus(self, statusObj):
         assert isinstance(statusObj, Status)
+        print(self.ModbusHandlerObj.info_dict)
         dict_status = vars(statusObj)
         warningAndDangerousList = [];
+
         for ele in dict_status:
             content = dict_status[ele]
-            if(content == True):
+            if (ele == "isPumpFanOff" and dict_status[ele] ):
+                print("isPumpFanOff: False, Temperature High!!")
+            elif(content == True ):
                 warningAndDangerousList.append(ele);
         for ele in warningAndDangerousList:
             print(ele + " : " + str(dict_status[ele]))
         print("warning and dangerous list: " + str(warningAndDangerousList))
+
+    def monitorPcanInfo(self):
+        dictContent = {self.label_list[i]: self.data_list[i] for i in range(len(self.label_list))};
+        maximum_CMA_Voltage = -1000
+        minimum_CMA_Voltage = 1000;
+        for ele in dictContent:
+            if "CMA_Voltage" in ele:
+                val = dictContent[ele]
+                if(val > maximum_CMA_Voltage):
+                    maximum_CMA_Voltage = val;
+                if(val < minimum_CMA_Voltage):
+                    minimum_CMA_Voltage = val;
+        print("maximum_CMA_Voltage: " + str(maximum_CMA_Voltage));
+        print("minimum_CMA_Voltage: " + str(minimum_CMA_Voltage));
+# ***************************************************************
+        max_temp = -1;
+        for ele in dictContent:
+            if "CMA_Max_Temp" in ele:
+                CMA_Max_Temp = dictContent[ele];
+                if max_temp < CMA_Max_Temp:
+                    max_temp = CMA_Max_Temp
+        print("Max temp: " + str(max_temp))
+# ******************************************************************
+        Max_Cell_Voltage = -1;
+        Min_Cell_Voltage = 1000;
+        for ele in dictContent:
+            if "Cell" in ele:
+                cell_voltage = dictContent[ele]
+                if (cell_voltage > Max_Cell_Voltage):
+                    Max_Cell_Voltage = cell_voltage;
+                if (cell_voltage < Min_Cell_Voltage):
+                    Min_Cell_Voltage = cell_voltage;
+        print("Max_Cell_Voltage: " + str(Max_Cell_Voltage));
+        print("Min_Cell_voltage: " + str(Min_Cell_Voltage))
 
 
 # ------------------------------------ Tools Function ---------------------------------------

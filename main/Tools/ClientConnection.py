@@ -12,15 +12,19 @@ class PCConnection(object):
     """docstring for PCConnection"""
 
     def __init__(self):
-        # super(PCConnection, self).__init__()
-        self.ip_addre = '192.168.137.1'
-        self.ip_port = 6699
-        self.errorTimes = 0;
-        self.isError = False;
-        self.recurTimes = 20;
+        with open('../Client/config.properties') as f:
+            data = json.load(f)
+            data = data["PCConnection"]
+            for key in data:
+                setattr(self, key, data[key]);
+
+        # self.ip_addre = '192.168.137.1'
+        # self.ip_port = 6699
+        # self.errorTimes = 0;
+        # self.isError = False;
+        # self.recurTimes = 20;
 
     def connect(self):
-
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.client.connect((self.ip_addre, self.ip_port))
 

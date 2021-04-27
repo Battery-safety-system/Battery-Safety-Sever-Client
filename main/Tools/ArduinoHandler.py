@@ -9,7 +9,12 @@ import logging
 logging.basicConfig(filename='../Client/Modbus Status.log', level=logging.DEBUG)
 class ArduinoHandler:
     def __init__(self):
-        self.ser = serial.Serial('/dev/ttyACM0', 9600, timeout=10)
+        with open('../Client/config.properties') as f:
+            data = json.load(f)
+        data = data["ArduinoHandler"]
+        port = data["USB_Port"];
+        port_rate = data["port_rate"]
+        self.ser = serial.Serial(port, 9600, timeout=10)
         # output device
         self.setPINValue();
         self.ohmsList = [];
