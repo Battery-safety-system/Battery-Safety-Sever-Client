@@ -53,19 +53,30 @@ and here
 * Install tools:
   
   ```console
-    $ pip install xxx
+    $ pip3 install xxx
   ```
 
 * Run Command: <br />
-  
+ 
     For PC: 
-  
+      ```console
+        $ cd ./main/Server
         $ python3 Server.py 
-
+      ```
     For Raspberry pi
-    
-        $ python3 Client.py 
-
+      ```console
+        $ cd ./main/Client
+        $ bash start_client.sh
+      ```
+    ***Note: Please run PC command before Raspberry pi***
+* Change the Schedule: <br />
+   Open the ./main/Client/config.properties
+   choose the ControlMode (1 means currentControlMode; 2 means powerControlMode)
+   then choose controlValueFile and enter the file name
+   save and close config.properties
+   jump to Run Command Part and run code
+   
+   
 ## Module <a name="Module"></a>
 
 ### 1. Arduino Model
@@ -76,6 +87,7 @@ we use A0, A1 as analog pin
 ## Content  <a name="Content"></a>
 
 ### 1. Client <a name="Client"></a>
+
 
 #### 
 
