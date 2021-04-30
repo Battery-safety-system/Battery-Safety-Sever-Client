@@ -58,16 +58,18 @@ and here
 
 * Run Command: <br />
  
+ 
     For PC: 
-      ```console
         $ cd ./main/Server
         $ python3 Server.py 
-      ```
+    
+    
+    
     For Raspberry pi
-      ```console
+
         $ cd ./main/Client
         $ bash start_client.sh
-      ```
+        
       
     ***Note: Please run PC command before Raspberry pi***
     
