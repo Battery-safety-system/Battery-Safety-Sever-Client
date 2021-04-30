@@ -44,7 +44,7 @@ It should Work!!!!
 If there is still error, please refer to this [website](https://forum.peak-system.com/viewtopic.php?f=59&t=3381)
 
 ### Python Package(python3)
-can, cantools, pickle, logging, socket, os, time, csv, minimalmodbus
+please use *pip3 install* command to install the following python package: can, cantools, pickle, logging, socket, os, time, csv, minimalmodbus
 
 ### IP Address
 Please make sure the PC local IP address is 192.168.137.1, or you need to change ip_addr tags both in main/Server/config.properties and main/Client/config.properties.
