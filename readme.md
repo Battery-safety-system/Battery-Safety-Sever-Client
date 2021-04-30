@@ -72,11 +72,11 @@ and here
     ***Note: Please run PC command before Raspberry pi***
     
 * Change the Schedule: <br />
-   Open the ./main/Client/config.properties <br />
-   choose the ControlMode (1 means currentControlMode; 2 means powerControlMode) <br />
-   then choose controlValueFile and enter the file name <br />
-   save and close config.properties <br />
-   jump to Run Command Part and run code <br />
+   1. Open the ./main/Client/config.properties <br />
+   2. Choose the ControlMode (1 means currentControlMode; 2 means powerControlMode) <br />
+   3. Then choose controlValueFile and enter the file name <br />
+   4. Save and close config.properties <br />
+   5. Jump to Run Command Part and run code <br />
    
    
 ## Module <a name="Module"></a>
@@ -86,10 +86,10 @@ and here
 Please check ArduinoHandler in /main/Client/config.properties. We can change Pump, Fan, Relay Pin numbers if we want. Also if the port is not right, you can also change USB_Port name. 
 
 ### 2. PCAN Model
-you can change the value of CMA_Voltage, CMA_Temp, Cell_Voltage warning and dangerous value to control the system. And also, if the Pcan doesn't connect to port can0, you can change the name of channel. 
+You can change the value of CMA_Voltage, CMA_Temp, Cell_Voltage warning and dangerous value to control the system. <br /> And also, if the Pcan doesn't connect to port can0, you can change the name of channel. 
 
 ### 3. Modbus Model
-Here, if we want to change the Modbus limitation, we need to change the values of  "max_vol", "min_vol", "max_crt", "max_dis_crt", "max_power". What's more, warning and dangerous level depend on "volLowWarning", "volHighWarning", "volHighDangerous", "volLowDangerous".
+Here, if we want to change the Modbus limitation, we need to change the values of  "max_vol", "min_vol", "max_crt", "max_dis_crt", "max_power". <br /> What's more, warning and dangerous level depend on "volLowWarning", "volHighWarning", "volHighDangerous", "volLowDangerous".
 
 ## Content  <a name="Content"></a>
 
