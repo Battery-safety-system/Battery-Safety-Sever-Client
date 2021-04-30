@@ -11,15 +11,19 @@ This Safety System aims to keep the temperature, voltage of the batteries module
 
 # Table of contents
 
-1. [Install](#Install)
+1. [Prerequirement](#Prerequirement)
 2. [Built With](#BuiltWith)
-3. [Content](#Content)
+3. [Content](#Content)s
    1. [Client](#Client)
    2. [Server](#Server)
 4. [Conclusion](#Conclusion)
 
-# Install <a name="Install"></a>
+# Hardware Prerequirement <a name="Hardware Prerequirement"></a>
+Device: Arduino, Modbus, Pcan, Battery, Raspberry, PC
 
+# Software Prerequirement <a name="Software Prerequirement"></a>
+
+## Pcan: 
 Before we use these code, we need to install peak driver to drive the pcan. <br/>
 Installation step: <br />
 
@@ -36,8 +40,16 @@ Installation step: <br />
     $ sudo modprobe pcan
     $ sudo ip link set can0 up type can bitrate 500000
    ```
-
+It should Work!!!!
 If there is still error, please refer to this [website](https://forum.peak-system.com/viewtopic.php?f=59&t=3381)
+
+## Python Package(python3)
+can, cantools, pickle, logging, socket, os, time, csv, minimalmodbus
+
+## IP Address
+Please make sure the PC local IP address is 192.168.137.1, or you need to change ip_addr tags both in main/Server/config.properties and main/Client/config.properties.
+What's more, you need to make ip_port in main/Server/config.properties and main/Client/config.properties are same and not used by other process, or PC cannot to the Raspberry.  
+
 
 ## Built With <a name="BuiltWith"></a>
 
@@ -48,7 +60,7 @@ and here
 
 * Language: Python3 <br />
 
-* Python Package: RPi.GPIO, can, cantools, pickle, logging, socket, os, time, csv <br />
+* Python Package: RPi.GPIO,  <br />
 
 * Install tools:
   
@@ -62,7 +74,7 @@ and here
     For PC: 
     
         $ cd ./main/Server
-        $ python3 Server.py 
+        $ python3 server-version5.py 
     
     
     
