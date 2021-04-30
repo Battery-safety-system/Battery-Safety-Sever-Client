@@ -118,3 +118,6 @@ Modbus datasheet: [MODBUS Programming Manual_100-PBJ1226-PAA_V1.0 (1).xlsx - Goo
 ## Tools:
 
  Kvaser Database Editor read dbc: [https://www.kvaser.com/download/](https://urldefense.com/v3/__https://www.kvaser.com/download/__;!!Mih3wA!ReAZfpD6fU6_pbI5hwYomFi2ZcN52VkdjdvT4XQDX1vOkkkJbpPjh9JoaB_i9I2kig$)
+ 
+ ## Possible Error: 
+ 
