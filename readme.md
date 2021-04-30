@@ -23,7 +23,7 @@ Device: Arduino, Modbus, Pcan, Battery, Raspberry, PC
 
 # Software Prerequirement <a name="Software Prerequirement"></a>
 
-## Pcan: 
+### Pcan: 
 Before we use these code, we need to install peak driver to drive the pcan. <br/>
 Installation step: <br />
 
@@ -43,10 +43,10 @@ Installation step: <br />
 It should Work!!!!
 If there is still error, please refer to this [website](https://forum.peak-system.com/viewtopic.php?f=59&t=3381)
 
-## Python Package(python3)
+### Python Package(python3)
 can, cantools, pickle, logging, socket, os, time, csv, minimalmodbus
 
-## IP Address
+### IP Address
 Please make sure the PC local IP address is 192.168.137.1, or you need to change ip_addr tags both in main/Server/config.properties and main/Client/config.properties.
 What's more, you need to make ip_port in main/Server/config.properties and main/Client/config.properties are same and not used by other process, or PC cannot to the Raspberry.  
 
