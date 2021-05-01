@@ -21,6 +21,7 @@ This Safety System aims to keep the temperature, voltage of the batteries module
 # Hardware Prerequirement <a name="Hardware Prerequirement"></a>
 Device: Arduino, Modbus, Pcan, Battery, Raspberry, PC, Network Switcher.
 
+
 # Software Prerequirement <a name="Software Prerequirement"></a>
 
 ### Pcan(raspberry): 
@@ -65,7 +66,8 @@ and here
 -->
 * Get the Code: 
 
-  $ git clone 
+  $ git clone https://github.com/Battery-safety-system/Battery-Safety-Sever-Client.git
+  $ git checkout TestCode
 
 
 * Run Command: <br />
