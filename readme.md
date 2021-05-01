@@ -38,9 +38,12 @@ Installation step: <br />
 ```
 
 
-
 If there is still error, please refer to this [website](https://forum.peak-system.com/viewtopic.php?f=59&t=3381)
 
+
+* Download Arduino
+	[simulator link](https://www.tinkercad.com/things/bGWVayF3Z1h-start-simulating/editel?lessonid=EHD2303J3YPUS5Z&projectid=OIYJ88OJ3OPN3EA&collectionid=OIYJ88OJ3OPN3EA&tenant=circuits#/lesson-viewer)
+	$ sudo apt-get install arduino
 
 ## Built With <a name="BuiltWith"></a>
 <!---
