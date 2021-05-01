@@ -13,7 +13,7 @@ This Safety System aims to keep the temperature, voltage of the batteries module
 
 1. [Prerequirement](#Prerequirement)
 2. [Built With](#BuiltWith)
-3. [Content](#Content)s
+3. [Content](#Content)
    1. [Client](#Client)
    2. [Server](#Server)
 4. [Conclusion](#Conclusion)
@@ -25,7 +25,7 @@ Device: Arduino, Modbus, Pcan, Battery, Raspberry, PC, Network Switcher.
 # Software Prerequirement <a name="Software Prerequirement"></a>
 
 ### Pcan(raspberry): 
-Before we use these code, we need to install peak driver to drive the pcan. <br/>
+Before using these code, you need to install peak driver to drive the pcan. <br/>
 Installation step: <br />
 
 1. First, install the driving package in the [peak website](https://www.peak-system.com/fileadmin/media/linux/files/peak-linux-driver-8.11.0.tar.gz) 
@@ -56,7 +56,7 @@ What's more, make sure ip_port in main/Server/config.properties and main/Client/
 
 ### VNC Connection
 VNC Connection is very tricky. First, PC need to connect with raspberry by Network Switcer, or connect with each other directly. Then PC will produce a local network ip address, which can be set as 192.168.137.1 <br />
-For Raspberry, we need to make sure Wifi is closed, or wifi will affect the connection with PC. Secondly, go to the Network preferences, and choose config as interface and network name as wlanxx. Set ipv4 as 192.168.137.xx(as you like), then click Apply. Thirdly, disconnect and reconnect the ethernet port of Raspberry and make sure VNC recommended ip addresses has 192.169.137.xx(of course, at this time, we already open VNC PORT). 
+For Raspberry, you need to make sure Wifi is closed, or wifi will affect the connection with PC. Secondly, go to the Network preferences, and choose config as interface and network name as wlanxx. Set ipv4 as 192.168.137.xx(as you like), then click Apply. Thirdly, disconnect and reconnect the ethernet port of Raspberry and make sure VNC recommended ip addresses has 192.169.137.xx(of course, before all of these, you must open VNC PORT). 
 
 ### Arduino(raspberry)
 Download Arduino IDE in Linux:
@@ -103,21 +103,33 @@ Then upload main/Arduino/Arduino.ino to the raspberry pi.
 
 ### 1. Arduino Model
 
-Please check "ArduinoHandler" in /main/Client/config.properties. We can change Pump, Fan, Relay Pin numbers if we want. Also if the port is not right, you can also change "USB_Port" name. 
+Please check "ArduinoHandler" in /main/Client/config.properties. You can change Pump, Fan, Relay Pin numbers if you want. Also if the port is not right, you can also change "USB_Port" name. 
 
 ### 2. PCAN Model
-The module is implemented in main/Client/PcanConnection.py. We can set the value of "CMA_Voltage_High_Dangerous", "CMA_Voltage_Low_Dangerous", "CMA_Voltage_High_Warning", "CMA_Voltage_Low_Warning", "CMA_Temp_Dangerous", "CMA_Temp_Warning", "CMA_Temp_security", "Cell_Voltage_High_Warning", "Cell_Voltage_Low_Warning", "Cell_Voltage_High_Dangerous", "Cell_Voltage_Low_Dangerous" from "PcanConnection" in main/Client/config.properties to control dangerous and warning level. What's more, we can also set "cellVoltageNum" to control how many cell voltages we can get from one battery. 
+The module is implemented in main/Client/PcanConnection.py. You can set the value of "CMA_Voltage_High_Dangerous", "CMA_Voltage_Low_Dangerous", "CMA_Voltage_High_Warning", "CMA_Voltage_Low_Warning", "CMA_Temp_Dangerous", "CMA_Temp_Warning", "CMA_Temp_security", "Cell_Voltage_High_Warning", "Cell_Voltage_Low_Warning", "Cell_Voltage_High_Dangerous", "Cell_Voltage_Low_Dangerous" from "PcanConnection" in main/Client/config.properties to control dangerous and warning level. What's more, you can also set "cellVoltageNum" to control how many cell voltages you can get from one battery. 
 <br /> And also, if the Pcan doesn't connect to port can0, you can change the name of "channel". 
 
 ### 3. Modbus Model
-Here, if we want to change the Modbus limitation, we need to change the values of  "max_vol", "min_vol", "max_crt", "max_dis_crt", "max_power". <br /> What's more, warning and dangerous level depend on "volLowWarning", "volHighWarning", "volHighDangerous", "volLowDangerous".
+Here, if you want to change the Modbus limitation, you need to change the values of  "max_vol", "min_vol", "max_crt", "max_dis_crt", "max_power". <br /> What's more, warning and dangerous level depend on "volLowWarning", "volHighWarning", "volHighDangerous", "volLowDangerous".
+
+## Collected Data 
+
+For Server: 
+* the collected datas will be put in main/Server/Battery-System-database/Battery-System MM-yyyy/log-Battery-System dd-MM-yyyy-hh-mm-ss.log files
+it will includes the data, time and all the datas we get from Arduino, Pcan, Modbus.
+
+For Client:
+* the collected datas will be put in main/Client/Battery-System-database/Battery-System MM-yyyy/log-Battery-System dd-MM-yyyy-hh-mm-ss.log files
+The contents are same as Server. 
+
+
+
+
 
 ## Content  <a name="Content"></a>
 
 ### 1. Client <a name="Client"></a>
-
-
-#### 
+Flow Chart
 
 ### 2. Server <a name="Server"></a>
 
