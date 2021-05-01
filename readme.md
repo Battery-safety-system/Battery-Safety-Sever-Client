@@ -19,11 +19,11 @@ This Safety System aims to keep the temperature, voltage of the batteries module
 4. [Conclusion](#Conclusion)
 
 # Hardware Prerequirement <a name="Hardware Prerequirement"></a>
-Device: Arduino, Modbus, Pcan, Battery, Raspberry, PC
+Device: Arduino, Modbus, Pcan, Battery, Raspberry, PC, Network Switcher.
 
 # Software Prerequirement <a name="Software Prerequirement"></a>
 
-### Pcan: 
+### Pcan(raspberry): 
 Before we use these code, we need to install peak driver to drive the pcan. <br/>
 Installation step: <br />
 
@@ -43,30 +43,30 @@ Installation step: <br />
 It should Work!!!!
 If there is still error, please refer to this [website](https://forum.peak-system.com/viewtopic.php?f=59&t=3381)
 
-### Python Package(python3)
-please use *pip3 install* command to install the following python package: can, cantools, pickle, logging, socket, os, time, csv, minimalmodbus
+### Python Package(python3, raspberry)
+Please use **pip3 install** command to install the following python package: can, cantools, pickle, logging, socket, os, time, csv, minimalmodbus in **raspberry**
+
 
 ### IP Address
 Please make sure the PC local IP address is 192.168.137.1, or you need to change ip_addr tags both in main/Server/config.properties and main/Client/config.properties.
-What's more, you need to make ip_port in main/Server/config.properties and main/Client/config.properties are same and not used by other process, or PC cannot to the Raspberry.  
+What's more, make sure ip_port in main/Server/config.properties and main/Client/config.properties are same and not used by other process, or PC cannot connect to the Raspberry.  
 
+**Note**: Before run the code, please use VNC to check if the local network works well. If the PC local ip address is same as ip_addr and can connect to raspberry pi by VNC(). Then it works well. 
 
-## Built With <a name="BuiltWith"></a>
+### VNC Connection
+VNC Connection is very tricky. First, PC need to connect with raspberry by Network Switcer, or connect with each other directly. Then PC will produce a local network ip address, which can be set as 192.168.137.1 <br />
+For Raspberry, we need to make sure Wifi is closed, or wifi will affect the connection with PC. Secondly, go to the Network preferences, and choose config as interface and network name as wlanxx. Set ipv4 as 192.168.137.xx(as you like), then click Apply. Thirdly, disconnect and reconnect the ethernet port of Raspberry and make sure VNC recommended ip addresses has 192.169.137.xx(of course, at this time, we already open VNC PORT). 
+
+## Built <a name="BuiltWith"></a>
 
 <!---
 your comment goes here
 and here
 -->
+* Get the Code: 
 
-* Language: Python3 <br />
+  $ git clone 
 
-* Python Package: RPi.GPIO,  <br />
-
-* Install tools:
-  
-  ```console
-    $ pip3 install xxx
-  ```
 
 * Run Command: <br />
  
