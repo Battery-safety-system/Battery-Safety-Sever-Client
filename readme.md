@@ -20,7 +20,7 @@ This Safety System aims to keep the temperature, voltage of the batteries module
 
 # Hardware Prerequirement <a name="Hardware Prerequirement"></a>
 Device: Arduino, Modbus, Pcan, Battery, Raspberry, PC, Network Switcher.
-
+Flowchart
 
 # Software Prerequirement <a name="Software Prerequirement"></a>
 
@@ -61,9 +61,11 @@ For Raspberry, you need to make sure Wifi is closed, or wifi will affect the con
 ### Arduino(raspberry)
 Download Arduino IDE in Linux:
 	[simulator link](https://www.tinkercad.com/things/bGWVayF3Z1h-start-simulating/editel?lessonid=EHD2303J3YPUS5Z&projectid=OIYJ88OJ3OPN3EA&collectionid=OIYJ88OJ3OPN3EA&tenant=circuits#/lesson-viewer)
-or	$ sudo apt-get install arduino<br />
+or	
 
-Then upload main/Arduino/Arduino.ino to the raspberry pi. 
+$ sudo apt-get install arduino<br />
+
+Then upload main/Arduino/Arduino.ino to the Arduino IDE. 
 
 ## Built <a name="BuiltWith"></a>
 
@@ -71,6 +73,7 @@ Then upload main/Arduino/Arduino.ino to the raspberry pi.
 
   $ git clone https://github.com/Battery-safety-system/Battery-Safety-Sever-Client.git
   $ git checkout TestCode
+  $ cd Battery-Safety-Sever-Client
 
 
 * Run Command: <br />
@@ -112,7 +115,7 @@ The module is implemented in main/Client/PcanConnection.py. You can set the valu
 ### 3. Modbus Model
 Here, if you want to change the Modbus limitation, you need to change the values of  "max_vol", "min_vol", "max_crt", "max_dis_crt", "max_power". <br /> What's more, warning and dangerous level depend on "volLowWarning", "volHighWarning", "volHighDangerous", "volLowDangerous".
 
-## Collected Data 
+## Collected Data(Result) 
 
 For Server: 
 * the collected datas will be put in main/Server/Battery-System-database/Battery-System MM-yyyy/log-Battery-System dd-MM-yyyy-hh-mm-ss.log files
