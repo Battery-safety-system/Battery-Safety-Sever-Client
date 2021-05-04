@@ -82,9 +82,7 @@ class Battery_System:
 
     def modbusInit(self):
         self.ArduinoHandlerObj.initRelayStepOne()
-        currentControlMode = 1;
-        powerControlMode = 2;
-        self.ModbusHandlerObj = ModbusHandler(powerControlMode);
+        self.ModbusHandlerObj = ModbusHandler();
         modbusLabels = self.ModbusHandlerObj.getLabels();
         self.ArduinoHandlerObj.initRelayStepTwo()
         return modbusLabels;
@@ -438,13 +436,13 @@ class Battery_System:
         
         self.closeAllDevice();
 
-Battery1 = Battery_System();
-Battery1.run();
-# try:
-#     Battery1 = Battery_System();
-#     Battery1.run();
-# except Exception as e:
-#     print(e)
+# Battery1 = Battery_System();
+# Battery1.run();
+try:
+    Battery1 = Battery_System();
+    Battery1.run();
+except Exception as e:
+    print(e)
 # 
 #     Battery1.closeAllDevice();
 # try:

@@ -9,12 +9,20 @@ class Status(object):
         self.battery_cell_voltage_voilated = [];
 
         self.isPcanTempWarning = False;
-        self.isPcanVoltageLowWarning = False;
-        self.isPcanVoltageHighWarning = False;
-
         self.isPcanTempDangerous = False;
-        self.isPcanVoltageHighDangerous = False;
-        self.isPcanVoltageLowDangerous = False;
+
+        self.isPcanVoltageCellLowWarning = False;
+        self.isPcanVoltageCMALowWarning = False;
+
+        self.isPcanVoltageCellHighWarning = False;
+        self.isPcanVoltageCMAHighWarning = False;
+
+        self.isPcanVoltageCellHighDangerous = False;
+        self.isPcanVoltageCMAHighDangerous = False;
+
+        self.isPcanVoltageCellLowDangerous = False;
+        self.isPcanVoltageCMALowDangerous = False;
+
         ## modbus status
         self.isModbusHighVoltageWarning = False;
         self.isModbusHighVoltageDagnerous = False;
@@ -23,7 +31,7 @@ class Status(object):
 
         ## device
         self.isRelayOff = False;
-        self.isModbusOff = False;
+        self.isMobusOff = False;
         self.isPumpFanOff = True;
 
         ## Total Status

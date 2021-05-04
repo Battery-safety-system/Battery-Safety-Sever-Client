@@ -2,14 +2,16 @@ import serial
 import csv
 import json
 import sys
-sys.path.append("/home/pi/Desktop/Battery-Safety-Sever-Client")
-from main.Tools.Status import Status
+import pathlib
+path = str(pathlib.Path().absolute())
+sys.path.append(path)
+from Tools.Status import Status
 import time;
-import logging
-logging.basicConfig(filename='../Client/Modbus Status.log', level=logging.DEBUG)
+
+
 class ArduinoHandler:
     def __init__(self):
-        with open('../Client/config.properties') as f:
+        with open('config.properties') as f:
             data = json.load(f)
         data = data["ArduinoHandler"]
         port = data["USB_Port"];
@@ -47,7 +49,7 @@ class ArduinoHandler:
         pass
         
     def setPINValue(self):
-        with open('../Client/config.properties') as f:
+        with open('config.properties') as f:
             data = json.load(f)
         data = data["ArduinoHandler"]
         self.pumpPIN = data["pumpPIN"];
@@ -75,10 +77,23 @@ class ArduinoHandler:
         self.setPumpFanOff();
 # ---------------------------Tools Section -------------------------------
     def receive(self):
-        return self.ser.readline().decode("utf-8");
+
+        self.ser.timeout = 30
+        content = self.ser.readline().decode("utf-8");
+        self.ser.timeout = None
+        return content
 
     def send(self, contentStr):
+        self.ser.write_timeout = 30;
+        self.ser.reset_output_buffer();
         self.ser.write(contentStr);
+        self.ser.write_timeout = None;
+
+    def checkReceiveData(self, data):
+        if ("Ardu_Temp1" not in data or "Ardu_Temp2" not in data or "Ardu_Press" not in data ):
+            return False;
+        else:
+            return True;
 
 # ---------------------------Main Function -----------------------------
     def getLabListFromContentDict(self):
@@ -118,9 +133,9 @@ class ArduinoHandler:
     def ReceiveInfoFromArduino(self):
         currentTime = time.time();
         contentStr = self.LoopObserveFunctionRead(self.receive, self.checkIfInfoRightFromArduino, 3);
-        print("Arduino REading: " + str(contentStr))
+        print("Arduino Reading: " + str(contentStr))
         if (contentStr == None ):
-            logging.error("ArduinoHandler: ReceiveInforFromArduino: Receive Error!!")
+            # logging.error("ArduinoHandler: ReceiveInforFromArduino: Receive Error!!")
             raise Exception("ArduinoHandler: ReceiveInfoFromArduino: contentStr is not right...")
 
         contentArr = contentStr.split(',');
@@ -208,8 +223,6 @@ class ArduinoHandler:
         ## logic: get info list
         ArduinoInfoList = [];
         if (StatusObj.isPcanTempWarning  or StatusObj.isPcanTempDangerous):
-            logging.error("StatusObj isPcanTempWarning" + str(StatusObj.isPcanTempWarning));
-            logging.error("StatusObj isPcanTempDangerous" + str(StatusObj.isPcanTempDangerous));
             ArduinoInfoList.append({"device": "Pump", "pin_number": self.pumpPIN, "pin_value": 1});
             ArduinoInfoList.append({"device": "Fan", "pin_number": self.FanPIN, "pin_value": 1});
             print("temperature is too high, the pump continue to work");
@@ -227,6 +240,8 @@ class ArduinoHandler:
             self.activateDevice(ArduinoInfoList);
         except Exception as e:
             raise("ArduinoHandler_setPumpFanOn: " + e)
+
+
     def setPumpFanOff(self):
         ArduinoInfoList = [];
         ArduinoInfoList.append({"device": "Pump", "pin_number": self.pumpPIN, "pin_value": 0});

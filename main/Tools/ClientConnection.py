@@ -12,7 +12,7 @@ class PCConnection(object):
     """docstring for PCConnection"""
 
     def __init__(self):
-        with open('../Client/config.properties') as f:
+        with open('config.properties') as f:
             data = json.load(f)
             data = data["PCConnection"]
             for key in data:

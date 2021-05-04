@@ -1,65 +1,76 @@
 # !/usr/bin/env python3
 import json
 import sys
-sys.path.append("/home/pi/Desktop/Battery-Safety-Sever-Client")
+import pathlib
+path = str(pathlib.Path().absolute())
+sys.path.append(path)
 import minimalmodbus
 import time
-import logging
-from main.Tools.Status import Status
+from Tools.Status import Status
 import csv
 
 class ModbusHandler:
-    def __init__(self, ControlMode):
-        logging.basicConfig(filename='Modbus Status.log', level=logging.DEBUG)
-        self.ControlMode = ControlMode;
+    def __init__(self):
 
-        with open('../Client/config.properties') as f:
+        with open('config.properties') as f:
             data = json.load(f)
             data = data['ModbusHandler']
             for key in data:
                 setattr(self, key, data[key]);
 
         self.intervalTimeList = [];
-        if(self.ControlMode == self.currentControlMode):
-            self.CurrentList = [];
-            with open(self.controlValueFile) as file:
-                reader = csv.reader(file)
-                for row in reader:
-                    if("Current" in row[1]):
-                        continue; 
-                    if (abs(float(row[1])) < self.max_crt):
-                        current = float(row[1]) / self.currentVal
-                    else:
-                        raise Exception(
-                            "ModbusHandler: __init__: Error!!! currentValue is out of maxium current value. Please check value control files.....")
-                    self.CurrentList.append(current)
-                    timeInterval = float(row[0])
-                    self.intervalTimeList.append(timeInterval)
-            print("CurrentList" + str(self.CurrentList))
-
-
-        if(self.ControlMode == self.powerControlMode):
-            self.PowerList = []
-            with open(self.controlValueFile) as file:
-                reader = csv.reader(file)
-                for row in reader:
-                    if ("Power" in row[1]):
-                        continue; 
-                    if (abs(float(row[1])) < self.max_power):
-                        power = float(row[1]) / self.powerValue
-                    else:
-                        raise Exception(
-                            "ModbusHandler: __init__: Error!!! powerValue is out of maxium power value. Please check value control files.....")
-                    self.PowerList.append(power)
-                    timeInterval = float(row[0])
-                    self.intervalTimeList.append(timeInterval)
-            print("PowerList: " + str(self.PowerList))
-
+        self.readScheduleFile();
         self.Init();
+
+    def readScheduleFile(self):
+        try:
+            if (self.ControlMode == self.currentControlMode):
+                self.CurrentList = [];
+                with open(self.controlValueFile) as file:
+                    reader = csv.reader(file)
+                    rownumber = 0;
+                    for row in reader:
+                        rownumber += 1;
+                        if (rownumber == 1):
+                            continue;
+                        if (abs(float(row[1])) < self.max_crt):
+                            current = float(row[1]) / self.currentVal
+                        else:
+                            raise Exception(
+                                "ModbusHandler: __init__: Error!!! currentValue is out of maxium current value. Please check value control files.....")
+                        self.CurrentList.append(current)
+                        timeInterval = float(row[0])
+                        self.intervalTimeList.append(timeInterval)
+                print("CurrentList" + str(self.CurrentList))
+        except Exception as e:
+            raise Exception("ModbusHandler: init: current Control schedule list has Error!!! please check schedule files" + str(e))
+
+        try:
+            if (self.ControlMode == self.powerControlMode):
+                self.PowerList = []
+                with open(self.controlValueFile) as file:
+                    reader = csv.reader(file)
+                    rownumber = 0
+                    for row in reader:
+                        rownumber += 1;
+                        if (rownumber == 1):
+                            continue;
+                        if (abs(float(row[1])) < self.max_power):
+                            power = float(row[1]) / self.powerValue
+                        else:
+                            raise Exception(
+                                "ModbusHandler: __init__: Error!!! powerValue is out of maxium power value. Please check value control files.....")
+                        self.PowerList.append(power)
+                        timeInterval = float(row[0])
+                        self.intervalTimeList.append(timeInterval)
+                print("PowerList: " + str(self.PowerList))
+        except Exception as e:
+            raise Exception(
+                "ModbusHandler: init: Power Control schedule list has Error!!! please check schedule files" + str(e))
+
 
     def Init(self):
 
-        logging.info("----------------")
         self.openModbus();
 
         self.setLimitation();
@@ -105,15 +116,6 @@ class ModbusHandler:
 
     def setStatusByVoltageInNormalWarningState(self, statusObj):
         assert isinstance(statusObj, Status)
-# #         volLowWarning = 343# test
-#         volLowWarning = 268
-# #         volLowWarning = 346# test
-#         volHighWarning = 384
-# #         volHighWarning = 342  # test
-#         volHighDangerous = 390;
-# #         volHighDangerous = 341# test
-#         volLowDangerous = 264
-# #         volLowDangerous = 346# test
         vol = self.info_dict["modbus_Voltage"]
         #
         statusObj.isModbusHighVoltageWarning = False;
@@ -123,22 +125,22 @@ class ModbusHandler:
 
 
         if (abs(vol) <=  self.volLowWarning and abs(vol) > self.volLowDangerous):
-            logging.warning("Modbus voltage Low violated warning")
+            print("Modbus voltage Low violated warning")
             statusObj.isModbusLowVoltageWarning = True;
             statusObj.warning = True;
 
         if (abs(vol) <= self.volLowDangerous):
-            logging.error("Modbus Voltage Low violated Dangerous")
+            print("Modbus Voltage Low violated Dangerous")
             statusObj.isModbusLowVoltageDangerous = True;
             statusObj.dangerous = True;
 
         if (abs(vol) >= self.volHighWarning and abs(vol) < self.volHighDangerous):
-            logging.warning("Modbus voltage High violated warning")
+            print("Modbus voltage High violated warning")
             statusObj.isModbusHighVoltageWarning = True;
             statusObj.warning = True;
 
         if (abs(vol) >= self.volHighDangerous):
-            logging.error("Modbus Voltage High violated Dangerous")
+            print("Modbus Voltage High violated Dangerous")
             statusObj.isModbusHighVoltageDagnerous = True;
             statusObj.dangerous = True;
         pass
@@ -261,22 +263,15 @@ class ModbusHandler:
     def getVoltage(self):
         RemoteVoltage = (self.instrument.read_register(self.epcl_remote_volt, 0, 4) / self.voltage_scale)
         return RemoteVoltage;
-    # def getRemoteVoltage(self):
-    #     RemoteVoltage = (self.instrument.read_register(30263, 0, 4) / self.voltage_scale)
-    #     return RemoteVoltage;
 
 # ---------------------------------------- set Function -------------------------------------------
     def setCurrent(self, value):
         self.instrument.write_register(self.K_op_mode, self.current_mode, 0, 6)  # K_op_mode
-        # print("SETTING POINTS")
-#         print(self.signedToUnsigned(value * self.current_scale))
-        #         self.instrument.write_register(self.Op_mode_setpoint,self.signedToUnsigned( value * self.current_scale ) , 0, 6)  # Op_mode_setpoint
+
         self.instrument.write_register(self.Op_mode_setpoint, self.signedToUnsigned(value * self.current_scale), 0, 6)
 
     def setPower(self, value):
         self.instrument.write_register(self.K_op_mode, self.power_mode, 0, 6)  # K_op_mode
-#         print("power unsigned value " + str(self.signedToUnsigned(value * self.power_scale)))
-        #         self.instrument.write_register(self.Op_mode_setpoint, 65028, 0, 6) # Op_mode_setpoint
         self.instrument.write_register(self.Op_mode_setpoint, self.signedToUnsigned(value * self.power_scale), 0,
                                        6)  # Op_mode_setpoint
 
@@ -320,10 +315,9 @@ class ModbusHandler:
         print("RemoteVoltage: " + str(RemoteVoltage))
         print("DCBusRef: " + str(DCref));
         print("DCBusPowerUnsigned: " + str(self.instrument.read_register(self.epcl_dc_link_pwr, 0, 4)))
-#         print("remote voltage: " + str(self.instrument.read_register(30263, 0, 4) / self.voltage_scale))
-        str1 = "DCBusPower: " + str(DCBusPower) + ";" + "DCBusCurrent: " + str(
-            DCBusCurrent) + ";" + "RemoteVoltage: " + str(RemoteVoltage) + ";"
-        logging.info(str1)
+
+
+
 
     def checkIfModbusCurrentRight(self, bottomLine, upLine ):
         current = self.getCurrent();
