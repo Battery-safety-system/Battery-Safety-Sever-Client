@@ -78,13 +78,13 @@ class ArduinoHandler:
 # ---------------------------Tools Section -------------------------------
     def receive(self):
 
-        self.ser.timeout = 30
+        self.ser.timeout = self.Read_Timeout
         content = self.ser.readline().decode("utf-8");
         self.ser.timeout = None
         return content
 
     def send(self, contentStr):
-        self.ser.write_timeout = 30;
+        self.ser.write_timeout = self.Write_Timeout;
         self.ser.reset_output_buffer();
         self.ser.write(contentStr);
         self.ser.write_timeout = None;

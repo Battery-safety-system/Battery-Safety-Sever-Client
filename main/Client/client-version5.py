@@ -327,6 +327,7 @@ class Battery_System:
             try:
                 self.ArduinoHandlerObj.setPumpFanOn();
                 self.StatusObj.isPumpFanOff = False;
+
             except Exception as e:
                 raise Exception("client_activeDeviceInWarningState: " + str(e))
             
@@ -336,6 +337,8 @@ class Battery_System:
                 self.ModbusHandlerObj.setModbusCharge();
             else:
                 self.ModbusHandlerObj.setModbusDischarge();
+            return
+        self.ModbusHandlerObj.updateCurrentOrPower();
 
     def closeAllDevice(self): # just make sure I do all the operation once,
         try:

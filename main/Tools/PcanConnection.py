@@ -85,13 +85,13 @@ class PcanConnection(object):
 # -------------------------- sending function ----------------------------------------
     def sendMessage(self, message):
         # print("Send Message: " + str(message.arbitration_id))
-        self.bus.send(message);
+        self.bus.send(message, self.Bus_sending_timeout);
         # print("sendMessage() end");
 
     def sendMessageList(self, messageList):
         # print("send Message list id: " + str([message.arbitration_id for message in messageList]))
         for Req_message in messageList:
-            self.bus.send(Req_message);
+            self.bus.send(Req_message, self.Bus_sending_timeout);
         # print("sendMessageList() end");
 
 # ------------------------ get Info from Pcan function --------------------------------------
@@ -102,7 +102,7 @@ class PcanConnection(object):
         count = 0;
         label_list = [];
         while True:
-            message = self.bus.recv();
+            message = self.bus.recv(self.Bus_receiving_timeout);
 #             print(message.arbitration_id)
             if(message.arbitration_id not in self.message_dbc):
                 count += 1;
@@ -114,15 +114,12 @@ class PcanConnection(object):
                 break;
         # label shoud be sorted [BMU01_pdo01, BMU02_pdo02 ...]
         if(len(label_list) == 0):
-#             print("label_list is " + str(label_list))
-            self.getBatteryListFromPcan()
-            return;
-#             raise Exception("PcannConnection Error!!!! label list length is 0")
+            raise Exception("PcanConnection: getBatteryListFromPcan: cannot read Data from Pcan, check Pcan Connection please");
+
         label_list.sort();
         battery_list = list(set([int(elem[3:5]) for elem in label_list]));
         self.battery_list = battery_list;
-        # print("battery_list: " + str(battery_list))
-        # print("getBatteryListFromPcan() end");
+
         
     def getLabelListPlusMessageDictFromPcan(self):
         # print("Begin getLabelListPlusMessageDictFromPcan()")
@@ -133,7 +130,7 @@ class PcanConnection(object):
         label_list = [];
         message_dict = {}
         while True:
-            message = self.bus.recv();
+            message = self.bus.recv(self.Bus_receiving_timeout);
             if(message.arbitration_id not in self.message_dbc):
                 count += 1;
             else:
@@ -174,7 +171,7 @@ class PcanConnection(object):
         message_dict = {};
         count = 0;
         while True:
-            message = self.bus.recv();
+            message = self.bus.recv(self.Bus_receiving_timeout);
             if(message.arbitration_id not in self.message_dbc ):
                 count += 1;
                 if(count > self.exitNum ):
@@ -183,6 +180,8 @@ class PcanConnection(object):
             message_name = self.message_dbc[message.arbitration_id]
             message_dict[message_name] = message;
             count = 0;
+        if(len(message_dict) == 0):
+            raise Exception("PcanConnection: getDataFromPcan: Error!!!! cannot read Data from Pcan, Please check Pcan connection");
         self.message_dict = message_dict;
         self.handleData();
         # print("getDataFromPcan() end");
