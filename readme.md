@@ -167,3 +167,4 @@ Modbus datasheet: [MODBUS Programming Manual_100-PBJ1226-PAA_V1.0 (1).xlsx - Goo
 ## Note:
 1. For Raspberry pi, you cannot keep Ethernet and wifi connection together, if you connect Wifi, raspberry pi cannot connect to PC by ethernet. 
 2. if the status is very emergent, and you want to close the modbus and battery right now. Please run Battery-Safety-Sever-Client/main/smallControlModule/closeModbus.py and InitArduinoDevice.py  
+3. If the Voltage is too low or too high, program cannot start normally, please check your power and current schedule.  
