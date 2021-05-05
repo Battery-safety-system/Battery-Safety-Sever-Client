@@ -20,7 +20,7 @@ This Safety System aims to keep the temperature, voltage of the batteries module
 
 # Hardware Prerequirement <a name="Hardware Prerequirement"></a>
 Device: Arduino, Modbus, Pcan, Battery, Raspberry, PC, Network Switcher.
-![HardWare FlowChart](/images/img.png)
+![HardWare FlowChart](/images/hardwareDiagram.png)
 
 # Software Prerequirement <a name="Software Prerequirement"></a>
 
@@ -132,7 +132,8 @@ The contents are same as Server.
 ## Content  <a name="Content"></a>
 
 ### 1. Client <a name="Client"></a>
-Flow Chart
+Here is the Client logic Diagram:
+[Client logic Diagram](/images/Client Flow Chart .png)
 
 ### 2. Server <a name="Server"></a>
 
