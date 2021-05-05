@@ -249,19 +249,19 @@ class PcanConnection(object):
         if max_CMA_Voltage >= self.CMA_Voltage_High_Dangerous:
             status.dangerous = True;
             status.isPcanVoltageCMAHighDangerous = True;
-            print("Cma voltage high dangeroius")
+#             print("Cma voltage high dangeroius")
         if max_CMA_Voltage >= self.CMA_Voltage_High_Warning:
             status.warning = True;
             status.isPcanVoltageCMAHighWarning = True;
-            print("CMA_Voltage_high warning")
+#             print("CMA_Voltage_high warning")
         if min_CMA_Voltage <= self.CMA_Voltage_Low_Dangerous:
             status.dangerous = True;
             status.isPcanVoltageCMALowDangerous = True;
-            print("CMA_Voltage_low dangerous")
+#             print("CMA_Voltage_low dangerous")
             
         if min_CMA_Voltage <= self.CMA_Voltage_Low_Warning:
             status.warning = True;
-            print("CMA_Voltage_low warning")
+#             print("CMA_Voltage_low warning")
             status.isPcanVoltageCMALowWarning = True
 
 
@@ -278,17 +278,19 @@ class PcanConnection(object):
             if CMA_Max_Temp >= self.CMA_Temp_Dangerous:  ##40?
                 status.dangerous = True;
                 status.isPcanTempDangerous = True;
-                print("CMA_Max_Temp dangerous: " + str(CMA_Max_Temp))
+#                 print("CMA_Max_Temp dangerous: " + str(CMA_Max_Temp))
                 if battery not in status.temperature_voliated_battery:
                     status.temperature_voliated_battery.append(battery);
                 
             if CMA_Max_Temp >= self.CMA_Temp_Warning:
-                print("CMA_Max_Temp warning: " + str(CMA_Max_Temp))
+#                 print("CMA_Max_Temp warning: " + str(CMA_Max_Temp))
                 status.warning = True;
                 status.isPcanTempWarning = True;
                 if battery not in status.temperature_voliated_battery:
                     status.temperature_voliated_battery.append(battery);
                 pass
+            
+            
         # print("Max temp: " + str(max_temp))
         # print("temperature voliated battery: " + str(status.temperature_voliated_battery))
         for battery in status.temperature_voliated_battery:

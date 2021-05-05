@@ -31,7 +31,7 @@ class Status(object):
 
         ## device
         self.isRelayOff = False;
-        self.isMobusOff = False;
+        self.isModbusOff = False;
         self.isPumpFanOff = True;
 
         ## Total Status
@@ -73,17 +73,21 @@ class Status(object):
 # ------------------------------------------ judge function ---------------------------------------------
 
     def isVoltageVio(self):
-        if  self.isPcanVoltageHighDangerous or self.isPcanVoltageHighWarning or self.isPcanVoltageLowWarning or self.isPcanVoltageLowDangerous or self.isModbusHighVoltageDagnerous or self.isModbusHighVoltageWarning or self.isModbusLowVoltageWarning or self.isModbusLowVoltageDangerous:
+        if  self.isPcanVoltageCellLowWarning or self.isPcanVoltageCellLowWarning or self.isPcanVoltageCellHighWarning or self.isPcanVoltageCMAHighWarning or self.isPcanVoltageCellHighDangerous or self.isPcanVoltageCMAHighDangerous or self.isPcanVoltageCellLowDangerous or self.isPcanVoltageCMALowDangerous:
             return True;
+        if self.isModbusHighVoltageWarning or self.isModbusHighVoltageDagnerous or self.isModbusLowVoltageWarning or self.isModbusLowVoltageDangerous:
+            return True;
+        return False; 
 
     def isVoltageLowVio(self):
-        if self.isPcanVoltageLowWarning or self.isPcanVoltageLowDangerous or self.isModbusLowVoltageWarning or self.isModbusLowVoltageDangerous:
+        if self.isPcanVoltageCellLowWarning or self.isPcanVoltageCMALowWarning or self.isPcanVoltageCellLowDangerous or self.isPcanVoltageCMALowDangerous or self.isModbusLowVoltageWarning or self.isModbusLowVoltageDangerous:
             return True;
+        return False;
 
     def isVoltageHighVio(self):
-        if self.isPcanVoltageHighWarning or self.isPcanVoltageHighDangerous or self.isModbusHighVoltageWarning or self.isModbusHighVoltageDagnerous:
+        if self.isPcanVoltageCellHighWarning or self.isPcanVoltageCMAHighWarning or self.isPcanVoltageCellHighDangerous or self.isPcanVoltageCMAHighDangerous or self.isModbusHighVoltageWarning or self.isModbusHighVoltageDagnerous:
             return True;
-        pass
+        return False; 
 
     def istempHighVio(self):
         if(self.isPcanTempWarning or self.isPcanTempDangerous):

@@ -1,15 +1,13 @@
 # !/usr/bin/env python3
 import json
 import sys
-sys.path.append("/home/pi/Desktop/Battery-Safety-Sever-Client")
 import minimalmodbus
 import time
-import logging
-from main.Tools.Status import Status
+
 
 class ModbusHandler:
     def __init__(self, ControlMode):
-        logging.basicConfig(filename='Modbus Status.log', level=logging.DEBUG)
+#         logging.basicConfig(filename='Modbus Status.log', level=logging.DEBUG)
         self.ControlMode = ControlMode;
 
         with open('../Client/config.properties') as f:

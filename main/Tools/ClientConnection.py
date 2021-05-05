@@ -66,7 +66,7 @@ class PCConnection(object):
                 return True;
         return False;
     def sendMessage(self, dict_pickle):
-        self.client.settimeout(20)
+        self.client.settimeout(self.timeout)
         try:
             self.client.send(dict_pickle)
         except Exception as e:

@@ -63,7 +63,7 @@ class ModbusHandler:
                         self.PowerList.append(power)
                         timeInterval = float(row[0])
                         self.intervalTimeList.append(timeInterval)
-                print("PowerList: " + str(self.PowerList))
+                print("PowerList: " + str(self.PowerList * self.powerValue))
         except Exception as e:
             raise Exception(
                 "ModbusHandler: init: Power Control schedule list has Error!!! please check schedule files" + str(e))

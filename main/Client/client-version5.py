@@ -1,13 +1,18 @@
 #!/usr/bin/python3
 import sys
-sys.path.append("/home/pi/Desktop/Battery-Safety-Sever-Client")
-from main.Tools.ClientConnection import PCConnection
-from main.Tools.File import File
-from main.Tools.PcanConnection import PcanConnection
-from main.Tools.Status import Status
-from main.Tools.ArduinoHandler import ArduinoHandler;
-from main.Tools.ModbusHandler import ModbusHandler;
-
+import pathlib
+path = str(pathlib.Path().absolute())
+path = path + "/.."
+sys.path.append(path)
+print(path)
+# sys.path.append("/home/pi/Desktop/Battery-Safety-Sever-Client")
+from Tools.ClientConnection import PCConnection
+from Tools.File import File
+from Tools.PcanConnection import PcanConnection
+from Tools.Status import Status
+from Tools.ArduinoHandler import ArduinoHandler;
+from Tools.ModbusHandler import ModbusHandler;
+import re;
 import time;
 
 import logging
@@ -30,15 +35,16 @@ class Battery_System:
         print("********************************************")
 
         # init the PC Connection
-        print("initialize PC Connection")
-        self.PcInit();
-        print("********************************************")
+
 
         print("Init Modbus")
         modbusLabels = []
         modbusLabels = self.modbusInit();
         print("********************************************")
 
+        print("initialize PC Connection")
+        self.PcInit();
+        print("********************************************")
 
 
         print("Init Label lists and datas")
@@ -200,7 +206,7 @@ class Battery_System:
         except Exception as e:
             # print("client: collectDataInNormalWarningState: Error!!! cannot receive message from pcan")
             logging.error(time.strftime('%H-%M-%S') + "client: collectDataInNormalWarningState: " + "pcanconnection cannot get information");
-            raise "client: collectDataInNormalWarningState:" + e;
+            raise Exception("client: collectDataInNormalWarningState:" + str(e));
 
 
 
@@ -227,7 +233,7 @@ class Battery_System:
         except Exception as e:
             logging.error(time.strftime(
                 '%H-%M-%S') + "client: collectDataInNormalWarningState: " + "Modbus cannot get information");
-            raise e;
+            raise Exception(str(e));
 
 
 
@@ -259,7 +265,7 @@ class Battery_System:
 
 #             print("info: client-version5: the content transfer to PC " + str(dictContent))
         except Exception as e:
-            print("client-version5: transferToPc: " + e)
+            print("client-version5: transferToPc: " + str(e))
             return ;
         try:
             self.PCConnectionObj.sendContent(dictContent)
@@ -285,6 +291,10 @@ class Battery_System:
     def updateStatusInNormalWarningState(self):
 
         if self.StatusObj.dangerous:
+            dict_status = vars(self.StatusObj)
+            for ele in dict_status:
+                if "Dangerous" in ele:
+                    print(ele + ": " + str(dict_status))
             self.currentState = self.dangerousState;
         elif self.StatusObj.warning:
             self.currentState = self.warningState;
@@ -373,6 +383,8 @@ class Battery_System:
         warningAndDangerousList = [];
 
         for ele in dict_status:
+            if "temperature_voliated_battery" in ele:
+                print("temperature_voliated_battery: " + str(dict_status[ele]))
             content = dict_status[ele]
             if (ele == "isPumpFanOff" and dict_status[ele] ):
                 print("isPumpFanOff: False, Temperature High!!")
@@ -381,6 +393,7 @@ class Battery_System:
         for ele in warningAndDangerousList:
             print(ele + " : " + str(dict_status[ele]))
         print("warning and dangerous list: " + str(warningAndDangerousList))
+
 
     def monitorPcanInfo(self):
 #         print("self.label_list: " + str(self.label_list))
@@ -413,13 +426,17 @@ class Battery_System:
         Max_Cell_Voltage = -1;
         Min_Cell_Voltage = 1000;
         for ele in dictContent:
-            if "Cell" in ele and "Voltage" in ele and "13" not in ele and "14" not in ele:
+            x = re.search("^BMU[0-9]{2}_Cell_[0-9]+_Voltage$", ele)
+            if x and "13" not in ele and "14" not in ele:
+#             if "Cell" in ele and "Voltage" in ele and "13" not in ele and "14" not in ele:
                 cell_voltage = dictContent[ele]
 #                 print(ele)
                 if (cell_voltage > Max_Cell_Voltage):
                     Max_Cell_Voltage = cell_voltage;
                 if (cell_voltage < Min_Cell_Voltage):
+                    
                     Min_Cell_Voltage = cell_voltage;
+#                     print("MIN check: " + str(Min_Cell_Voltage))
         print("Max_Cell_Voltage: " + str(Max_Cell_Voltage));
         print("Min_Cell_voltage: " + str(Min_Cell_Voltage))
 
@@ -446,8 +463,7 @@ try:
     Battery1.run();
 except Exception as e:
     print(e)
-# 
-#     Battery1.closeAllDevice();
+    Battery1.closeAllDevice();
 # try:
 #
 # except:

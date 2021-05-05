@@ -1,12 +1,7 @@
 import serial
 import csv
 import json
-import sys
-sys.path.append("/home/pi/Desktop/Battery-Safety-Sever-Client")
-from main.Tools.Status import Status
 import time;
-import logging
-logging.basicConfig(filename='../Client/Modbus Status.log', level=logging.DEBUG)
 class ArduinoHandler:
     def __init__(self):
         self.ser = serial.Serial('/dev/ttyACM0', 9600)
@@ -61,6 +56,7 @@ ar1 = ArduinoHandler();
 # ar1.setRelayoff();
 # time.sleep(2)
 ar1.setPumpFanOff();
+print(ar1.receive())
 # ar1.setPumpFanOn();
 # ArduinoInfoList = []
 # ArduinoInfoList.append({"device": "Fan", "pin_number": 7, "pin_value": 0});

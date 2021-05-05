@@ -78,16 +78,16 @@ class ArduinoHandler:
 # ---------------------------Tools Section -------------------------------
     def receive(self):
 
-        self.ser.timeout = self.Read_Timeout
+#         self.ser.timeout = self.Read_Timeout
         content = self.ser.readline().decode("utf-8");
-        self.ser.timeout = None
+#         self.ser.timeout = None
         return content
 
     def send(self, contentStr):
-        self.ser.write_timeout = self.Write_Timeout;
+#         self.ser.write_timeout = self.Write_Timeout;
         self.ser.reset_output_buffer();
         self.ser.write(contentStr);
-        self.ser.write_timeout = None;
+#         self.ser.write_timeout = None;
 
     def checkReceiveData(self, data):
         if ("Ardu_Temp1" not in data or "Ardu_Temp2" not in data or "Ardu_Press" not in data ):
@@ -156,6 +156,7 @@ class ArduinoHandler:
 
     def checkIfInfoRightFromArduino(self, contentStr):
         assert isinstance(contentStr, str)
+#         print(contentStr)
         try:
             contentArr = contentStr.split(',')
             for oneInfo in contentArr:
@@ -239,7 +240,7 @@ class ArduinoHandler:
         try:
             self.activateDevice(ArduinoInfoList);
         except Exception as e:
-            raise("ArduinoHandler_setPumpFanOn: " + e)
+            raise Exception("ArduinoHandler_setPumpFanOn: " + str(e))
 
 
     def setPumpFanOff(self):
@@ -249,7 +250,7 @@ class ArduinoHandler:
         try:
             self.activateDevice(ArduinoInfoList);
         except Exception as e:
-            raise ("ArduinoHandler_setPumpFanOff: " + e)
+            raise Exception("ArduinoHandler_setPumpFanOff: " + str(e))
 
     def setRelayoff(self):
         ArduinoInfoList = []
