@@ -20,7 +20,7 @@ This Safety System aims to keep the temperature, voltage of the batteries module
 
 # Hardware Prerequirement <a name="Hardware Prerequirement"></a>
 Device: Arduino, Modbus, Pcan, Battery, Raspberry, PC, Network Switcher.
-Flowchart
+![HardWare FlowChart]((/images/img.png)
 
 # Software Prerequirement <a name="Software Prerequirement"></a>
 
