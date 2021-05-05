@@ -115,6 +115,9 @@ The module is implemented in main/Client/PcanConnection.py. You can set the valu
 ### 3. Modbus Model
 Here, if you want to change the Modbus limitation, you need to change the values of  "max_vol", "min_vol", "max_crt", "max_dis_crt", "max_power". <br /> What's more, warning and dangerous level depend on "volLowWarning", "volHighWarning", "volHighDangerous", "volLowDangerous".
 
+### 4. PC Connection Model
+you can change "recurTimes" in "Battery-Safety-Sever-Client/main/Client/config.properties" to set the times the program loops for after errors happen on PC Connection. If you set another ip address or already use the current port, you can change "ip_addre", "ip_port".
+
 ## Collected Data(Result) 
 
 For Server: 
@@ -139,6 +142,11 @@ Here is the Client logic Diagram:
 Here is the Sever logic Diagram:
 Flow Chart
 
+### 3. Warning and Dangerous Level Logic
+Here is the Warning and Dangerous Level Logic Diagram: 
+![warning and dangerous diagram](/images/warning_dangerous_level_operation.png)
+
+
 ## Conclusion <a name="Conclusion"></a>
 
 ## Materials:
@@ -155,3 +163,8 @@ Modbus datasheet: [MODBUS Programming Manual_100-PBJ1226-PAA_V1.0 (1).xlsx - Goo
  
  ## Possible Error: 
 ![Possible Error](/images/OperatorException.png) 
+
+## Note:
+1. For Raspberry pi, you cannot keep Ethernet and wifi connection together, if you connect Wifi, raspberry pi cannot connect to PC by ethernet. 
+2. if the status is very emergent, and you want to close the modbus and battery right now. Please run Battery-Safety-Sever-Client/main/smallControlModule/closeModbus.py and InitArduinoDevice.py  
+3. If the Voltage is too low or too high, program cannot start normally, please check your power and current schedule.  
