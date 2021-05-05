@@ -155,3 +155,6 @@ Modbus datasheet: [MODBUS Programming Manual_100-PBJ1226-PAA_V1.0 (1).xlsx - Goo
  
  ## Possible Error: 
 ![Possible Error](/images/OperatorException.png) 
+
+## Note:
+1. For Raspberry pi, you cannot keep Ethernet and wifi connection together, if you connect Wifi, raspberry pi cannot connect to PC by ethernet. 
