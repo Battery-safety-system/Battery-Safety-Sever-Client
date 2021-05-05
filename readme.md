@@ -139,6 +139,11 @@ Here is the Client logic Diagram:
 Here is the Sever logic Diagram:
 Flow Chart
 
+### 3. Warning and Dangerous Level Logic
+Here is the Warning and Dangerous Level Logic Diagram: 
+![warning and dangerous diagram](/images/warning_dangerous_level_operation.png)
+
+
 ## Conclusion <a name="Conclusion"></a>
 
 ## Materials:
