@@ -115,6 +115,9 @@ The module is implemented in main/Client/PcanConnection.py. You can set the valu
 ### 3. Modbus Model
 Here, if you want to change the Modbus limitation, you need to change the values of  "max_vol", "min_vol", "max_crt", "max_dis_crt", "max_power". <br /> What's more, warning and dangerous level depend on "volLowWarning", "volHighWarning", "volHighDangerous", "volLowDangerous".
 
+### 4. PC Connection Model
+you can change "recurTimes" in "Battery-Safety-Sever-Client/main/Client/config.properties" to set the times the program loops for after errors happen on PC Connection. If you set another ip address or already use the current port, you can change "ip_addre", "ip_port".
+
 ## Collected Data(Result) 
 
 For Server: 
