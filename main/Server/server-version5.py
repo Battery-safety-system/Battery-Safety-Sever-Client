@@ -4,20 +4,17 @@ sys.path.append("C:\\Users\\SERF1\\Desktop\\Battery-Safety-Sever-Client")
 from main.Tools.File import File
 from main.Tools.ServerConnection import Connection
 import time
-import logging
 
 class Server_PC:
     def __init__(self):
         # variable
         self.content = {};
         self.labels = [];
-        logging.basicConfig(filename='Server_Error_Record.log', level=logging.WARNING)
 
         ## section1: file and floder creation
         print("check the connection")
         self.ConnectionObj = Connection();
         print("*****************************************")
-
         self.receiveContentFromClient();
 
         print("*****************************************")
@@ -34,10 +31,6 @@ class Server_PC:
             print('complete the loop \n')
 
     def writeToFile(self):
-        # for key in self.content:
-        #     assert isinstance(key, str)
-        #     # if "is" in key and self.content[key]:
-        #     #     print(key + ": " + str(self.content[key]))
         self.FileObj.WritetoCVS(self.datas, self.labels)
 
     def updateLabelsFromContent(self):
