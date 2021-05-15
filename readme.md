@@ -140,7 +140,7 @@ Here is the Client logic Diagram:
 
 ### 2. Server <a name="Server"></a>
 Here is the Sever logic Diagram:
-Flow Chart
+![Server_logic_Diagram](/images/Server_Flow_Chart.png)
 
 ### 3. Warning and Dangerous Level Logic
 Here is the Warning and Dangerous Level Logic Diagram: 
