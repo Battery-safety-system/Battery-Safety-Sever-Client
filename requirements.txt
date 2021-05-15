@@ -1,0 +1,13 @@
+aenum==3.0.0
+argparse-addons==0.7.0
+bitstruct==8.11.1
+can==0.0.0
+cantools==36.2.0
+diskcache==5.2.1
+minimalmodbus==1.0.2
+pyserial==3.5
+python-can==3.3.4
+rpi==0.0.1
+textparser==0.23.0
+windows-curses==2.2.0
+wrapt==1.12.1

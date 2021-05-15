@@ -2,10 +2,11 @@ language: python
 python:
   - "3.6"
 
-services:
-  - docker
+before_script: 	pip install -r requirements.txt
 
-before_script: pip install test
-
-script:
-  - docker-compose run app sh -c "python "
+#script: - main/Client/start_client
+deploy:
+  provider: script
+  script: bash main/Client/start_client.sh
+  on:
+    branch: main
