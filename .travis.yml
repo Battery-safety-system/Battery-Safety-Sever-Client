@@ -10,3 +10,6 @@ deploy:
   script: bash main/Client/start_client.sh
   on:
     branch: main
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
