@@ -1,6 +1,5 @@
 # Battery Safety Client Server System
 
-[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
 This Safety System aims to keep the temperature, voltage of the batteries modules in the specific range. 
 
