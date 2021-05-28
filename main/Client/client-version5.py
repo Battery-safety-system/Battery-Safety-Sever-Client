@@ -374,7 +374,7 @@ class Battery_System:
         for ele in dict_status:
             content = dict_status[ele]
             if (ele == "isPumpFanOff" and not dict_status[ele] ):
-                print("isPumpFanOff: False, Temperature High!!")
+                print("isPumpFanOff: False, Temperature not High!!")
             elif(content == True ):
                 warningAndDangerousList.append(ele);
         for ele in warningAndDangerousList:
