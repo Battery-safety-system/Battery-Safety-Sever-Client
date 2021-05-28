@@ -12,7 +12,7 @@ class PCConnection(object):
     """docstring for PCConnection"""
 
     def __init__(self):
-        with open('config.properties') as f:
+        with open('../Client/config.properties') as f:
             data = json.load(f)
             data = data["PCConnection"]
             for key in data:
@@ -66,7 +66,7 @@ class PCConnection(object):
                 return True;
         return False;
     def sendMessage(self, dict_pickle):
-        self.client.settimeout(self.timeout)
+        self.client.settimeout(20)
         try:
             self.client.send(dict_pickle)
         except Exception as e:

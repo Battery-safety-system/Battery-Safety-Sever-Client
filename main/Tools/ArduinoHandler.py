@@ -2,21 +2,19 @@ import serial
 import csv
 import json
 import sys
-import pathlib
-path = str(pathlib.Path().absolute())
-sys.path.append(path)
-from Tools.Status import Status
+sys.path.append("/home/pi/Desktop/Battery-Safety-Sever-Client")
+from main.Tools.Status import Status
 import time;
-
-
+import logging
+logging.basicConfig(filename='../Client/Modbus Status.log', level=logging.DEBUG)
 class ArduinoHandler:
     def __init__(self):
-        with open('config.properties') as f:
+        with open('../Client/config.properties') as f:
             data = json.load(f)
         data = data["ArduinoHandler"]
         port = data["USB_Port"];
         port_rate = data["port_rate"]
-        self.ser = serial.Serial(port, 9600, timeout=10)
+        self.ser = serial.Serial(port, 9600, timeout=15)
         # output device
         self.setPINValue();
         self.ohmsList = [];
@@ -49,7 +47,7 @@ class ArduinoHandler:
         pass
         
     def setPINValue(self):
-        with open('config.properties') as f:
+        with open('../Client/config.properties') as f:
             data = json.load(f)
         data = data["ArduinoHandler"]
         self.pumpPIN = data["pumpPIN"];
@@ -62,7 +60,7 @@ class ArduinoHandler:
     def setOhmsTempList(self):
         ohmsList = [];
         tempList = [];
-        with open('TempSensor.csv', newline='') as csvfile:
+        with open('../Tools/TempSensor.csv', newline='') as csvfile:
             spamreader = csv.reader(csvfile, delimiter=',')
             for row in spamreader:
                 ohms = float(row[1]);
@@ -77,23 +75,10 @@ class ArduinoHandler:
         self.setPumpFanOff();
 # ---------------------------Tools Section -------------------------------
     def receive(self):
-
-#         self.ser.timeout = self.Read_Timeout
-        content = self.ser.readline().decode("utf-8");
-#         self.ser.timeout = None
-        return content
+        return self.ser.readline().decode("utf-8");
 
     def send(self, contentStr):
-#         self.ser.write_timeout = self.Write_Timeout;
-        self.ser.reset_output_buffer();
         self.ser.write(contentStr);
-#         self.ser.write_timeout = None;
-
-    def checkReceiveData(self, data):
-        if ("Ardu_Temp1" not in data or "Ardu_Temp2" not in data or "Ardu_Press" not in data ):
-            return False;
-        else:
-            return True;
 
 # ---------------------------Main Function -----------------------------
     def getLabListFromContentDict(self):
@@ -135,7 +120,7 @@ class ArduinoHandler:
         contentStr = self.LoopObserveFunctionRead(self.receive, self.checkIfInfoRightFromArduino, 3);
         print("Arduino Reading: " + str(contentStr))
         if (contentStr == None ):
-            # logging.error("ArduinoHandler: ReceiveInforFromArduino: Receive Error!!")
+            logging.error("ArduinoHandler: ReceiveInforFromArduino: Receive Error!!")
             raise Exception("ArduinoHandler: ReceiveInfoFromArduino: contentStr is not right...")
 
         contentArr = contentStr.split(',');
@@ -156,7 +141,6 @@ class ArduinoHandler:
 
     def checkIfInfoRightFromArduino(self, contentStr):
         assert isinstance(contentStr, str)
-#         print(contentStr)
         try:
             contentArr = contentStr.split(',')
             for oneInfo in contentArr:
@@ -224,6 +208,8 @@ class ArduinoHandler:
         ## logic: get info list
         ArduinoInfoList = [];
         if (StatusObj.isPcanTempWarning  or StatusObj.isPcanTempDangerous):
+            logging.error("StatusObj isPcanTempWarning" + str(StatusObj.isPcanTempWarning));
+            logging.error("StatusObj isPcanTempDangerous" + str(StatusObj.isPcanTempDangerous));
             ArduinoInfoList.append({"device": "Pump", "pin_number": self.pumpPIN, "pin_value": 1});
             ArduinoInfoList.append({"device": "Fan", "pin_number": self.FanPIN, "pin_value": 1});
             print("temperature is too high, the pump continue to work");
@@ -240,9 +226,7 @@ class ArduinoHandler:
         try:
             self.activateDevice(ArduinoInfoList);
         except Exception as e:
-            raise Exception("ArduinoHandler_setPumpFanOn: " + str(e))
-
-
+            raise("ArduinoHandler_setPumpFanOn: " + e)
     def setPumpFanOff(self):
         ArduinoInfoList = [];
         ArduinoInfoList.append({"device": "Pump", "pin_number": self.pumpPIN, "pin_value": 0});
@@ -250,7 +234,7 @@ class ArduinoHandler:
         try:
             self.activateDevice(ArduinoInfoList);
         except Exception as e:
-            raise Exception("ArduinoHandler_setPumpFanOff: " + str(e))
+            raise ("ArduinoHandler_setPumpFanOff: " + e)
 
     def setRelayoff(self):
         ArduinoInfoList = []

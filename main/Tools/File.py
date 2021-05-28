@@ -3,6 +3,12 @@ import time
 import os
 import csv
 
+# !/usr/bin/python3
+import time
+import os
+import csv
+
+
 class File(object):
     """docstring for File"""
 
