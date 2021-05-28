@@ -1,18 +1,13 @@
 #!/usr/bin/python3
 import sys
-import pathlib
-path = str(pathlib.Path().absolute())
-path = path + "/.."
-sys.path.append(path)
-print(path)
-# sys.path.append("/home/pi/Desktop/Battery-Safety-Sever-Client")
-from Tools.ClientConnection import PCConnection
-from Tools.File import File
-from Tools.PcanConnection import PcanConnection
-from Tools.Status import Status
-from Tools.ArduinoHandler import ArduinoHandler;
-from Tools.ModbusHandler import ModbusHandler;
-import re;
+sys.path.append("/home/pi/Desktop/Battery-Safety-Sever-Client/")
+from main.Tools.ClientConnection import PCConnection
+from main.Tools.File import File
+from main.Tools.PcanConnection import PcanConnection
+from main.Tools.Status import Status
+from main.Tools.ArduinoHandler import ArduinoHandler;
+from main.Tools.ModbusHandler import ModbusHandler;
+
 import time;
 
 import logging
@@ -35,16 +30,15 @@ class Battery_System:
         print("********************************************")
 
         # init the PC Connection
-
+        print("initialize PC Connection")
+        self.PcInit();
+        print("********************************************")
 
         print("Init Modbus")
         modbusLabels = []
         modbusLabels = self.modbusInit();
         print("********************************************")
 
-        print("initialize PC Connection")
-        self.PcInit();
-        print("********************************************")
 
 
         print("Init Label lists and datas")
@@ -88,7 +82,9 @@ class Battery_System:
 
     def modbusInit(self):
         self.ArduinoHandlerObj.initRelayStepOne()
-        self.ModbusHandlerObj = ModbusHandler();
+        currentControlMode = 1;
+        powerControlMode = 2;
+        self.ModbusHandlerObj = ModbusHandler(powerControlMode);
         modbusLabels = self.ModbusHandlerObj.getLabels();
         self.ArduinoHandlerObj.initRelayStepTwo()
         return modbusLabels;
@@ -206,7 +202,7 @@ class Battery_System:
         except Exception as e:
             # print("client: collectDataInNormalWarningState: Error!!! cannot receive message from pcan")
             logging.error(time.strftime('%H-%M-%S') + "client: collectDataInNormalWarningState: " + "pcanconnection cannot get information");
-            raise Exception("client: collectDataInNormalWarningState:" + str(e));
+            raise "client: collectDataInNormalWarningState:" + e;
 
 
 
@@ -233,7 +229,7 @@ class Battery_System:
         except Exception as e:
             logging.error(time.strftime(
                 '%H-%M-%S') + "client: collectDataInNormalWarningState: " + "Modbus cannot get information");
-            raise Exception(str(e));
+            raise e;
 
 
 
@@ -265,7 +261,7 @@ class Battery_System:
 
 #             print("info: client-version5: the content transfer to PC " + str(dictContent))
         except Exception as e:
-            print("client-version5: transferToPc: " + str(e))
+            print("client-version5: transferToPc: " + e)
             return ;
         try:
             self.PCConnectionObj.sendContent(dictContent)
@@ -291,10 +287,6 @@ class Battery_System:
     def updateStatusInNormalWarningState(self):
 
         if self.StatusObj.dangerous:
-            dict_status = vars(self.StatusObj)
-            for ele in dict_status:
-                if "Dangerous" in ele:
-                    print(ele + ": " + str(dict_status))
             self.currentState = self.dangerousState;
         elif self.StatusObj.warning:
             self.currentState = self.warningState;
@@ -302,8 +294,8 @@ class Battery_System:
             self.currentState = self.normalState;
 
 # ------------------------------- active device in dangerous warning -----------------------------
-    def activeDeviceInNormalState(self):
-        self.ModbusHandlerObj.updateCurrentOrPower();
+#     def activeDeviceInNormalState(self):
+#         self.ModbusHandlerObj.updateCurrentOrPower();
 
     def activeDeviceInDangerousState(self):
         if (not self.StatusObj.isModbusOff):
@@ -337,7 +329,6 @@ class Battery_System:
             try:
                 self.ArduinoHandlerObj.setPumpFanOn();
                 self.StatusObj.isPumpFanOff = False;
-
             except Exception as e:
                 raise Exception("client_activeDeviceInWarningState: " + str(e))
             
@@ -347,8 +338,6 @@ class Battery_System:
                 self.ModbusHandlerObj.setModbusCharge();
             else:
                 self.ModbusHandlerObj.setModbusDischarge();
-            return
-        self.ModbusHandlerObj.updateCurrentOrPower();
 
     def closeAllDevice(self): # just make sure I do all the operation once,
         try:
@@ -383,17 +372,14 @@ class Battery_System:
         warningAndDangerousList = [];
 
         for ele in dict_status:
-            if "temperature_voliated_battery" in ele:
-                print("temperature_voliated_battery: " + str(dict_status[ele]))
             content = dict_status[ele]
-            if (ele == "isPumpFanOff" and dict_status[ele] ):
+            if (ele == "isPumpFanOff" and not dict_status[ele] ):
                 print("isPumpFanOff: False, Temperature High!!")
             elif(content == True ):
                 warningAndDangerousList.append(ele);
         for ele in warningAndDangerousList:
             print(ele + " : " + str(dict_status[ele]))
         print("warning and dangerous list: " + str(warningAndDangerousList))
-
 
     def monitorPcanInfo(self):
 #         print("self.label_list: " + str(self.label_list))
@@ -426,17 +412,13 @@ class Battery_System:
         Max_Cell_Voltage = -1;
         Min_Cell_Voltage = 1000;
         for ele in dictContent:
-            x = re.search("^BMU[0-9]{2}_Cell_[0-9]+_Voltage$", ele)
-            if x and "13" not in ele and "14" not in ele:
-#             if "Cell" in ele and "Voltage" in ele and "13" not in ele and "14" not in ele:
+            if "Cell" in ele and "Voltage" in ele and "13" not in ele and "14" not in ele:
                 cell_voltage = dictContent[ele]
 #                 print(ele)
                 if (cell_voltage > Max_Cell_Voltage):
                     Max_Cell_Voltage = cell_voltage;
                 if (cell_voltage < Min_Cell_Voltage):
-                    
                     Min_Cell_Voltage = cell_voltage;
-#                     print("MIN check: " + str(Min_Cell_Voltage))
         print("Max_Cell_Voltage: " + str(Max_Cell_Voltage));
         print("Min_Cell_voltage: " + str(Min_Cell_Voltage))
 
@@ -456,14 +438,15 @@ class Battery_System:
         
         self.closeAllDevice();
 
-# Battery1 = Battery_System();
-# Battery1.run();
-try:
-    Battery1 = Battery_System();
-    Battery1.run();
-except Exception as e:
-    print(e)
-    Battery1.closeAllDevice();
+Battery1 = Battery_System();
+Battery1.run();
+# try:
+#     Battery1 = Battery_System();
+#     Battery1.run();
+# except Exception as e:
+#     print(e)
+# 
+#     Battery1.closeAllDevice();
 # try:
 #
 # except:
